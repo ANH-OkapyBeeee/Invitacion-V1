@@ -1,0 +1,99 @@
+{
+  "translation": {
+    "open": "Open",
+    "envelopeTitle": "MY XV YEARS",
+    "heroTitle": "XV Years",
+    "scroll": "SCROLL",
+    "countdown": {
+      "days": "DAYS",
+      "hours": "HRS",
+      "minutes": "MIN",
+      "seconds": "SEC"
+    },
+    "itinerary": {
+      "title": "Itinerary",
+      "events": [
+        { "time": "3:00 PM", "title": "Religious Ceremony", "desc": "Iglesia de Nuestra Señora de Guadalupe", "emoji": "⛪" },
+        { "time": "4:00 PM", "title": "Reception", "desc": "Salón Salitrito", "emoji": "🥂" },
+        { "time": "5:00 PM", "title": "Banquet", "desc": "Delicious dinner to share", "emoji": "🍽️" },
+        { "time": "7:00 PM", "title": "Waltz", "desc": "A magical moment", "emoji": "💃" },
+        { "time": "8:00 PM", "title": "Toast", "desc": "Words from the family", "emoji": "🍾" },
+        { "time": "9:00 PM", "title": "Dance Floor Opens", "desc": "Let's dance!", "emoji": "🎵" },
+        { "time": "11:00 PM", "title": "Mariachi", "desc": "Musical surprise", "emoji": "🎺" }
+      ]
+    },
+    "locations": {
+      "ceremony": "Religious Ceremony",
+      "reception": "Reception",
+      "btnText": "View on Map"
+    },
+    "family": {
+      "title": "My Favorite People",
+      "quote": "Thank you for being my guide and unconditional support in every step of my life.",
+      "dad": "MY FATHER",
+      "mom": "MY MOTHER",
+      "sister": "MY SISTER"
+    },
+    "godparents": {
+      "title": "My Godparents",
+      "desc": "Special people who join me in this new stage.",
+      "godfather": "GODFATHER",
+      "godmother": "GODMOTHER"
+    },
+    "dresscode": {
+      "title": "Dress Code",
+      "formal": "Formal",
+      "noRed": "Avoid Red",
+      "noGold": "Avoid Gold",
+      "noPearl": "Avoid Pearl",
+      "charroTitle": "Charro Theme",
+      "charroDesc": "If you like, you can join us with a charro touch in your attire.",
+      "note": "We reserve the right of admission."
+    },
+    "saveTheDate": {
+      "title": "Save the Date",
+      "subtitle": "You can't miss it!",
+      "desc": "I hope to have your presence on this special day.",
+      "addToCalendar": "Add to Calendar",
+      "calendar": {
+        "su": "Su", "mo": "Mo", "tu": "Tu", "we": "We", "th": "Th", "fr": "Fr", "sa": "Sa",
+        "month": "August"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "Will there be parking?",
+      "a1": "Yes, the venue has ample and secure parking.",
+      "q2": "Can I bring a guest?",
+      "a2": "The number of passes is indicated on your personal invitation.",
+      "q3": "Is there a gift registry?",
+      "a3": "Your presence is my best gift, but if you wish to have a detail with me, there will be a box at the reception."
+    },
+    "photoUpload": {
+      "title": "Share your Photos",
+      "desc": "Scan the QR code or click the button to upload the photos and videos you take at the event.",
+      "btnText": "Upload my Photos"
+    },
+    "footer": {
+      "gugu": "GuGu | Laboratorio Creativo®",
+      "tapMore": "Tap for more information ↓",
+      "slogan": "Innovating to tell your story uniquely.",
+      "servicesIntro": "Drive your business growth with our specialized tech solutions:",
+      "servicesOutro": "Experts in strategic consulting, digital transformation, implementation, deployment, and support for SME modernization.",
+      "services": [
+        "Digital Invitations",
+        "Web Design & E-commerce Architecture",
+        "Visual Identity & Video/Photo Editing",
+        "Custom Software Programming & Development",
+        "A.I. Implementation for Businesses & Virtual Assistants",
+        "ERP Installation, Configuration & Maintenance (Odoo & SAP)",
+        "3D Modeling",
+        "Cloud Infrastructure Migration, Implementation & Support",
+        "Digital Marketing Strategies & Hyper-segmented Advertising"
+      ],
+      "dev": "Developer",
+      "legal": "Privacy Policy · Terms and Conditions · Cookie Policy",
+      "rights": "All Rights Reserved."
+    }
+  }
+}

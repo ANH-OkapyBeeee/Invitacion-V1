@@ -1,0 +1,99 @@
+{
+  "translation": {
+    "open": "Abrir",
+    "envelopeTitle": "MIS XV AÑOS",
+    "heroTitle": "XV Años",
+    "scroll": "SCROLL",
+    "countdown": {
+      "days": "DÍAS",
+      "hours": "HRS",
+      "minutes": "MIN",
+      "seconds": "SEG"
+    },
+    "itinerary": {
+      "title": "Itinerario",
+      "events": [
+        { "time": "3:00 PM", "title": "Ceremonia Religiosa", "desc": "Iglesia de Nuestra Señora de Guadalupe", "emoji": "⛪" },
+        { "time": "4:00 PM", "title": "Recepción", "desc": "Salón Salitrito", "emoji": "🥂" },
+        { "time": "5:00 PM", "title": "Banquete", "desc": "Una deliciosa cena para compartir en familia", "emoji": "🍽️" },
+        { "time": "7:00 PM", "title": "Vals", "desc": "Un momento mágico", "emoji": "💃" },
+        { "time": "8:00 PM", "title": "Brindis", "desc": "Palabras de la familia", "emoji": "🍾" },
+        { "time": "9:00 PM", "title": "Apertura de Pista", "desc": "¡A bailar se ha dicho!", "emoji": "🎵" },
+        { "time": "11:00 PM", "title": "Mariachi", "desc": "Sorpresa musical", "emoji": "🎺" }
+      ]
+    },
+    "locations": {
+      "ceremony": "Ceremonia Religiosa",
+      "reception": "Recepción",
+      "btnText": "Ver en Mapa"
+    },
+    "family": {
+      "title": "Mis Personas Favoritas",
+      "quote": "Gracias por ser mi guía y apoyo incondicional en cada paso de mi vida.",
+      "dad": "MI PADRE",
+      "mom": "MI MADRE",
+      "sister": "MI HERMANA"
+    },
+    "godparents": {
+      "title": "Mis Padrinos",
+      "desc": "Personas muy especiales que me acompañan en esta nueva etapa.",
+      "godfather": "PADRINO",
+      "godmother": "MADRINA"
+    },
+    "dresscode": {
+      "title": "Código de Vestimenta",
+      "formal": "Formal",
+      "noRed": "Evitar Rojo",
+      "noGold": "Evitar Dorado",
+      "noPearl": "Evitar Perla",
+      "charroTitle": "Temática Charra",
+      "charroDesc": "Sería un honor que nos acompañes luciendo un toque charro en tu vestimenta.",
+      "note": "Nos reservamos el derecho de admisión."
+    },
+    "saveTheDate": {
+      "title": "Reserva la Fecha",
+      "subtitle": "¡Será un día inolvidable!",
+      "desc": "Espero contar con tu grata presencia en este día tan especial.",
+      "addToCalendar": "Agregar a mi Calendario",
+      "calendar": {
+        "su": "Do", "mo": "Lu", "tu": "Ma", "we": "Mi", "th": "Ju", "fr": "Vi", "sa": "Sá",
+        "month": "Agosto"
+      }
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "q1": "¿Habrá estacionamiento?",
+      "a1": "Sí, el salón cuenta con estacionamiento amplio y seguro.",
+      "q2": "¿Puedo llevar acompañante?",
+      "a2": "El número de pases está indicado en tu invitación personal.",
+      "q3": "¿Hay alguna mesa de regalos?",
+      "a3": "Tu presencia es mi mejor regalo; sin embargo, si deseas tener un detalle conmigo, contaremos con un buzón en la recepción."
+    },
+    "photoUpload": {
+      "title": "Captura los Momentos",
+      "desc": "Ayúdanos a inmortalizar este día. Escanea el código QR o haz clic en el botón para compartir las fotos y videos que tomes durante el evento.",
+      "btnText": "Compartir mis Fotos"
+    },
+    "footer": {
+      "gugu": "GuGu | Laboratorio Creativo®",
+      "tapMore": "Toca para más información ↓",
+      "slogan": "Innovando para contar tu historia de forma única.",
+      "servicesIntro": "Impulsa el crecimiento de tu negocio con nuestras soluciones tecnológicas:",
+      "servicesOutro": "Expertos en consultoría estratégica, transformación digital, implementación, despliegue y soporte para la modernización de PyMEs.",
+      "services": [
+        "Invitaciones Digitales",
+        "Diseño Web y Arquitectura de tiendas online",
+        "Identidad Visual y Edición de Video/Fotografía",
+        "Programación y desarrollo de software a la medida",
+        "Implementación de I.A. para empresas y Asistentes virtuales",
+        "Instalación, configuración y mantenimiento de ERP (Odoo y SAP)",
+        "Modelado 3D",
+        "Migración, implementación y soporte de infraestructura en la nube",
+        "Estrategias de marketing digital y publicidad hiper-segmentada"
+      ],
+      "dev": "Desarrollador",
+      "legal": "Política de Privacidad · Términos y Condiciones · Política de Cookies",
+      "rights": "All Rights Reserved."
+    }
+  }
+}
