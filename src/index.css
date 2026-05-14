@@ -135,3 +135,11 @@ body {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
   }
 }
+@keyframes starBurst {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.5); opacity: 0; }
+}
+
+.animate-star-burst {
+  animation: starBurst 3s ease-out forwards;
+}

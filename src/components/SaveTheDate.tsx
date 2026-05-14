@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CONFIG } from '../config';
 
 const SaveTheDate = () => {
   const { t } = useTranslation();
+  const [animPhase, setAnimPhase] = useState<'static' | 'exploding'>('static');
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    
+    const runCycle = () => {
+      setAnimPhase('static');
+      timeout = setTimeout(() => {
+        setAnimPhase('exploding');
+        timeout = setTimeout(() => {
+          runCycle();
+        }, 3000); // Explotar 3s
+      }, 1500); // Estático 1.5s
+    };
+
+    runCycle();
+    return () => clearTimeout(timeout);
+  }, []);
 
   const handleCalendar = () => {
     const title = encodeURIComponent(`XV Años - ${CONFIG.quinceañeraName}`);
@@ -55,16 +73,41 @@ const SaveTheDate = () => {
               }
               for (let i = 1; i <= daysInMonth; i++) {
                 const isEventDay = i === eventDay;
+                const isExploding = isEventDay && animPhase === 'exploding';
+
                 days.push(
-                  <div 
-                    key={i} 
-                    className={`flex items-center justify-center h-8 w-8 mx-auto rounded-full transition-all duration-300 ${
-                      isEventDay 
-                        ? 'bg-gradient-to-br from-xv-gold to-[#D4AF37] text-xv-black-bg font-bold scale-[1.15] shadow-[0_0_15px_rgba(212,175,55,0.6)]' 
-                        : 'text-white'
-                    }`}
-                  >
-                    {i}
+                  <div key={i} className="relative flex items-center justify-center">
+                    <div 
+                      className={`flex items-center justify-center h-8 w-8 mx-auto rounded-full transition-all duration-500 ${
+                        isEventDay 
+                          ? `bg-xv-gold text-xv-black-bg font-bold scale-[1.7] shadow-[0_0_30px_rgba(212,175,55,0.6)] relative z-10 ring-1 ring-xv-gold/40` 
+                          : 'text-white'
+                      }`}
+                    >
+                      {i}
+                    </div>
+                    {isExploding && (
+                      <div className="absolute inset-0 pointer-events-none z-20">
+                        {[...Array(24)].map((_, idx) => {
+                          const angle = (idx / 24) * 360 + (Math.random() * 15);
+                          const dist = 100 + Math.random() * 250;
+                          const x = Math.cos(angle * Math.PI / 180) * dist;
+                          const y = Math.sin(angle * Math.PI / 180) * dist;
+                          return (
+                            <div 
+                              key={idx}
+                              className="absolute left-1/2 top-1/2 w-6 h-6 text-xv-gold-light animate-star-burst pointer-events-none"
+                              style={{
+                                '--x': `${x}px`,
+                                '--y': `${y}px`,
+                              } as React.CSSProperties}
+                            >
+                              ✦
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 );
               }

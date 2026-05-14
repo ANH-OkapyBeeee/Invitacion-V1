@@ -36,19 +36,20 @@
     },
     "godparents": {
       "title": "Mis Padrinos",
-      "desc": "Personas muy especiales que me acompañan en esta nueva etapa.",
+      "desc": "Testigos de mi fe ayer y compañeros de mi alegría hoy. Gracias por acompañarme en mis XV años.",
       "godfather": "PADRINO",
       "godmother": "MADRINA"
     },
     "dresscode": {
       "title": "Código de Vestimenta",
-      "formal": "Formal",
-      "noRed": "Evitar Rojo",
-      "noGold": "Evitar Dorado",
-      "noPearl": "Evitar Perla",
-      "charroTitle": "Temática Charra",
-      "charroDesc": "Sería un honor que nos acompañes luciendo un toque charro en tu vestimenta.",
-      "note": "Nos reservamos el derecho de admisión."
+      "subtitle": "¡Siéntete libre de lucir tu mejor estilo!",
+      "desc": "Queremos que disfrutes al máximo, por lo que puedes venir con el estilo que te haga sentir más cómodo: ya sea formal, casual o lo que tú prefieras.",
+      "reservedColors": "¡Ayúdanos a que la festejada brille! Con mucho cariño, pedimos a nuestras invitadas evitar vestidos en Rojo, Dorado o Blanco Perla, ya que estos colores son exclusivos para el vestido de la Quinceañera y sus damas. Agradecemos profundamente su amable comprensión para hacer este momento aún más especial.",
+      "noRed": "Rojo",
+      "noGold": "Dorado",
+      "noPearl": "Perla",
+      "charroTitle": "¡Saca ese Estilo Charro que Llevas Dentro!",
+      "charroDesc": "Te invitamos a portar con toda confianza esa prenda o accesorio tradicional que tanto te gusta. ¡Es el momento perfecto para lucir las botas, el sombrero, ese cinturón piteado o el moño charro! Ya sea un rebozo, un vestido de escaramuza, o incluso ese bigotazo y las trenzas con listones... ¡atrévete a darle ese toque especial a la fiesta!"
     },
     "saveTheDate": {
       "title": "Reserva la Fecha",
@@ -63,11 +64,21 @@
     "faq": {
       "title": "Preguntas Frecuentes",
       "q1": "¿Habrá estacionamiento?",
-      "a1": "Sí, el salón cuenta con estacionamiento amplio y seguro.",
-      "q2": "¿Puedo llevar acompañante?",
-      "a2": "El número de pases está indicado en tu invitación personal.",
-      "q3": "¿Hay alguna mesa de regalos?",
-      "a3": "Tu presencia es mi mejor regalo; sin embargo, si deseas tener un detalle conmigo, contaremos con un buzón en la recepción."
+      "a1": "Sí, el salón cuenta con estacionamiento amplio y seguro para todos nuestros invitados.",
+      "q2": "¿Puedo llevar niños?",
+      "a2": "¡Por supuesto! Los más pequeños son bienvenidos para compartir esta alegría en familia.",
+      "q3": "¿Habrá mesa de regalos?",
+      "a3": "Tu presencia es nuestro mejor regalo; sin embargo, si deseas tener un detalle adicional, contaremos con una mesa de regalos y un buzón para lluvia de sobres en la recepción. ¡Muchas gracias por tu cariño!",
+      "q4": "¿El evento será en interior o exterior?",
+      "a4": "El evento se llevará a cabo en un salón cerrado.",
+      "q5": "¿A qué hora debo llegar?",
+      "a5": "Te sugerimos llegar 15 minutos antes de la ceremonia religiosa para que puedas acompañarnos desde el inicio.",
+      "q6": "¿Es necesario llevar la invitación impresa?",
+      "a6": "¡No es necesario! Puedes mostrar esta invitación digital desde tu celular al llegar al salón.",
+      "q7": "¿Cuál es el código de vestimenta?",
+      "a7": "El estilo es libre (formal o casual), solo te pedimos recordar la temática charra y evitar los colores reservados para la festejada.",
+      "q8": "¿Puedo tomar fotos y videos?",
+      "a8": "¡Por supuesto! Nos encantará que captures cada momento. No olvides compartirlos en nuestra sección de 'Captura los Momentos'."
     },
     "photoUpload": {
       "title": "Captura los Momentos",

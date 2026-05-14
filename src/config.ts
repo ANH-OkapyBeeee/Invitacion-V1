@@ -4,13 +4,15 @@ export const CONFIG = {
   church: {
     name: "Iglesia de Nuestra Señora de Guadalupe",
     address: "Ajuchitlán, Colón, Qro.",
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=20°45'37.0%22N+100°02'25.9%22W",
+    mapsUrl: "https://maps.app.goo.gl/ukH7mntKEWXggeqo6",
+    dirUrl: "https://www.google.com/maps/dir/?api=1&destination=Iglesia+de+Nuestra+Señora+de+Guadalupe,+Ajuchitlán,+Colón,+Qro.&dir_action=navigate",
     time: "3:00 PM"
   },
   venue: {
     name: "Salón Salitrito",
-    address: "20°45'37.0\"N 100°02'25.9\"W",
-    mapsUrl: "https://maps.app.goo.gl/vpsjXBmyhWSDFSdbA",
+    address: "Camino a el CBTA 115, Colonia Salitre, 76286 Colón, Qro.",
+    mapsUrl: "https://maps.app.goo.gl/2mWY63GU3hZG7j816",
+    dirUrl: "https://www.google.com/maps/dir/?api=1&destination=20°45'37.0\"N+100°02'25.9\"W&dir_action=navigate",
     time: "4:00 PM"
   },
   family: {
