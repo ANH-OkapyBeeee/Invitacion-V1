@@ -4,7 +4,7 @@ const Confetti = () => {
   const [particles, setParticles] = useState<{ id: number; color: string; left: number; delay: number; duration: number }[]>([]);
 
   useEffect(() => {
-    const colors = ['#D4AF37', '#C41E3A', '#F5F0E8', '#FFD700', '#FFFFFF', '#FF9AA2'];
+    const colors = ['#D4AF37', '#6E1423', '#FDFBF7', '#FFF3CD', '#FFFFFF', '#400B14'];
     const newParticles = Array.from({ length: 100 }).map((_, i) => ({
       id: i,
       color: colors[Math.floor(Math.random() * colors.length)],

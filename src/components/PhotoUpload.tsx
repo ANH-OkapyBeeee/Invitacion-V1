@@ -13,7 +13,7 @@ const PhotoUpload = () => {
   };
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-xv-red to-[#8B0000] text-center text-white">
+    <section className="py-20 px-4 bg-gradient-to-b from-xv-red to-xv-dark-red text-center text-white">
       <div className="max-w-[480px] mx-auto">
         <h2 className="font-playfair italic text-4xl text-xv-gold mb-6 animate-shimmer">{t('photoUpload.title')}</h2>
         
@@ -26,7 +26,7 @@ const PhotoUpload = () => {
             value={uploadUrl} 
             size={200}
             bgColor="#ffffff"
-            fgColor="#8B0000"
+            fgColor="#6E1423"
             level="H"
             includeMargin={false}
           />

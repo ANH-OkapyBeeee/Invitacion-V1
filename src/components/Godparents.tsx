@@ -6,7 +6,7 @@ const Godparents = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-[#8B0000] to-[#C41E3A] text-center">
+    <section className="py-20 px-4 bg-gradient-to-b from-xv-dark-red to-xv-red text-center">
       <div className="max-w-[480px] mx-auto">
         <h2 className="font-playfair italic text-4xl text-xv-gold mb-4 animate-shimmer">{t('godparents.title')}</h2>
         <p className="font-cormorant italic text-white/80 text-lg mb-12 px-2">
