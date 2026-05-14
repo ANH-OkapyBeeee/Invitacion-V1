@@ -24,8 +24,11 @@ export const CONFIG = {
   },
   contact: {
     whatsapp: "527204223213",
+    devPhone: "7204223213",
+    devPhone2: "4425046771",
     devEmail: "alexis.nicolas.hurtado@outlook.com",
-    devPhone: "7204223213"
+    devEmail2: "alexis_fenix345@hotmail.com",
+    address: "Hidalgo #77, El Blanco, Colón, Querétaro"
   },
   cloudinaryCloudName: "",
   cloudinaryUploadPreset: ""
