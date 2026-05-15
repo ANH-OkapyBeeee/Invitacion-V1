@@ -21,7 +21,13 @@ const Itinerary = () => {
 
   return (
     <section ref={sectionRef} className="py-20 px-6 bg-xv-pearl text-xv-black-bg relative">
-      <h2 className="text-center font-playfair italic text-4xl text-xv-red mb-16 animate-shimmer">{t('itinerary.title')}</h2>
+      <h2 className="text-center font-playfair italic text-4xl text-xv-red mb-6 animate-shimmer">{t('itinerary.title')}</h2>
+      
+      <div className="max-w-[480px] mx-auto text-center mb-16">
+        <p className="font-cormorant italic text-gray-600 text-xl px-4 leading-relaxed">
+          "Existen instantes que el corazón guarda para siempre, momentos donde la gratitud se convierte en abrazo y la alegría en destino compartido. Te invito a ser parte de esta noche mágica, donde mi historia y la de mi familia se iluminan con tu presencia, transformando un sueño en un recuerdo eterno."
+        </p>
+      </div>
       
       <div className="max-w-[480px] mx-auto relative">
         {/* Vertical Timeline */}

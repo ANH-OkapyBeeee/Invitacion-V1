@@ -66,7 +66,7 @@ const Footer = () => {
           onClick={() => setExpanded(!expanded)}
           className="w-full touch-manipulation focus:outline-none"
         >
-          <div className="font-playfair text-xl text-xv-gold mb-2">{t('footer.gugu')}</div>
+          <div className="font-playfair text-xl text-xv-gold mb-2 animate-vibrate-footer">{t('footer.gugu')}</div>
           {!expanded && (
             <div className="font-josefin text-xs uppercase tracking-widest animate-pulse">
               {t('footer.tapMore')}

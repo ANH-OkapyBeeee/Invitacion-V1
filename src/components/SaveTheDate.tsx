@@ -7,7 +7,7 @@ const SaveTheDate = () => {
   const [animPhase, setAnimPhase] = useState<'static' | 'exploding'>('static');
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
     
     const runCycle = () => {
       setAnimPhase('static');

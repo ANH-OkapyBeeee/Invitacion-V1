@@ -18,7 +18,7 @@ export const CONFIG = {
   family: {
     dadName: "Manuel Balderas Ibarra",
     momName: "Ma. de la Luz Vega Feregrino",
-    sisterName: ""
+    sisterName: "Fatima Balderas Vega"
   },
   godparents: {
     godfatherName: "Ricarday Narváez Montes",

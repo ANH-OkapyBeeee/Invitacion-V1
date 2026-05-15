@@ -14,7 +14,7 @@
   --black-bg:   #0A0304; /* Negro con sutil tinte borgoña */
 }
 
-body {
+html, body {
   background-color: var(--black-bg);
   background-image: 
     radial-gradient(circle at top right, rgba(110, 20, 35, 0.12) 0%, transparent 60%),
@@ -22,6 +22,7 @@ body {
   background-attachment: fixed;
   color: var(--pearl);
   overflow-x: hidden;
+  width: 100%;
   -webkit-font-smoothing: antialiased;
   min-height: 100svh;
 }
@@ -61,9 +62,13 @@ body {
   }
 }
 
-@keyframes confettiFall {
-  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+@keyframes emojiBurst {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) rotate(var(--r, 360deg)) scale(1.5); opacity: 0; }
+}
+
+.animate-emojiBurst {
+  animation: emojiBurst 1.5s ease-out forwards;
 }
 
 @keyframes borderPulse {
@@ -71,17 +76,33 @@ body {
   50% { border-color: rgba(212, 175, 55, 0.8); }
 }
 
-@keyframes earthquake {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  10% { transform: translate(-1px, -1px) rotate(-0.5deg); }
-  20% { transform: translate(1px, -1px) rotate(0.5deg); }
-  30% { transform: translate(-1px, 1px) rotate(0deg); }
-  40% { transform: translate(1px, 1px) rotate(0.5deg); }
-  50% { transform: translate(-1px, -1px) rotate(-0.5deg); }
-  60% { transform: translate(1px, -1px) rotate(0deg); }
-  70% { transform: translate(-1px, 1px) rotate(0.5deg); }
-  80% { transform: translate(-1px, -1px) rotate(-0.5deg); }
-  90% { transform: translate(1px, 1px) rotate(0deg); }
+@keyframes vibrateCycle1 {
+  0%, 45% { transform: translate(0,0) rotate(0deg); }
+  2%, 8%, 14%, 20%, 26%, 32%, 38%, 44% { transform: translate(-1px, -1px) rotate(-1deg); }
+  4%, 10%, 16%, 22%, 28%, 34%, 40% { transform: translate(1px, 1px) rotate(1deg); }
+  6%, 12%, 18%, 24%, 30%, 36%, 42% { transform: translate(-1px, 1px) rotate(0deg); }
+  50%, 100% { transform: translate(0,0) rotate(0deg); }
+}
+
+@keyframes vibrateCycle2 {
+  0%, 50% { transform: translate(0,0) rotate(0deg); }
+  52%, 58%, 64%, 70%, 76%, 82%, 88%, 94% { transform: translate(-1px, -1px) rotate(-1deg); }
+  54%, 60%, 66%, 72%, 78%, 84%, 90%, 96% { transform: translate(1px, 1px) rotate(1deg); }
+  56%, 62%, 68%, 74%, 80%, 86%, 92%, 98% { transform: translate(-1px, 1px) rotate(0deg); }
+  100% { transform: translate(0,0) rotate(0deg); }
+}
+
+@keyframes strongPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes vibrateFooter {
+  0%, 25% { transform: translate(0,0) rotate(0deg); }
+  27%, 33%, 39%, 45%, 51%, 57%, 63%, 69% { transform: translate(-1px, -1px) rotate(-1deg); }
+  29%, 35%, 41%, 47%, 53%, 59%, 65%, 71% { transform: translate(1px, 1px) rotate(1deg); }
+  31%, 37%, 43%, 49%, 55%, 61%, 67%, 73% { transform: translate(-1px, 1px) rotate(0deg); }
+  75%, 100% { transform: translate(0,0) rotate(0deg); }
 }
 
 .animate-shimmer { animation: shimmer 3s infinite; }
@@ -91,6 +112,25 @@ body {
 .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
 .animate-border-pulse { animation: borderPulse 2s infinite; }
 .animate-earthquake { animation: earthquake 0.4s infinite; }
+.animate-vibrate-1 { animation: vibrateCycle1 6s infinite linear; }
+.animate-vibrate-2 { animation: vibrateCycle2 6s infinite linear; }
+.animate-vibrate-footer { animation: vibrateFooter 6s infinite linear; }
+.animate-strong-pulse { animation: strongPulse 1.2s infinite ease-in-out; }
+
+@keyframes scrollHint {
+  0%, 100% { 
+    transform: translateY(0) scale(1); 
+    opacity: 0.3;
+  }
+  50% { 
+    transform: translateY(15px) scale(1.1); 
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6));
+  }
+}
+
+.animate-scroll-hint { animation: scrollHint 1.8s ease-in-out infinite; }
+
 
 @keyframes goldShine {
   0% { background-position: 0% center; }
@@ -133,6 +173,28 @@ body {
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(253, 251, 247, 0.1);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 @keyframes starBurst {
