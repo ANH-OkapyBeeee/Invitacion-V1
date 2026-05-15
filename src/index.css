@@ -131,6 +131,28 @@ html, body {
 
 .animate-scroll-hint { animation: scrollHint 1.8s ease-in-out infinite; }
 
+@keyframes handCycle {
+  0%, 48% { opacity: 1; transform: translateY(0) scale(1); }
+  5%, 15%, 25%, 35%, 45% { transform: translateY(5px) scale(0.85); }
+  10%, 20%, 30%, 40%, 47% { transform: translateY(0) scale(1); }
+  50%, 100% { opacity: 0; transform: translateY(0) scale(1); }
+}
+
+.animate-hand-1 { animation: handCycle 6s infinite ease-in-out; }
+.animate-hand-2 { animation: handCycle 6s infinite ease-in-out; animation-delay: 3s; }
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-scale-up { animation: scaleUp 0.3s ease-out; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in { animation: fadeIn 0.3s ease-out; }
+
 
 @keyframes goldShine {
   0% { background-position: 0% center; }

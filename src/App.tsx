@@ -14,7 +14,7 @@ import PhotoUpload from './components/PhotoUpload';
 import Footer from './components/Footer';
 
 function App() {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isButtonsVisible, setIsButtonsVisible] = useState(true);
@@ -110,6 +110,8 @@ function App() {
     },
   };
 
+  const [activeTip, setActiveTip] = useState<number | null>(null);
+
   return (
     <div className="relative w-full max-w-[100vw] overflow-x-hidden font-josefin text-xv-pearl bg-xv-black-bg min-h-[100svh]">
       
@@ -148,18 +150,85 @@ function App() {
       {!isOpened ? (
         <EnvelopeScreen onOpen={() => setIsOpened(true)} />
       ) : (
-        <main className="animate-fade-in-up">
-          <Hero />
-          <Itinerary />
-          <Locations />
-          <Family />
-          <Godparents />
-          <DressCode />
-          <SaveTheDate />
-          <FAQ />
-          <PhotoUpload />
-          <Footer />
-        </main>
+        <>
+          <main className="animate-fade-in-up">
+            <Hero />
+            <Itinerary />
+            <Locations />
+            <Family />
+            <Godparents />
+            <DressCode onTipSelect={setActiveTip} activeTip={activeTip} />
+            <SaveTheDate />
+            <FAQ />
+            <PhotoUpload />
+            <Footer />
+          </main>
+
+          {/* Focus Modal Overlay (Outside of main to avoid transform issues) */}
+          {activeTip !== null && (
+            <div 
+              className="fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-y-auto bg-black/70 backdrop-blur-lg"
+              onClick={() => setActiveTip(null)}
+            >
+              <div 
+                className="relative bg-xv-pearl w-full max-w-[440px] my-auto rounded-3xl shadow-2xl overflow-hidden border border-xv-gold/30 animate-scale-up"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Close Button */}
+                <button 
+                  onClick={() => setActiveTip(null)}
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-xv-red text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-[10000]"
+                >
+                  ✕
+                </button>
+
+                {activeTip === 1 ? (
+                  <div className="p-8 md:p-10 text-center">
+                    <div className="text-6xl mb-6">👗</div>
+                    <h3 className="font-playfair italic text-3xl text-xv-red mb-4">Tip de Vestimenta</h3>
+                    <div className="w-16 h-0.5 bg-xv-gold/40 mx-auto mb-6" />
+                    <p className="font-cormorant text-xl text-xv-black-bg mb-8 italic leading-relaxed font-medium">
+                      {t('dresscode.reservedColors')}
+                    </p>
+                    
+                    <div className="flex justify-center gap-6">
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-[#6E1423] relative border border-gray-200 shadow-sm">
+                          <div className="absolute top-1/2 left-0 w-full h-[2px] bg-white/40 -rotate-45" />
+                        </div>
+                        <span className="font-josefin text-[10px] uppercase tracking-widest text-gray-500 font-bold">{t('dresscode.noRed')}</span>
+                      </div>
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-xv-gold relative border border-gray-200 shadow-sm">
+                          <div className="absolute top-1/2 left-0 w-full h-[2px] bg-[#0D0305]/40 -rotate-45" />
+                        </div>
+                        <span className="font-josefin text-[10px] uppercase tracking-widest text-gray-500 font-bold">{t('dresscode.noGold')}</span>
+                      </div>
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="w-12 h-12 rounded-full bg-xv-pearl relative border border-gray-200 shadow-sm">
+                          <div className="absolute top-1/2 left-0 w-full h-[2px] bg-[#0D0305]/40 -rotate-45" />
+                        </div>
+                        <span className="font-josefin text-[10px] uppercase tracking-widest text-gray-500 font-bold">{t('dresscode.noPearl')}</span>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-[#1a0f0f] text-white p-8 md:p-10 text-center relative overflow-hidden">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.12)_0%,transparent_70%)]" />
+                    <div className="text-6xl mb-6 relative z-10">📝</div>
+                    <h3 className="font-playfair italic text-3xl text-xv-gold mb-4 relative z-10">
+                      {t('dresscode.charroTitle')}
+                    </h3>
+                    <div className="w-16 h-0.5 bg-xv-gold/40 mx-auto mb-6 relative z-10" />
+                    <p className="font-cormorant text-xl text-white/90 relative z-10 leading-relaxed italic">
+                      {t('dresscode.charroDesc')}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
