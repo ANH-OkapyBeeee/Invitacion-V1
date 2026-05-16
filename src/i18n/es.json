@@ -1,9 +1,12 @@
 {
   "translation": {
     "open": "Abrir",
-    "envelopeTitle": "MIS XV AÑOS",
+    "envelopeTitle": "MIS XV",
     "heroTitle": "MIS XV",
     "scroll": "DESLIZA",
+    "hero": {
+      "faltan": "FALTAN"
+    },
     "countdown": {
       "days": "DÍAS",
       "hours": "HRS",

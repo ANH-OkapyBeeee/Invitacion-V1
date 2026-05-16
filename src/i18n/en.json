@@ -1,9 +1,12 @@
 {
   "translation": {
     "open": "Open",
-    "envelopeTitle": "MY XV YEARS",
+    "envelopeTitle": "MY XV",
     "heroTitle": "MY XV",
     "scroll": "SCROLL",
+    "hero": {
+      "faltan": "LEFT"
+    },
     "countdown": {
       "days": "DAYS",
       "hours": "HRS",

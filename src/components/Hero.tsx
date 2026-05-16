@@ -174,7 +174,6 @@ const Hero = () => {
           <p className="font-playfair italic text-2xl text-white leading-relaxed animate-fade-in">
             {statusMessage}
           </p>
-          <div className="mt-4 text-xv-gold animate-shimmer text-xl">❧ ✦ ❧</div>
         </div>
       )}
 

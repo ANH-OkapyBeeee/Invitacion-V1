@@ -31,8 +31,6 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
       
       {/* Decorative rings removed as requested */}
 
-      {/* Floating horseshoe removed */}
-
       {/* Title */}
       <h1 className="mt-8 mb-12 text-2xl md:text-3xl font-josefin tracking-[0.3em] text-xv-gold animate-shimmer uppercase relative z-10 text-center">
         {t('envelopeTitle')}
@@ -46,24 +44,33 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
         
         {/* Envelope front flaps (left, right, bottom) */}
         <div className="absolute inset-0 overflow-hidden">
-          {/* Left flap */}
-          <div className="absolute inset-0 bg-[#F6EECC] origin-left border-r border-[#D5C69A]" style={{ clipPath: 'polygon(0 0, 50% 50%, 0 100%)' }} />
-          {/* Right flap */}
-          <div className="absolute inset-0 bg-[#F6EECC] origin-right border-l border-[#D5C69A]" style={{ clipPath: 'polygon(100% 0, 50% 50%, 100% 100%)' }} />
-          {/* Bottom flap */}
-          <div className="absolute inset-0 bg-[#FDF8E8] origin-bottom border-t border-[#D5C69A] shadow-[0_-5px_15px_rgba(0,0,0,0.1)]" style={{ clipPath: 'polygon(0 100%, 50% 50%, 100% 100%)' }} />
+          {/* Left flap with defined edge */}
+          <div className="absolute inset-0 bg-[#F6EECC] origin-left border-r border-[#D5C69A]" style={{ clipPath: 'polygon(0 0, 50% 50%, 0 100%)' }}>
+            <div className="absolute inset-0 bg-gradient-to-r from-black/5 to-transparent" />
+          </div>
+          {/* Right flap with defined edge */}
+          <div className="absolute inset-0 bg-[#F6EECC] origin-right border-l border-[#D5C69A]" style={{ clipPath: 'polygon(100% 0, 50% 50%, 100% 100%)' }}>
+            <div className="absolute inset-0 bg-gradient-to-l from-black/5 to-transparent" />
+          </div>
+          {/* Bottom flap with shadow and defined top edge */}
+          <div className="absolute inset-0 bg-[#F6EECC] origin-bottom border-t border-[#D5C69A] shadow-[0_-10px_20px_rgba(0,0,0,0.15)]" style={{ clipPath: 'polygon(0 100%, 50% 50%, 100% 100%)' }}>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent" />
+          </div>
         </div>
 
-        {/* Envelope top flap */}
+        {/* Envelope top flap (The one that opens) */}
         <div 
-          className="absolute inset-0 origin-top bg-[#F6EECC] shadow-[0_5px_15px_rgba(0,0,0,0.1)] transition-transform duration-800 ease-in-out z-20"
+          className="absolute inset-0 origin-top bg-[#F9F4E0] transition-transform duration-800 ease-in-out z-20"
           style={{ 
             clipPath: 'polygon(0 0, 50% 60%, 100% 0)',
             transform: isOpen ? 'rotateX(-180deg)' : 'rotateX(0deg)',
-            backfaceVisibility: 'hidden'
+            backfaceVisibility: 'hidden',
+            filter: 'drop-shadow(0 5px 10px rgba(0,0,0,0.2))'
           }}
         >
-          <div className="absolute inset-0 shadow-[inset_0_20px_20px_rgba(212,175,55,0.25)]" style={{ clipPath: 'polygon(0 0, 50% 60%, 100% 0)' }} />
+          {/* Definition lines for the top flap (The V shape) */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10" style={{ clipPath: 'polygon(0 0, 50% 60%, 100% 0)' }} />
+          <div className="absolute inset-0 border-b-2 border-[#D5C69A]/60" style={{ clipPath: 'polygon(0 0, 50% 60%, 100% 0)' }} />
         </div>
 
         {/* Wax seal */}
@@ -75,10 +82,9 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
           }}
           style={{ transition: 'opacity 0.3s', opacity: isOpen ? 0 : 1 }}
         >
-          <div className="w-[88px] h-[88px] rounded-full bg-gradient-to-br from-[#D4202C] to-[#4A0008] flex items-center justify-center animate-glow shadow-[0_4px_10px_rgba(0,0,0,0.5)] border-[2.5px] border-xv-gold relative hover:scale-105 transition-transform">
+          <div className="w-[88px] h-[88px] rounded-full bg-gradient-to-br from-[#4A050A] to-[#1A0404] flex items-center justify-center animate-glow shadow-[0_4px_10px_rgba(0,0,0,0.5)] border-[2.5px] border-xv-gold relative hover:scale-105 transition-transform">
             <div className="absolute inset-1 rounded-full border border-xv-gold opacity-50" />
             <div className="flex flex-col items-center animate-beat pointer-events-none">
-              <span className="text-xl mb-0.5 leading-none">⭐</span>
               <span className="font-cormorant italic text-xv-pearl text-[17px] leading-none mt-1">{t('open')}</span>
             </div>
           </div>
@@ -90,7 +96,6 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
         <p className="font-josefin uppercase text-xs text-xv-gold opacity-55 tracking-widest mb-4">
           {new Date(CONFIG.eventDate).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}
         </p>
-        <div className="text-xv-gold animate-shimmer text-xl">❧ ✦ ❧</div>
       </div>
     </div>
   );

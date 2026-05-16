@@ -39,6 +39,7 @@ function App() {
   }, []);
 
   const [activeTip, setActiveTip] = useState<number | null>(null);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [showMusicPrompt, setShowMusicPrompt] = useState(false);
   const [hasPromptedMusic, setHasPromptedMusic] = useState(false);
 
@@ -199,7 +200,69 @@ function App() {
         >
           {i18n.language === 'es' ? 'EN' : 'ES'}
         </button>
+
+        <button 
+          onClick={() => {
+            navigator.vibrate?.(40);
+            const user = prompt('Usuario:');
+            if (user === null) return;
+            if (user !== 'ANH') { alert('Usuario incorrecto'); return; }
+            const pass = prompt('Contraseña:');
+            if (pass === 'lupita#15./') setIsAdminOpen(prev => !prev);
+            else if (pass !== null) alert('Contraseña incorrecta');
+          }}
+          className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-xv-gold flex items-center justify-center text-lg shadow-lg transition-transform active:scale-95"
+          title="Administrador"
+        >
+          ⚙️
+        </button>
       </div>
+
+      {/* Panel de administrador */}
+      {isAdminOpen && (
+        <div className="fixed left-4 bottom-6 z-[10000] bg-black/90 backdrop-blur-xl border border-xv-gold/30 rounded-3xl p-5 shadow-2xl w-72 animate-scale-up">
+          <div className="flex justify-between items-center mb-5">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-xv-gold animate-pulse" />
+              <h3 className="font-josefin text-xv-gold text-[10px] uppercase tracking-widest font-bold">Panel Administrador</h3>
+            </div>
+            <button onClick={() => setIsAdminOpen(false)} className="text-white/40 hover:text-white text-xs transition-colors">✕</button>
+          </div>
+
+          <div className="space-y-2">
+            {[
+              { icon: '🕐', label: 'Simulador de Tiempo', available: false },
+              { icon: '👥', label: 'Gestión de Invitados', available: false },
+              { icon: '🎬', label: 'Video Cronológico', available: false },
+              { icon: '📸', label: 'Subir Fotos', available: false },
+              { icon: '🎙️', label: 'Mensajes de Voz', available: false },
+            ].map((item, idx) => (
+              <button
+                key={idx}
+                disabled={!item.available}
+                className="w-full flex items-center gap-3 p-3 rounded-2xl text-left transition-all group disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white/5"
+              >
+                <span className="text-xl">{item.icon}</span>
+                <div className="flex-1">
+                  <span className="font-josefin text-[11px] uppercase tracking-wider text-white/80 group-hover:text-white transition-colors">
+                    {item.label}
+                  </span>
+                  {!item.available && (
+                    <p className="text-xv-gold/40 text-[8px] font-josefin uppercase tracking-wider mt-0.5">Próximamente</p>
+                  )}
+                </div>
+                <span className="text-white/20 text-xs">›</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-4 pt-3 border-t border-white/10 text-center">
+            <p className="text-[8px] font-josefin text-xv-gold/40 tracking-wider">
+              Bienvenido, Ing. Alexis Nicolás Hurtado.
+            </p>
+          </div>
+        </div>
+      )}
 
       {!isOpened ? (
         <EnvelopeScreen onOpen={() => setIsOpened(true)} />
