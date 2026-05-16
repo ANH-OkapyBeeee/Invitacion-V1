@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CONFIG } from '../config';
 import { QRCodeSVG } from 'qrcode.react';
@@ -7,13 +7,52 @@ const Footer = () => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [isShaking, setIsShaking] = useState(true);
+  const [isShaking, setIsShaking] = useState(false);
+  const footerRef = useRef<HTMLElement>(null);
+  const timersRef = useRef<number[]>([]);
+  const hasTriggeredInitial = useRef(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setIsShaking(prev => !prev);
-    }, 3000);
-    return () => clearInterval(interval);
+    const clearAllTimers = () => {
+      timersRef.current.forEach(t => clearTimeout(t));
+      timersRef.current = [];
+    };
+
+    const runCycle = () => {
+      // Step 2: Stop for 2s
+      const t1 = window.setTimeout(() => {
+        setIsShaking(true);
+        // Step 3: Vibrate for 3s
+        const t2 = window.setTimeout(() => {
+          setIsShaking(false);
+          runCycle(); // Repeat cycle
+        }, 3000);
+        timersRef.current.push(t2);
+      }, 2000);
+      timersRef.current.push(t1);
+    };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !hasTriggeredInitial.current) {
+        hasTriggeredInitial.current = true;
+        clearAllTimers();
+
+        // Step 1: Initial 5s vibration
+        setIsShaking(true);
+        const t0 = window.setTimeout(() => {
+          setIsShaking(false);
+          runCycle();
+        }, 5000);
+        timersRef.current.push(t0);
+      }
+    }, { threshold: 0.1 });
+
+    if (footerRef.current) observer.observe(footerRef.current);
+
+    return () => {
+      observer.disconnect();
+      clearAllTimers();
+    };
   }, []);
 
   const defaultMsg = encodeURIComponent("¡Hola! Me gustaría información sobre sus servicios de diseño e invitaciones digitales.");
@@ -59,18 +98,29 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#080108] text-gray-400 py-10 px-4 text-center transition-all duration-500">
+    <footer ref={footerRef} className="bg-[#080108] text-gray-400 py-10 px-4 text-center transition-all duration-500">
       <div className="max-w-[480px] mx-auto">
         
         <button 
           onClick={() => setExpanded(!expanded)}
           className="w-full touch-manipulation focus:outline-none"
         >
-          <div className="font-playfair text-xl text-xv-gold mb-2 animate-vibrate-footer">{t('footer.gugu')}</div>
+          <div className="font-josefin text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-1">
+            {t('footer.developedBy')}
+          </div>
+          <div className="font-playfair text-xl text-xv-gold mb-4 animate-vibrate-footer">{t('footer.gugu')}</div>
+          
           {!expanded && (
-            <div className="font-josefin text-xs uppercase tracking-widest animate-pulse">
-              {t('footer.tapMore')}
-            </div>
+            <>
+              <div className="flex justify-center mb-4">
+                <div className={`bg-white rounded-xl p-2 shadow-lg border border-white/10 w-20 h-20 flex items-center justify-center overflow-hidden transition-all duration-300 ${isShaking ? 'animate-earthquake' : ''}`}>
+                  <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="w-full h-full object-contain" />
+                </div>
+              </div>
+              <div className="font-josefin text-sm uppercase tracking-widest animate-pulse mt-2">
+                {t('footer.tapMore')}
+              </div>
+            </>
           )}
         </button>
 
@@ -166,7 +216,14 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="font-josefin text-[10px] uppercase tracking-wider mb-4 opacity-50 flex flex-col gap-2">
+        </div>
+
+        {/* Legal Section with prominent separator */}
+        <div className="mt-16 pt-12 pb-4 relative">
+          {/* Gold Gradient Line */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-xv-gold to-transparent opacity-40" />
+          
+          <div className="font-josefin text-[10px] uppercase tracking-[0.25em] opacity-40 flex flex-col gap-2">
             <div>{t('footer.legal')}</div>
             <div>© 2026 {t('footer.gugu')} {t('footer.rights')}</div>
           </div>
