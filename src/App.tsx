@@ -264,23 +264,27 @@ function App() {
         </div>
       )}
 
-      {!isOpened ? (
+      {/* Main Content (Pre-rendered but hidden) */}
+      <div className={!isOpened ? 'fixed inset-0 opacity-0 pointer-events-none -z-10' : 'block relative'}>
+        <ShakeCelebration />
+        <main className="animate-fade-in-up">
+          <Hero />
+          <Itinerary />
+          <Locations />
+          <Family />
+          <Godparents />
+          <DressCode onTipSelect={setActiveTip} activeTip={activeTip} />
+          <SaveTheDate />
+          <FAQ />
+          <PhotoUpload />
+          <Footer />
+        </main>
+      </div>
+
+      {/* Envelope Screen */}
+      {!isOpened && (
         <EnvelopeScreen onOpen={() => setIsOpened(true)} />
-      ) : (
-        <>
-          <ShakeCelebration />
-          <main className="animate-fade-in-up">
-            <Hero />
-            <Itinerary />
-            <Locations />
-            <Family />
-            <Godparents />
-            <DressCode onTipSelect={setActiveTip} activeTip={activeTip} />
-            <SaveTheDate />
-            <FAQ />
-            <PhotoUpload />
-            <Footer />
-          </main>
+      )}
 
           {/* Focus Modal Overlay (Outside of main to avoid transform issues) */}
           {activeTip !== null && (
@@ -348,8 +352,6 @@ function App() {
               </div>
             </div>
           )}
-        </>
-      )}
       {/* Delayed Music Confirmation Prompt */}
       {showMusicPrompt && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">

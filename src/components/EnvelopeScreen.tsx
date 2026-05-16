@@ -23,11 +23,14 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
     
     setTimeout(() => {
       onOpen();
-    }, 1200);
+    }, 1000);
   };
 
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center bg-[radial-gradient(circle,_#2D0808_0%,_#0D0305_100%)] z-50 overflow-hidden transition-opacity duration-1000">
+    <div 
+      className="fixed inset-0 flex flex-col items-center justify-center bg-[radial-gradient(circle,_#2D0808_0%,_#0D0305_100%)] z-50 overflow-hidden transition-opacity duration-700 ease-in-out"
+      style={{ opacity: isOpen ? 0 : 1, pointerEvents: isOpen ? 'none' : 'auto' }}
+    >
       
       {/* Twinkling Stars Background with Safe Zone Mask */}
       <div 
