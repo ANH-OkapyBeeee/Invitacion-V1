@@ -8,9 +8,49 @@ const GRID_COLS = 5;
 
 const Hero = () => {
   const { t } = useTranslation();
-  const { days, hours, minutes, seconds } = useCountdown(CONFIG.eventDate);
+  const now = new Date();
+  const eventDay = 22;
+  const eventMonth = 7; // August is 7 (0-indexed)
+  const eventYear = 2026;
+  
+  // Determine target date (reset to next year after Aug 24, 2026)
+  const resetLimit = new Date(2026, 7, 24);
+  const eventDateStr = now >= resetLimit 
+    ? "2027-08-22T15:00:00" 
+    : CONFIG.eventDate;
+
+  const { days, hours, minutes, seconds } = useCountdown(eventDateStr);
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const [visiblePieces, setVisiblePieces] = useState<number[]>([]);
+
+  // Phase Logic for Messages
+  const isEventDay = now.getFullYear() === 2026 && now.getMonth() === 7 && now.getDate() === 22;
+  const isAfterReset = now >= resetLimit;
+
+  let countdownTitle = t('hero.faltan'); // Default: "FALTAN"
+  let statusMessage = "";
+  let showCountdown = true;
+
+  if (isEventDay) {
+    const currentHour = now.getHours();
+    const eventTime = new Date(CONFIG.eventDate);
+    
+    if (now < eventTime) {
+      countdownTitle = "¡Recuerda que hoy es el gran día!";
+    } else {
+      showCountdown = false;
+      countdownTitle = ""; // Remove 'FALTAN'
+      if (currentHour < 16) {
+        statusMessage = "Prepárate porque ya está por comenzar la misa";
+      } else if (currentHour < 17) {
+        statusMessage = "Ya es hora de irnos al salón";
+      } else {
+        statusMessage = "¡Gracias por acompañarnos! Es un honor compartir este día tan especial con todos ustedes.";
+      }
+    }
+  } else if (isAfterReset) {
+    countdownTitle = t('hero.faltan');
+  }
 
   const photos = [
     'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600',
@@ -112,20 +152,31 @@ const Hero = () => {
         {new Date(CONFIG.eventDate).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}
       </div>
 
-      {/* Faltan Text */}
-      <div className="z-10 font-josefin uppercase text-xv-gold tracking-[0.4em] mb-4 text-sm animate-pulse">
-        FALTAN
-      </div>
+      {/* Faltan Text / Event Day Title */}
+      {countdownTitle && (
+        <div className="z-10 font-josefin uppercase text-xv-gold tracking-[0.4em] mb-4 text-sm animate-pulse">
+          {countdownTitle}
+        </div>
+      )}
 
-      {/* Countdown */}
-      <div className="z-10 flex gap-3 md:gap-4 mb-16">
-        {timeBlocks.map((block, idx) => (
-          <div key={idx} className="flex flex-col items-center justify-center w-[70px] h-[80px] md:w-[85px] md:h-[95px] bg-xv-gold/5 border border-xv-gold/20 rounded-lg animate-border-pulse backdrop-blur-sm shadow-[0_4px_15px_rgba(0,0,0,0.2)]">
-            <span className="font-playfair text-3xl md:text-4xl text-xv-pearl mb-1">{block.value}</span>
-            <span className="font-josefin uppercase text-[10px] md:text-xs text-xv-gold opacity-55">{block.label}</span>
-          </div>
-        ))}
-      </div>
+      {/* Countdown or Status Message */}
+      {showCountdown ? (
+        <div className="z-10 flex gap-3 md:gap-4 mb-16">
+          {timeBlocks.map((block, idx) => (
+            <div key={idx} className="flex flex-col items-center justify-center w-[70px] h-[80px] md:w-[85px] md:h-[95px] bg-xv-gold/5 border border-xv-gold/20 rounded-lg animate-border-pulse backdrop-blur-sm shadow-[0_4px_15px_rgba(0,0,0,0.2)]">
+              <span className="font-playfair text-3xl md:text-4xl text-xv-pearl mb-1">{block.value}</span>
+              <span className="font-josefin uppercase text-[10px] md:text-xs text-xv-gold opacity-55">{block.label}</span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="z-10 mb-16 max-w-[400px] mx-auto px-4">
+          <p className="font-playfair italic text-2xl text-white leading-relaxed animate-fade-in">
+            {statusMessage}
+          </p>
+          <div className="mt-4 text-xv-gold animate-shimmer text-xl">❧ ✦ ❧</div>
+        </div>
+      )}
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 z-10 animate-scroll-hint">

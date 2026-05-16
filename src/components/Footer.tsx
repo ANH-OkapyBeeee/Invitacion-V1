@@ -8,9 +8,20 @@ const Footer = () => {
   const [expanded, setExpanded] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isShaking, setIsShaking] = useState(false);
+  const [isShakingWA, setIsShakingWA] = useState(false);
+  const [activeHighlight, setActiveHighlight] = useState(0);
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const footerRef = useRef<HTMLElement>(null);
   const timersRef = useRef<number[]>([]);
   const hasTriggeredInitial = useRef(false);
+
+  // Separate effect for hand pointers cycle
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveHighlight((prev) => (prev + 1) % 4);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const clearAllTimers = () => {
@@ -32,18 +43,41 @@ const Footer = () => {
       timersRef.current.push(t1);
     };
 
+    const runWACycle = () => {
+      // Shake for 3.5s
+      setIsShakingWA(true);
+      const tw1 = window.setTimeout(() => {
+        setIsShakingWA(false);
+        // Rest for 2s
+        const tw2 = window.setTimeout(() => {
+          runWACycle();
+        }, 2000);
+        timersRef.current.push(tw2);
+      }, 3500);
+      timersRef.current.push(tw1);
+    };
+
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting && !hasTriggeredInitial.current) {
         hasTriggeredInitial.current = true;
         clearAllTimers();
 
-        // Step 1: Initial 5s vibration
+        // Step 1: Initial 5s vibration for logo
         setIsShaking(true);
         const t0 = window.setTimeout(() => {
           setIsShaking(false);
           runCycle();
         }, 5000);
         timersRef.current.push(t0);
+
+        // Start WA cycle immediately when visible
+        runWACycle();
+
+        // Delay 'Back to Top' button for 5 seconds
+        const tBack = window.setTimeout(() => {
+          setShowBackToTop(true);
+        }, 5000);
+        timersRef.current.push(tBack);
       }
     }, { threshold: 0.1 });
 
@@ -59,14 +93,12 @@ const Footer = () => {
   const waUrl = `https://wa.me/${CONFIG.contact.whatsapp}?text=${defaultMsg}`;
 
   const copyToClipboard = (text: string) => {
-    navigator.vibrate?.(50); // Vibrar primero
-    navigator.clipboard.writeText(text);
-    
-    // Pequeño retraso para que la vibración se sienta antes del alert bloqueante
+    navigator.vibrate?.([40, 30, 40]);
     setTimeout(() => {
-      alert("¡Copiado al portapapeles!");
+      navigator.clipboard.writeText(text);
+      alert(t('footer.copied'));
       setActiveMenu(null);
-    }, 100);
+    }, 150);
   };
 
   const toggleMenu = (menu: string) => {
@@ -74,15 +106,25 @@ const Footer = () => {
     setActiveMenu(activeMenu === menu ? null : menu);
   };
 
-  const renderContactMenu = (id: string, value: string, type: 'phone' | 'email') => {
+  const scrollToTop = () => {
+    navigator.vibrate?.([40, 40]);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const renderContactMenu = (id: string, value: string, type: 'phone' | 'email', index: number) => {
     const isPhone = type === 'phone';
     const waLink = `https://wa.me/52${value}?text=${defaultMsg}`;
     
     return (
       <div className="relative inline-block">
+        {activeHighlight === index && (
+          <span className="absolute -left-7 top-1/2 -translate-y-1/2 text-lg animate-hand-pointing pointer-events-none z-10">
+            👉
+          </span>
+        )}
         <button 
           onClick={() => toggleMenu(id)}
-          className="hover:text-xv-gold transition-colors underline decoration-white/30 underline-offset-4 py-1 px-1"
+          className={`hover:text-xv-gold transition-colors underline decoration-white/30 underline-offset-4 py-1 px-1 inline-block ${activeHighlight === index ? 'animate-pulse' : ''}`}
         >
           {value}
         </button>
@@ -170,7 +212,6 @@ const Footer = () => {
             "{t('footer.slogan')}"
           </p>
 
-          {/* Block 1: Strategic Vision */}
           <div className="bg-white/5 rounded-2xl p-8 border border-white/10 mb-6 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
             <h5 className="font-playfair text-xs text-xv-gold uppercase tracking-[0.25em] mb-4 font-bold">
               Más allá de las invitaciones
@@ -181,7 +222,6 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Block 2: Specific Solutions */}
           <div className="bg-white/5 rounded-2xl p-8 border border-white/10 mb-8 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
             <p className="font-josefin text-sm text-xv-gold-light mb-8 leading-relaxed italic">
               Estas son algunas de las soluciones tecnológicas que diseñamos para potenciar tu crecimiento:
@@ -203,30 +243,27 @@ const Footer = () => {
             
             <div className="flex flex-col gap-6 font-josefin text-sm mb-8">
               
-              {/* Phones */}
               <div className="flex flex-col items-center gap-1">
                 <span className="text-xv-gold text-[10px] uppercase tracking-widest flex items-center gap-2 mb-1">
                   <span>📞</span> Teléfonos
                 </span>
                 <div className="flex flex-col md:flex-row gap-2 md:gap-4 text-white items-center">
-                  {renderContactMenu('phone1', CONFIG.contact.devPhone, 'phone')}
+                  {renderContactMenu('phone1', CONFIG.contact.devPhone, 'phone', 0)}
                   <span className="hidden md:inline opacity-50">/</span>
-                  {renderContactMenu('phone2', CONFIG.contact.devPhone2, 'phone')}
+                  {renderContactMenu('phone2', CONFIG.contact.devPhone2, 'phone', 1)}
                 </div>
               </div>
 
-              {/* Emails */}
               <div className="flex flex-col items-center gap-1">
                 <span className="text-xv-gold text-[10px] uppercase tracking-widest flex items-center gap-2 mb-1">
                   <span>✉️</span> E-Mails
                 </span>
                 <div className="flex flex-col gap-2 text-white items-center">
-                  {renderContactMenu('email1', CONFIG.contact.devEmail, 'email')}
-                  {renderContactMenu('email2', CONFIG.contact.devEmail2, 'email')}
+                  {renderContactMenu('email1', CONFIG.contact.devEmail, 'email', 2)}
+                  {renderContactMenu('email2', CONFIG.contact.devEmail2, 'email', 3)}
                 </div>
               </div>
 
-              {/* Address */}
               <div className="flex flex-col items-center gap-1">
                 <span className="text-xv-gold text-[10px] uppercase tracking-widest flex items-center gap-2 mb-1">
                   <span>📍</span> Dirección
@@ -243,7 +280,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => navigator.vibrate?.(50)}
-              className="inline-block w-full py-3 px-6 rounded-full bg-[#25D366] text-white font-josefin uppercase font-bold text-sm tracking-wider mb-6 shadow-lg"
+              className={`inline-block w-full py-3 px-6 rounded-full bg-[#25D366] text-white font-josefin uppercase font-bold text-sm tracking-wider mb-6 shadow-lg transition-transform ${isShakingWA ? 'animate-earthquake' : ''}`}
             >
               Contactar por WhatsApp
             </a>
@@ -265,6 +302,24 @@ const Footer = () => {
             <div>© 2026 {t('footer.gugu')} {t('footer.rights')}</div>
           </div>
         </div>
+
+        {/* Delayed 'Back to Top' Button */}
+        {showBackToTop && (
+          <div className="mt-16 animate-scale-up">
+            <button 
+              onClick={scrollToTop}
+              className="flex flex-col items-center gap-2 w-full group focus:outline-none animate-float"
+            >
+              <div className="flex gap-4 mb-2">
+                <span className="text-xv-gold text-lg animate-scroll-hint">↑</span>
+                <span className="font-josefin text-xs uppercase tracking-[0.3em] text-xv-gold transition-colors">
+                  Volver al Inicio
+                </span>
+                <span className="text-xv-gold text-lg animate-scroll-hint">↑</span>
+              </div>
+            </button>
+          </div>
+        )}
 
       </div>
     </footer>

@@ -131,6 +131,20 @@ html, body {
 
 .animate-scroll-hint { animation: scrollHint 1.8s ease-in-out infinite; }
 
+@keyframes scrollUpHint {
+  0%, 100% { 
+    transform: translateY(0) scale(1); 
+    opacity: 0.3;
+  }
+  50% { 
+    transform: translateY(-15px) scale(1.1); 
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.6));
+  }
+}
+
+.animate-scroll-up-hint { animation: scrollUpHint 1.8s ease-in-out infinite; }
+
 @keyframes vibrate {
   0%, 90% { transform: translate(0) rotate(0deg); }
   92% { transform: translate(-4px, 2px) rotate(-1deg); }
@@ -152,15 +166,24 @@ html, body {
   animation: vibrate 3s linear infinite;
 }
 
-@keyframes handCycle {
-  0%, 48% { opacity: 1; transform: translateY(0) scale(1); }
-  5%, 15%, 25%, 35%, 45% { transform: translateY(5px) scale(0.85); }
-  10%, 20%, 30%, 40%, 47% { transform: translateY(0) scale(1); }
-  50%, 100% { opacity: 0; transform: translateY(0) scale(1); }
+@keyframes handPointing {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
 }
 
-.animate-hand-1 { animation: handCycle 6s infinite ease-in-out; }
-.animate-hand-2 { animation: handCycle 6s infinite ease-in-out; animation-delay: 3s; }
+.animate-hand-pointing { animation: handPointing 0.8s infinite ease-in-out; }
+
+.animate-hand-1 { animation: handCycle 4s infinite ease-in-out; }
+.animate-hand-2 { animation: handCycle 4s infinite ease-in-out; animation-delay: 2s; }
+
+@keyframes handCycle {
+  0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+  10%, 40% { opacity: 1; transform: scale(1.1) translateY(0); }
+  42% { transform: scale(0.9) translateY(2px); } /* El Click/Presión */
+  45%, 55% { opacity: 1; transform: scale(1.1) translateY(0); }
+  65%, 95% { opacity: 0; transform: scale(0.8) translateY(10px); }
+  100% { opacity: 0; }
+}
 
 @keyframes scaleUp {
   from { opacity: 0; transform: scale(0.8); }
