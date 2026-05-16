@@ -36,6 +36,7 @@ const Locations = () => {
             href={CONFIG.church.dirUrl} 
             target="_blank" 
             rel="noopener noreferrer"
+            onClick={() => navigator.vibrate?.(50)}
             className="inline-block w-full py-3 px-6 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F5D76E] text-xv-black-bg font-josefin uppercase font-bold text-sm tracking-wider animate-beat shadow-[0_0_15px_rgba(212,175,55,0.4)] relative z-10"
           >
             {t('locations.btnText')}
@@ -68,6 +69,7 @@ const Locations = () => {
             href={CONFIG.venue.dirUrl} 
             target="_blank" 
             rel="noopener noreferrer"
+            onClick={() => navigator.vibrate?.(50)}
             className="inline-block w-full py-3 px-6 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F5D76E] text-xv-black-bg font-josefin uppercase font-bold text-sm tracking-wider animate-beat shadow-[0_0_15px_rgba(212,175,55,0.4)] relative z-10"
             style={{ animationDelay: '0.5s' }}
           >

@@ -24,6 +24,7 @@ const SaveTheDate = () => {
   }, []);
 
   const handleCalendar = () => {
+    navigator.vibrate?.(50);
     const title = encodeURIComponent(`XV Años - ${CONFIG.quinceañeraName}`);
     
     // Detailed Description

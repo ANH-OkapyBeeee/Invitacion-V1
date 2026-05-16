@@ -9,6 +9,7 @@ const PhotoUpload = () => {
   const uploadUrl = window.location.href; 
 
   const handleUploadClick = () => {
+    navigator.vibrate?.(50);
     window.open(uploadUrl, '_blank');
   };
 

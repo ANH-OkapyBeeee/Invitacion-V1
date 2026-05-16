@@ -30,7 +30,10 @@ const DressCode = ({ onTipSelect, activeTip }: DressCodeProps) => {
         <div className="grid grid-cols-2 gap-4 mb-8">
           {/* Tip 1 */}
           <div 
-            onClick={() => onTipSelect(activeTip === 1 ? null : 1)}
+            onClick={() => {
+              navigator.vibrate?.(40);
+              onTipSelect(activeTip === 1 ? null : 1);
+            }}
             className={`relative cursor-pointer p-4 rounded-2xl border transition-all duration-300 shadow-md flex flex-col items-center justify-center min-h-[140px]
               ${activeTip === 1 
                 ? 'bg-[#4A0008] border-xv-gold text-white scale-105 shadow-xl' 
@@ -48,7 +51,10 @@ const DressCode = ({ onTipSelect, activeTip }: DressCodeProps) => {
 
           {/* Tip 2 */}
           <div 
-            onClick={() => onTipSelect(activeTip === 2 ? null : 2)}
+            onClick={() => {
+              navigator.vibrate?.(40);
+              onTipSelect(activeTip === 2 ? null : 2);
+            }}
             className={`relative cursor-pointer p-4 rounded-2xl border transition-all duration-300 shadow-md flex flex-col items-center justify-center min-h-[140px]
               ${activeTip === 2 
                 ? 'bg-[#4A0008] border-xv-gold text-white scale-105 shadow-xl' 

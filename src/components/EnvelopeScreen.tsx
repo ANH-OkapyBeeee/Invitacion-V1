@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Confetti from './Confetti';
 import { CONFIG } from '../config';
+import { requestShakePermission } from './ShakeCelebration';
 
 interface Props {
   onOpen: () => void;
@@ -12,14 +13,14 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
-  const handleOpen = () => {
+  const handleOpen = async () => {
     if (isOpen) return;
+    
+    // Request permission for shake effect
+    await requestShakePermission();
+
     setIsOpen(true);
     
-    setTimeout(() => {
-      setShowConfetti(true);
-    }, 700);
-
     setTimeout(() => {
       onOpen();
     }, 1200);
@@ -68,7 +69,10 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
         {/* Wax seal */}
         <div 
           className="absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 z-30 cursor-pointer"
-          onClick={handleOpen}
+          onClick={() => {
+            navigator.vibrate?.(60);
+            handleOpen();
+          }}
           style={{ transition: 'opacity 0.3s', opacity: isOpen ? 0 : 1 }}
         >
           <div className="w-[88px] h-[88px] rounded-full bg-gradient-to-br from-[#D4202C] to-[#4A0008] flex items-center justify-center animate-glow shadow-[0_4px_10px_rgba(0,0,0,0.5)] border-[2.5px] border-xv-gold relative hover:scale-105 transition-transform">
@@ -88,8 +92,6 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
         </p>
         <div className="text-xv-gold animate-shimmer text-xl">❧ ✦ ❧</div>
       </div>
-
-      {showConfetti && <Confetti />}
     </div>
   );
 };

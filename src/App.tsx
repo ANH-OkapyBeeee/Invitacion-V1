@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import YouTube, { type YouTubeEvent, type YouTubeProps } from 'react-youtube';
+import confetti from 'canvas-confetti';
 import EnvelopeScreen from './components/EnvelopeScreen';
 import Hero from './components/Hero';
 import Itinerary from './components/Itinerary';
@@ -12,6 +13,7 @@ import SaveTheDate from './components/SaveTheDate';
 import FAQ from './components/FAQ';
 import PhotoUpload from './components/PhotoUpload';
 import Footer from './components/Footer';
+import ShakeCelebration from './components/ShakeCelebration';
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -84,16 +86,46 @@ function App() {
   };
 
   useEffect(() => {
-    // When opened, try to play audio automatically
-    if (isOpened && playerRef.current) {
-      try {
-        const state = playerRef.current.getPlayerState();
-        if (state !== 1 && state !== 3) {
-          playerRef.current.playVideo();
-          setIsPlaying(true);
+    // When opened, try to play audio automatically and trigger celebration
+    if (isOpened) {
+      // Trigger magical star shower
+      const duration = 4 * 1000;
+      const end = Date.now() + duration;
+
+      const frame = () => {
+        confetti({
+          particleCount: 3,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0, y: 0.6 },
+          colors: ['#D4AF37', '#FDFBF7', '#FFF3CD'],
+          shapes: ['star']
+        });
+        confetti({
+          particleCount: 3,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1, y: 0.6 },
+          colors: ['#D4AF37', '#FDFBF7', '#FFF3CD'],
+          shapes: ['star']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
         }
-      } catch (e) {
-        console.error("Error autoplaying on open:", e);
+      };
+      frame();
+
+      if (playerRef.current) {
+        try {
+          const state = playerRef.current.getPlayerState();
+          if (state !== 1 && state !== 3) {
+            playerRef.current.playVideo();
+            setIsPlaying(true);
+          }
+        } catch (e) {
+          console.error("Error autoplaying on open:", e);
+        }
       }
     }
   }, [isOpened]);
@@ -133,14 +165,20 @@ function App() {
         onTouchStart={resetButtonsTimer}
       >
         <button 
-          onClick={toggleAudio}
+          onClick={() => {
+            navigator.vibrate?.(40);
+            toggleAudio();
+          }}
           className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-xv-gold flex items-center justify-center text-xl shadow-lg transition-transform active:scale-95"
         >
           {isPlaying ? '🎵' : '🔇'}
         </button>
 
         <button 
-          onClick={toggleLanguage}
+          onClick={() => {
+            navigator.vibrate?.(40);
+            toggleLanguage();
+          }}
           className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-xv-gold flex items-center justify-center text-sm font-bold shadow-lg transition-transform active:scale-95 text-xv-gold uppercase"
         >
           {i18n.language === 'es' ? 'EN' : 'ES'}
@@ -151,6 +189,7 @@ function App() {
         <EnvelopeScreen onOpen={() => setIsOpened(true)} />
       ) : (
         <>
+          <ShakeCelebration />
           <main className="animate-fade-in-up">
             <Hero />
             <Itinerary />
@@ -176,7 +215,10 @@ function App() {
               >
                 {/* Close Button */}
                 <button 
-                  onClick={() => setActiveTip(null)}
+                  onClick={() => {
+                    navigator.vibrate?.(40);
+                    setActiveTip(null);
+                  }}
                   className="absolute top-4 right-4 w-10 h-10 rounded-full bg-xv-red text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-[10000]"
                 >
                   ✕

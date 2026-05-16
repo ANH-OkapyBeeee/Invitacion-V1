@@ -59,12 +59,18 @@ const Footer = () => {
   const waUrl = `https://wa.me/${CONFIG.contact.whatsapp}?text=${defaultMsg}`;
 
   const copyToClipboard = (text: string) => {
+    navigator.vibrate?.(50); // Vibrar primero
     navigator.clipboard.writeText(text);
-    alert("¡Copiado al portapapeles!");
-    setActiveMenu(null);
+    
+    // Pequeño retraso para que la vibración se sienta antes del alert bloqueante
+    setTimeout(() => {
+      alert("¡Copiado al portapapeles!");
+      setActiveMenu(null);
+    }, 100);
   };
 
   const toggleMenu = (menu: string) => {
+    navigator.vibrate?.(40);
     setActiveMenu(activeMenu === menu ? null : menu);
   };
 
@@ -81,15 +87,40 @@ const Footer = () => {
           {value}
         </button>
         {activeMenu === id && (
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-[#150a15] border border-xv-gold/30 rounded-xl shadow-2xl overflow-hidden z-20 flex flex-col">
-            <button onClick={() => copyToClipboard(value)} className="p-3 text-xs tracking-wider border-b border-white/10 hover:bg-white/10 transition-colors uppercase text-white">Copiar {isPhone ? 'Número' : 'Correo'}</button>
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-[#150a15] border border-xv-gold/30 rounded-2xl shadow-2xl overflow-hidden z-20 flex flex-col">
+            <button 
+              onClick={() => copyToClipboard(value)} 
+              className="p-3 text-xs tracking-wider border-b border-white/10 hover:bg-white/10 transition-colors uppercase text-white"
+            >
+              Copiar {isPhone ? 'Número' : 'Correo'}
+            </button>
             {isPhone ? (
               <>
-                <a href={`tel:${value}`} className="p-3 text-xs tracking-wider border-b border-white/10 hover:bg-white/10 transition-colors uppercase block text-center text-white">Llamar</a>
-                <a href={waLink} target="_blank" rel="noopener noreferrer" className="p-3 text-xs tracking-wider hover:bg-white/10 transition-colors uppercase block text-center text-[#25D366] font-bold">WhatsApp</a>
+                <a 
+                  href={`tel:${value}`} 
+                  onClick={() => navigator.vibrate?.(40)}
+                  className="p-3 text-xs tracking-wider border-b border-white/10 hover:bg-white/10 transition-colors uppercase block text-center text-white"
+                >
+                  Llamar
+                </a>
+                <a 
+                  href={waLink} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  onClick={() => navigator.vibrate?.(40)}
+                  className="p-3 text-xs tracking-wider hover:bg-white/10 transition-colors uppercase block text-center text-[#25D366] font-bold"
+                >
+                  WhatsApp
+                </a>
               </>
             ) : (
-              <a href={`mailto:${value}`} className="p-3 text-xs tracking-wider hover:bg-white/10 transition-colors uppercase block text-center text-white">Enviar Correo</a>
+              <a 
+                href={`mailto:${value}`} 
+                onClick={() => navigator.vibrate?.(40)}
+                className="p-3 text-xs tracking-wider hover:bg-white/10 transition-colors uppercase block text-center text-white"
+              >
+                Enviar Correo
+              </a>
             )}
           </div>
         )}
@@ -102,7 +133,10 @@ const Footer = () => {
       <div className="max-w-[480px] mx-auto">
         
         <button 
-          onClick={() => setExpanded(!expanded)}
+          onClick={() => {
+            navigator.vibrate?.(40);
+            setExpanded(!expanded);
+          }}
           className="w-full touch-manipulation focus:outline-none"
         >
           <div className="font-josefin text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-1">
@@ -208,6 +242,7 @@ const Footer = () => {
               href={`https://wa.me/${CONFIG.contact.whatsapp}?text=${defaultMsg}`}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => navigator.vibrate?.(50)}
               className="inline-block w-full py-3 px-6 rounded-full bg-[#25D366] text-white font-josefin uppercase font-bold text-sm tracking-wider mb-6 shadow-lg"
             >
               Contactar por WhatsApp

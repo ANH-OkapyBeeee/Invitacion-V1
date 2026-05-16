@@ -64,7 +64,10 @@ const FAQ = () => {
               className={`flex-shrink-0 w-[260px] h-[340px] perspective-1000 snap-center transition-all duration-500 
                 ${flippedIndex !== idx ? 'animate-vibrate' : ''} 
                 ${activeIndex === idx ? 'scale-[1.02] z-10' : 'scale-95 opacity-60'}`}
-              onClick={() => setFlippedIndex(flippedIndex === idx ? null : idx)}
+              onClick={() => {
+                navigator.vibrate?.(40);
+                setFlippedIndex(flippedIndex === idx ? null : idx);
+              }}
             >
               <div className={`relative w-full h-full transition-transform duration-700 transform-style-3d ${flippedIndex === idx ? 'rotate-y-180' : ''}`}>
                 
