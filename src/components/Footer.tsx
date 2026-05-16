@@ -136,28 +136,30 @@ const Footer = () => {
             "{t('footer.slogan')}"
           </p>
 
-          <p className="font-josefin text-sm text-xv-gold mb-6 px-4 leading-relaxed">
-            {t('footer.servicesIntro')}
-          </p>
-
-          <div className="flex flex-col gap-3 text-left font-josefin text-sm mb-8 px-6">
-            {(t('footer.services', { returnObjects: true }) as string[]).map((service, idx) => (
-              <div key={idx} className="flex items-start gap-3">
-                <span className="text-xv-gold mt-[2px] text-xs">✦</span>
-                <span className="text-gray-300 leading-tight">{service}</span>
-              </div>
-            ))}
+          {/* Block 1: Strategic Vision */}
+          <div className="bg-white/5 rounded-2xl p-8 border border-white/10 mb-6 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+            <h5 className="font-playfair text-xs text-xv-gold uppercase tracking-[0.25em] mb-4 font-bold">
+              Más allá de las invitaciones
+            </h5>
+            
+            <p className="font-josefin text-sm text-white/90 leading-relaxed tracking-wide">
+              Somos expertos en consultoría estratégica, transformación digital, implementación, despliegue y soporte para la modernización de PyMEs.
+            </p>
           </div>
 
-          {/* Enhanced Outro */}
-          <div className="relative p-[1px] bg-gradient-to-r from-xv-gold via-[#F5D76E] to-xv-gold rounded-xl mb-10 mx-4 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
-            <div className="bg-[#080108] rounded-xl px-4 py-6 text-center">
-              <h5 className="font-playfair text-xs text-xv-gold-light uppercase tracking-widest mb-3 font-bold">
-                Más allá de las invitaciones
-              </h5>
-              <p className="font-cormorant text-[1.35rem] text-white leading-relaxed italic">
-                {t('footer.servicesOutro')}
-              </p>
+          {/* Block 2: Specific Solutions */}
+          <div className="bg-white/5 rounded-2xl p-8 border border-white/10 mb-8 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+            <p className="font-josefin text-sm text-xv-gold-light mb-8 leading-relaxed italic">
+              Estas son algunas de las soluciones tecnológicas que diseñamos para potenciar tu crecimiento:
+            </p>
+
+            <div className="flex flex-col gap-4 text-left font-josefin text-sm">
+              {(t('footer.services', { returnObjects: true }) as string[]).map((service, idx) => (
+                <div key={idx} className="flex items-start gap-3 group">
+                  <span className="text-xv-gold mt-[2px] text-xs transition-transform group-hover:scale-125">✦</span>
+                  <span className="text-gray-300 leading-tight group-hover:text-white transition-colors">{service}</span>
+                </div>
+              ))}
             </div>
           </div>
 
