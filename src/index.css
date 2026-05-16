@@ -131,6 +131,19 @@ html, body {
 
 .animate-scroll-hint { animation: scrollHint 1.8s ease-in-out infinite; }
 
+@keyframes vibrate {
+  0%, 90% { transform: translate(0) rotate(0deg); }
+  92% { transform: translate(-4px, 2px) rotate(-1deg); }
+  94% { transform: translate(-4px, -2px) rotate(1deg); }
+  96% { transform: translate(4px, 2px) rotate(-1deg); }
+  98% { transform: translate(4px, -2px) rotate(1deg); }
+  100% { transform: translate(0) rotate(0deg); }
+}
+
+.animate-vibrate {
+  animation: vibrate 3s linear infinite;
+}
+
 @keyframes handCycle {
   0%, 48% { opacity: 1; transform: translateY(0) scale(1); }
   5%, 15%, 25%, 35%, 45% { transform: translateY(5px) scale(0.85); }

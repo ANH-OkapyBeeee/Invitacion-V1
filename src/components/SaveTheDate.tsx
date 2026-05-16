@@ -25,14 +25,45 @@ const SaveTheDate = () => {
 
   const handleCalendar = () => {
     const title = encodeURIComponent(`XV Años - ${CONFIG.quinceañeraName}`);
-    const details = encodeURIComponent(t('saveTheDate.desc'));
-    const location = encodeURIComponent(CONFIG.venue.name);
-    // Format: YYYYMMDDTHHMMSS (local time)
-    const dateObj = new Date(CONFIG.eventDate);
-    const formatStr = dateObj.toISOString().replace(/-|:|\.\d\d\d/g, '').slice(0, 15);
-    const endDate = new Date(dateObj.getTime() + 5 * 60 * 60 * 1000).toISOString().replace(/-|:|\.\d\d\d/g, '').slice(0, 15);
     
-    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${formatStr}/${endDate}&details=${details}&location=${location}`;
+    // Detailed Description
+    const detailsText = `¡No te puedes perder este gran evento tan especial para nosotros!
+
+📍 MISA:
+Iglesia de Nuestra Señora de Guadalupe
+Fecha Sábado, 22 de agosto de 2026
+Hora: 3:00 PM
+Dirección: Ajuchitlán, Colón, Qro.
+
+✨ RECEPCIÓN:
+Salón Salitrito
+Fecha Sábado, 22 de agosto de 2026
+Hora: 4:00 PM
+Dirección: Camino a el CBTA 115, Colonia Salitre, 76286 Colón, Qro.
+
+👗 CÓDIGO DE VESTIMENTA:
+Queremos que disfrutes al máximo, por lo que puedes venir con el estilo que te haga sentir más cómodo: ya sea formal, casual o lo que tú prefieras.
+( 🔔 Recordatorio: Favor de evitar vestidos en Rojo, Dorado o Blanco Perla).
+
+Atentamente:
+Betzy Guadalupe Balderas Vega
+Y Sus padres: Manuel Balderas Ibarra y Ma. de la Luz Vega Feregrino`;
+
+    const details = encodeURIComponent(detailsText);
+    const location = encodeURIComponent(`${CONFIG.venue.name}, ${CONFIG.venue.address}`);
+    
+    // Dates
+    const startDate = new Date(CONFIG.eventDate);
+    const endDate = new Date(startDate.getTime() + 11 * 60 * 60 * 1000); // 3 PM + 11h = 2 AM next day
+    
+    const formatDate = (date: Date) => {
+      return date.toISOString().replace(/-|:|\.\d\d\d/g, '').slice(0, 15) + 'Z';
+    };
+
+    const startStr = formatDate(startDate);
+    const endStr = formatDate(endDate);
+
+    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startStr}/${endStr}&details=${details}&location=${location}`;
     window.open(url, '_blank');
   };
 

@@ -52,9 +52,9 @@
       "charroDesc": "Te invitamos a portar con toda confianza esa prenda o accesorio tradicional que tanto te gusta. ¡Es el momento perfecto para lucir las botas 👢, el sombrero 🤠, ese cinturón piteado ✨ o el moño charro 👔! Ya sea un rebozo 🧣, un vestido de escaramuza 👗, o incluso ese bigotazo 👨🏻 y las trenzas con listones 👧🏻... ¡atrévete a darle ese toque especial a la fiesta! 🎉"
     },
     "saveTheDate": {
-      "title": "Reserva la Fecha",
-      "subtitle": "¡Será un día inolvidable!",
-      "desc": "Espero contar con tu grata presencia en este día tan especial.",
+      "title": "¡Ve apartando el día!",
+      "subtitle": "Tu presencia es el ingrediente principal de esta gran celebración",
+      "desc": "Hay momentos que solo se disfrutan al máximo con las personas correctas, y tú eres una de ellas. ¡Te esperamos!",
       "addToCalendar": "Agregar a mi Calendario",
       "calendar": {
         "su": "Do", "mo": "Lu", "tu": "Ma", "we": "Mi", "th": "Ju", "fr": "Vi", "sa": "Sá",

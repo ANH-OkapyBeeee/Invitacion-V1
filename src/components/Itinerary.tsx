@@ -25,7 +25,7 @@ const Itinerary = () => {
       
       <div className="max-w-[480px] mx-auto text-center mb-16">
         <p className="font-cormorant italic text-gray-600 text-xl px-4 leading-relaxed">
-          "Existen instantes que el corazón guarda para siempre, momentos donde la gratitud se convierte en abrazo y la alegría en destino compartido. Te invito a ser parte de esta noche mágica, donde mi historia y la de mi familia se iluminan con tu presencia, transformando un sueño en un recuerdo eterno."
+          "Acompáñanos a compartir la alegría de un sueño hecho realidad...Tu presencia es nuestro mejor regalo."
         </p>
       </div>
       
