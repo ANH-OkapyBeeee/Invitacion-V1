@@ -213,14 +213,13 @@ function App() {
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-[#1a0f0f] text-white p-8 md:p-10 text-center relative overflow-hidden">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.12)_0%,transparent_70%)]" />
-                    <div className="text-6xl mb-6 relative z-10">📝</div>
-                    <h3 className="font-playfair italic text-3xl text-xv-gold mb-4 relative z-10">
+                  <div className="p-8 md:p-10 text-center">
+                    <div className="text-6xl mb-6">📝</div>
+                    <h3 className="font-playfair italic text-3xl text-xv-red mb-4">
                       {t('dresscode.charroTitle')}
                     </h3>
-                    <div className="w-16 h-0.5 bg-xv-gold/40 mx-auto mb-6 relative z-10" />
-                    <p className="font-cormorant text-xl text-white/90 relative z-10 leading-relaxed italic">
+                    <div className="w-16 h-0.5 bg-xv-gold/40 mx-auto mb-6" />
+                    <p className="font-cormorant text-xl text-xv-black-bg mb-8 italic leading-relaxed font-medium">
                       {t('dresscode.charroDesc')}
                     </p>
                   </div>
