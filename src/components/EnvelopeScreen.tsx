@@ -29,10 +29,34 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
   return (
     <div className="fixed inset-0 flex flex-col items-center justify-center bg-[radial-gradient(circle,_#2D0808_0%,_#0D0305_100%)] z-50 overflow-hidden transition-opacity duration-1000">
       
-      {/* Decorative rings removed as requested */}
+      {/* Twinkling Stars Background with Safe Zone Mask */}
+      <div 
+        className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
+        style={{
+          maskImage: 'radial-gradient(ellipse at center, transparent 35%, black 75%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at center, transparent 35%, black 75%)',
+        }}
+      >
+        {[...Array(80)].map((_, i) => (
+          <div
+            key={i}
+            className={`absolute animate-twinkle ${i % 3 === 0 ? 'text-xv-gold' : 'text-white'}`}
+            style={{
+              fontSize: `calc(var(--star-base-size) * ${i % 8 === 0 ? 2.4 : (i % 3 === 0 ? 1.6 : 1)})`,
+              top: Math.random() * 100 + '%',
+              left: Math.random() * 100 + '%',
+              '--duration': (Math.random() * 2 + 2) + 's',
+              animationDelay: (Math.random() * 3) + 's',
+              filter: 'drop-shadow(0 0 5px currentColor)',
+            } as React.CSSProperties}
+          >
+            {i % 4 === 0 ? '✦' : '★'}
+          </div>
+        ))}
+      </div>
 
       {/* Title */}
-      <h1 className="mt-8 mb-12 text-2xl md:text-3xl font-josefin tracking-[0.3em] text-xv-gold animate-shimmer uppercase relative z-10 text-center">
+      <h1 className="mt-6 mb-10 text-4xl md:text-5xl font-josefin tracking-[0.3em] text-xv-gold animate-shimmer uppercase relative z-10 text-center">
         {t('envelopeTitle')}
       </h1>
 
@@ -93,7 +117,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
 
       <div className="mt-12 text-center relative z-10 transition-opacity duration-500" style={{ opacity: isOpen ? 0 : 1 }}>
         <h2 className="font-playfair italic text-3xl text-xv-gold-light mb-2">{CONFIG.quinceañeraName}</h2>
-        <p className="font-josefin uppercase text-xs text-xv-gold opacity-55 tracking-widest mb-4">
+        <p className="font-josefin uppercase text-sm md:text-base text-xv-gold opacity-80 tracking-widest mb-4">
           {new Date(CONFIG.eventDate).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}
         </p>
       </div>
