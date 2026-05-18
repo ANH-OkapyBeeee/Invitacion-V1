@@ -41,7 +41,7 @@ const DressCode = ({ onTipSelect, activeTip }: DressCodeProps) => {
           >
             <div className="text-4xl mb-2">👗</div>
             <h3 className="font-josefin font-bold text-xv-gold uppercase tracking-widest text-sm mb-1">Tip 1</h3>
-            <p className={`font-cormorant italic text-white/70 text-xs ${activeTip !== 1 ? 'animate-strong-pulse' : ''}`}>
+            <p className="font-cormorant italic text-white/70 text-xs">
               {activeTip === 1 ? 'Cerrar detalles' : 'Toca para más detalles'}
             </p>
             <div className="absolute -bottom-2 -right-1 text-2xl animate-hand-1 drop-shadow-lg z-20">
@@ -62,7 +62,7 @@ const DressCode = ({ onTipSelect, activeTip }: DressCodeProps) => {
           >
             <div className="text-4xl mb-2">📝</div>
             <h3 className="font-josefin font-bold text-xv-gold uppercase tracking-widest text-sm mb-1">Tip 2</h3>
-            <p className={`font-cormorant italic text-white/70 text-xs ${activeTip !== 2 ? 'animate-strong-pulse' : ''}`}>
+            <p className="font-cormorant italic text-white/70 text-xs">
               {activeTip === 2 ? 'Cerrar detalles' : 'Toca para más detalles'}
             </p>
             <div className="absolute -bottom-2 -right-1 text-2xl animate-hand-2 drop-shadow-lg z-20">
