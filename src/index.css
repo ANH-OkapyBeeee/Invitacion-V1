@@ -450,6 +450,11 @@ html, body {
   animation: floatOrganicB 7s ease-in-out infinite;
 }
 
+/* By default, hide the crown inside the envelope's top flap */
+.flap-crown {
+  display: none !important;
+}
+
 /* ==========================================
    Envelope Screen Short Height Adjustments
    ========================================== */
@@ -461,19 +466,21 @@ html, body {
     padding-top: 1.25rem !important; /* pt-5 */
   }
 
-  /* Scale down the royal crown */
+  /* Hide the royal crown at the top to save space */
   .crown-container {
-    width: 110px !important;
-    height: 78px !important;
-    margin-top: 0.25rem !important;
-    margin-bottom: -0.5rem !important;
+    display: none !important;
   }
 
-  /* Scale down the title text size and margins */
+  /* Relocate royal crown directly onto the envelope's top flap */
+  .flap-crown {
+    display: block !important;
+  }
+
+  /* Scale down the title text size and margins cleanly */
   .envelope-title {
     font-size: 2.25rem !important; /* text-4xl */
-    margin-top: 0.5rem !important;
-    margin-bottom: 1.25rem !important;
+    margin-top: 2rem !important;
+    margin-bottom: 1.5rem !important;
   }
 
   /* Scale envelope to perfect 1.428 aspect ratio without distortion */
@@ -545,15 +552,20 @@ html, body {
     padding-top: 0.75rem !important; /* pt-3 */
   }
 
-  /* Hide the crown to rescue valuable vertical space */
+  /* Hide the top crown */
   .crown-container {
     display: none !important;
   }
 
+  /* Keep the crown visible inside the top flap */
+  .flap-crown {
+    display: block !important;
+  }
+
   .envelope-title {
     font-size: 1.75rem !important; /* text-3xl-ish */
-    margin-top: 0.25rem !important;
-    margin-bottom: 0.75rem !important;
+    margin-top: 1.25rem !important;
+    margin-bottom: 1rem !important;
   }
 
   .envelope-wrapper {

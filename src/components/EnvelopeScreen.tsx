@@ -321,6 +321,15 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/15 pointer-events-none" />
             <div className="absolute inset-0 border-b-2 border-xv-gold/40 pointer-events-none" style={{ clipPath: 'polygon(0 0, 50% 60%, 100% 0)' }} />
             <div className="absolute inset-x-0 top-0 h-[2px] bg-white/40 pointer-events-none" />
+            
+            {/* Crown inside the top flap (appears on short viewports or when the top crown is hidden) */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-[10%] lg:top-[12%] w-[48px] h-[33px] lg:w-[68px] lg:h-[47px] pointer-events-none z-10 flap-crown">
+              <img 
+                src="/Fotos/Corona/corona.png" 
+                alt="Corona Solapa" 
+                className="w-full h-full object-contain filter-gold-to-burgundy opacity-[0.85]" 
+              />
+            </div>
           </div>
         </div>
 
