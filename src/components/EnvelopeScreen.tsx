@@ -199,7 +199,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
 
       {/* Title - Progressive entry */}
       <h1 
-        className="mt-6 mb-10 text-5xl md:text-6xl font-playfair italic text-xv-gold animate-shimmer relative z-10 text-center transition-all duration-[2000ms] ease-out"
+        className="mt-6 mb-10 text-5xl md:text-6xl font-playfair text-xv-gold animate-shimmer relative z-10 text-center transition-all duration-[2000ms] ease-out"
         style={{
           opacity: isTitleVisible ? 1 : 0,
           transform: isTitleVisible ? 'scale(1)' : 'scale(0.95)'
