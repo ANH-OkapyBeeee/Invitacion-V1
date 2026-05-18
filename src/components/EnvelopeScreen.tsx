@@ -211,7 +211,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
         <img 
           src="/Fotos/Corona/corona.png" 
           alt="Corona Real" 
-          className="w-full h-full object-contain filter-seal-red"
+          className="w-full h-full object-contain"
         />
       </div>
 

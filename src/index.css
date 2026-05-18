@@ -556,6 +556,10 @@ html, body {
   .flap-date {
     display: block !important;
   }
+  .flap-date p {
+    color: #6E1423 !important;
+    text-shadow: 0.5px 0.5px 1px rgba(255, 255, 255, 0.45) !important;
+  }
 }
 
 /* Extremely short viewports (vertical space < 600px) */
