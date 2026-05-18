@@ -214,7 +214,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <p className="font-cormorant italic text-lg text-gray-300 mb-6 px-4">
+          <p className="font-josefin text-sm md:text-base text-gray-300 mb-6 px-6 leading-relaxed tracking-wide font-medium">
             "{t('footer.slogan')}"
           </p>
 
