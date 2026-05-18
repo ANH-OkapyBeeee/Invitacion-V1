@@ -412,4 +412,18 @@ html, body {
   mix-blend-mode: multiply;
 }
 
+@keyframes floatGently {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-float-gently {
+  animation: floatGently 6s ease-in-out infinite;
+}
+
+
 

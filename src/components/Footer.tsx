@@ -18,22 +18,6 @@ const serviceMetadata = [
   { emoji: "📱", shortEs: "Tuning Móvil", shortEn: "Mobile Tuning", large: true }
 ];
 
-const bubblePositions = [
-  { top: "12%", left: "10%", duration: "12s", delay: "0s" },  // Index 0 (Web & Tiendas - large)
-  { top: "10%", left: "42%", duration: "16s", delay: "-3s" }, // Index 1
-  { top: "12%", left: "74%", duration: "14s", delay: "-6s" }, // Index 2
-  { top: "32%", left: "14%", duration: "13s", delay: "-1.5s" }, // Index 3
-  { top: "34%", left: "46%", duration: "18s", delay: "-8s" }, // Index 4
-  { top: "30%", left: "76%", duration: "15s", delay: "-4s" }, // Index 5
-  { top: "54%", left: "10%", duration: "17s", delay: "-11s" }, // Index 6
-  { top: "56%", left: "44%", duration: "11s", delay: "-2.5s" }, // Index 7
-  { top: "52%", left: "74%", duration: "13s", delay: "-9s" }, // Index 8
-  { top: "76%", left: "15%", duration: "15s", delay: "-5s" }, // Index 9 (Ciberseguridad - large)
-  { top: "78%", left: "45%", duration: "12s", delay: "-7s" }, // Index 10
-  { top: "75%", left: "73%", duration: "14s", delay: "-12s" }, // Index 11 (Tuning Móvil - large)
-  // Extra one for English 13th item
-  { top: "48%", left: "80%", duration: "16s", delay: "-10s" }
-];
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -49,128 +33,6 @@ const Footer = () => {
   const timersRef = useRef<number[]>([]);
   const hasTriggeredInitial = useRef(false);
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const bubbleRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const bubblesData = useRef<{
-    ox: number;
-    oy: number;
-    vx: number;
-    vy: number;
-    size: number;
-  }[]>([]);
-
-  // Physics elastic bouncing simulation for bubbles (localized offsets)
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const servicesArray = t('footer.services', { returnObjects: true }) as string[];
-    const isEnglishList = servicesArray.length === 13;
-    const servicesLength = isEnglishList ? 13 : 12;
-
-    const getBubbleMetadata = (idx: number, isEn: boolean) => {
-      if (isEn) {
-        if (idx === 0) {
-          return { emoji: "✨", shortLabel: "Invitations", large: false };
-        }
-        const meta = serviceMetadata[idx - 1] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service", large: false };
-        return { emoji: meta.emoji, shortLabel: meta.shortEn, large: !!(meta as any).large };
-      } else {
-        const meta = serviceMetadata[idx] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service", large: false };
-        return { emoji: meta.emoji, shortLabel: meta.shortEs, large: !!(meta as any).large };
-      }
-    };
-
-    // Initialize bubble offset positions and velocities
-    const newBubbles = [];
-    for (let i = 0; i < servicesLength; i++) {
-      const { large } = getBubbleMetadata(i, isEnglishList);
-      const isMobile = window.innerWidth < 768;
-      const size = large ? (isMobile ? 104 : 118) : (isMobile ? 78 : 90);
-
-      // Random small starting offsets inside home radius
-      const ox = (Math.random() - 0.5) * 12;
-      const oy = (Math.random() - 0.5) * 12;
-
-      // Soft physical drift speed
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 0.2 + Math.random() * 0.2; // extremely smooth, gentle drift
-      const vx = Math.cos(angle) * speed;
-      const vy = Math.sin(angle) * speed;
-
-      newBubbles.push({
-        ox,
-        oy,
-        vx,
-        vy,
-        size
-      });
-    }
-    bubblesData.current = newBubbles;
-
-    let animationFrameId: number;
-
-    const updatePhysics = () => {
-      if (!containerRef.current) return;
-      const w = containerRef.current.clientWidth || 300;
-      const h = containerRef.current.clientHeight || 480;
-
-      bubblesData.current.forEach((b, idx) => {
-        // Calculate dynamic grid home position
-        const pos = bubblePositions[idx] || { top: "50%", left: "50%" };
-        const leftPercent = parseFloat(pos.left) / 100;
-        const topPercent = parseFloat(pos.top) / 100;
-        
-        const homeX = leftPercent * (w - b.size);
-        const homeY = topPercent * (h - b.size);
-
-        // Update offset positions
-        b.ox += b.vx;
-        b.oy += b.vy;
-
-        const rangeX = 22; // max local drift horizontal
-        const rangeY = 22; // max local drift vertical
-
-        // Dynamic boundaries relative to dynamic home position and overall container limits
-        const minOffsetK = -Math.min(rangeX, homeX);
-        const maxOffsetK = Math.min(rangeX, w - b.size - homeX);
-        const minOffsetV = -Math.min(rangeY, homeY);
-        const maxOffsetV = Math.min(rangeY, h - b.size - homeY);
-
-        // Bounce horizontal (left & right localized bounds)
-        if (b.ox <= minOffsetK) {
-          b.ox = minOffsetK;
-          b.vx = Math.abs(b.vx);
-        } else if (b.ox >= maxOffsetK) {
-          b.ox = maxOffsetK;
-          b.vx = -Math.abs(b.vx);
-        }
-
-        // Bounce vertical (top & bottom localized bounds)
-        if (b.oy <= minOffsetV) {
-          b.oy = minOffsetV;
-          b.vy = Math.abs(b.vy);
-        } else if (b.oy >= maxOffsetV) {
-          b.oy = maxOffsetV;
-          b.vy = -Math.abs(b.vy);
-        }
-
-        // Apply style via translate3d for GPU hardware acceleration
-        const el = bubbleRefs.current[idx];
-        if (el) {
-          el.style.transform = `translate3d(${homeX + b.ox}px, ${homeY + b.oy}px, 0)`;
-        }
-      });
-
-      animationFrameId = requestAnimationFrame(updatePhysics);
-    };
-
-    animationFrameId = requestAnimationFrame(updatePhysics);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [t]);
 
 
   // Separate effect for hand pointers cycle
@@ -398,60 +260,61 @@ const Footer = () => {
               Estas son algunas de las soluciones tecnológicas que diseñamos para potenciar tu crecimiento:
             </p>
 
-            {/* Floating Bubbles Canvas */}
-            <div className="relative w-full my-4 px-4">
-              <div ref={containerRef} className="relative w-full h-[480px] md:h-[540px] overflow-hidden bg-black/60 rounded-3xl border border-white/5 shadow-inner">
-                {(() => {
-                  const servicesArray = t('footer.services', { returnObjects: true }) as string[];
-                  const isEnglishList = servicesArray.length === 13;
-                  
-                  const getBubbleMetadata = (idx: number, isEn: boolean) => {
-                    if (isEn) {
-                      if (idx === 0) {
-                        return { emoji: "✨", shortLabel: "Invitations", large: false };
+            {/* 3-Column Responsive Grid Canvas */}
+            <div className="relative w-full my-4 px-2 md:px-4">
+              <div className="w-full bg-black/60 rounded-3xl border border-white/5 shadow-inner p-6 md:p-10">
+                <div className="grid grid-cols-3 gap-y-8 md:gap-y-12 gap-x-2 md:gap-x-6 justify-items-center items-center w-full max-w-3xl mx-auto">
+                  {(() => {
+                    const servicesArray = t('footer.services', { returnObjects: true }) as string[];
+                    const isEnglishList = servicesArray.length === 13;
+                    
+                    const getBubbleMetadata = (idx: number, isEn: boolean) => {
+                      if (isEn) {
+                        if (idx === 0) {
+                          return { emoji: "✨", shortLabel: "Invitations", large: false };
+                        }
+                        const meta = serviceMetadata[idx - 1] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service", large: false };
+                        return { emoji: meta.emoji, shortLabel: meta.shortEn, large: !!(meta as any).large };
+                      } else {
+                        const meta = serviceMetadata[idx] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service", large: false };
+                        return { emoji: meta.emoji, shortLabel: meta.shortEs, large: !!(meta as any).large };
                       }
-                      const meta = serviceMetadata[idx - 1] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service", large: false };
-                      return { emoji: meta.emoji, shortLabel: meta.shortEn, large: !!(meta as any).large };
-                    } else {
-                      const meta = serviceMetadata[idx] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service", large: false };
-                      return { emoji: meta.emoji, shortLabel: meta.shortEs, large: !!(meta as any).large };
-                    }
-                  };
+                    };
 
-                  return servicesArray.map((_, idx) => {
-                    const { emoji, shortLabel, large } = getBubbleMetadata(idx, isEnglishList);
-                    const isSelected = activeServiceIndex === idx;
+                    return servicesArray.map((_, idx) => {
+                      const { emoji, shortLabel, large } = getBubbleMetadata(idx, isEnglishList);
+                      const isSelected = activeServiceIndex === idx;
+                      const isLastItemEn = isEnglishList && idx === 12;
 
-                    return (
-                      <button
-                        key={idx}
-                        ref={el => { bubbleRefs.current[idx] = el; }}
-                        onClick={() => {
-                          navigator.vibrate?.([30, 20]);
-                          setActiveServiceIndex(idx);
-                        }}
-                        style={{
-                          top: 0,
-                          left: 0,
-                          transform: 'translate3d(0px, 0px, 0)'
-                        }}
-                        className={`absolute rounded-full flex flex-col items-center justify-center select-none cursor-pointer transition-[background-color,border-color,box-shadow,color] duration-300
-                          ${large ? 'w-[104px] h-[104px] md:w-[118px] md:h-[118px]' : 'w-[78px] h-[78px] md:w-[90px] md:h-[90px]'}
-                          ${isSelected 
-                            ? 'bg-gradient-to-br from-[#D4AF37] to-[#8A5A19] border-2 border-white shadow-[0_0_25px_rgba(212,175,55,0.45)] scale-110 z-20' 
-                            : 'bg-white/95 border border-xv-gold/40 hover:border-xv-gold shadow-[0_4px_15px_rgba(0,0,0,0.15)] hover:scale-105 active:scale-95 z-10'}`}
-                      >
-                        <span className={`text-2xl md:text-3xl mb-0.5 transition-transform ${isSelected ? 'scale-110' : ''}`}>
-                          {emoji}
-                        </span>
-                        <span className={`text-[8px] md:text-[9px] uppercase tracking-wider font-extrabold font-josefin leading-tight px-1 text-center line-clamp-2
-                          ${isSelected ? 'text-white' : 'text-[#080108]'}`}>
-                          {shortLabel}
-                        </span>
-                      </button>
-                    );
-                  });
-                })()}
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => {
+                            navigator.vibrate?.([30, 20]);
+                            setActiveServiceIndex(idx);
+                          }}
+                          style={{
+                            animationDelay: `${idx * 0.35}s`
+                          }}
+                          className={`rounded-full flex flex-col items-center justify-center select-none cursor-pointer transition-[background-color,border-color,box-shadow,color,transform] duration-300 animate-float-gently
+                            ${large ? 'w-[84px] h-[84px] md:w-[106px] md:h-[106px]' : 'w-[76px] h-[76px] md:w-[92px] md:h-[92px]'}
+                            ${isLastItemEn ? 'col-span-3 justify-self-center' : ''}
+                            ${isSelected 
+                              ? 'bg-gradient-to-br from-[#D4AF37] to-[#8A5A19] border-2 border-white shadow-[0_0_25px_rgba(212,175,55,0.45)] scale-110 z-20' 
+                              : 'bg-white/95 border border-xv-gold/40 hover:border-xv-gold shadow-[0_4px_15px_rgba(0,0,0,0.15)] hover:scale-105 active:scale-95 z-10'}`}
+                        >
+                          <span className={`text-xl md:text-2xl mb-0.5 transition-transform ${isSelected ? 'scale-110' : ''}`}>
+                            {emoji}
+                          </span>
+                          <span className={`text-[8px] md:text-[9px] uppercase tracking-wider font-extrabold font-josefin leading-tight px-1 text-center line-clamp-2
+                            ${isSelected ? 'text-white' : 'text-[#080108]'}`}>
+                            {shortLabel}
+                          </span>
+                        </button>
+                      );
+                    });
+                  })()}
+                </div>
               </div>
 
               {/* Backdrop-blur Focus concentration detailed popup popover */}
