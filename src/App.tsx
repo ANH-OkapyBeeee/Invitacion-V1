@@ -153,10 +153,9 @@ function App() {
     width: '0',
     playerVars: {
       autoplay: 0,
-      start: 142, // 2:22 in seconds
       playsinline: 1,
       loop: 1,
-      playlist: 'okIQYRE_t3s',
+      playlist: 'M3CbRJ6jgQc',
     },
   };
 
@@ -167,7 +166,7 @@ function App() {
       {/* Hidden YouTube Player for Background Music */}
       <div className="fixed top-[-1000px] left-[-1000px] opacity-0 w-[10px] h-[10px] pointer-events-none overflow-hidden -z-50">
         <YouTube 
-          videoId="okIQYRE_t3s" 
+          videoId="M3CbRJ6jgQc" 
           opts={opts} 
           onReady={onPlayerReady} 
           onPlay={() => setIsPlaying(true)}

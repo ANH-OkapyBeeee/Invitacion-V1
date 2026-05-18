@@ -27,7 +27,7 @@ const Godparents = () => {
 
           {/* Godmother */}
           <div className="bg-white/10 backdrop-blur-md border border-xv-gold rounded-xl p-6 flex flex-col items-center">
-            <div className="text-5xl mb-4">💐</div>
+            <div className="text-5xl mb-4">👩</div>
             <div className="font-josefin text-xv-gold uppercase text-xs tracking-widest font-bold mb-2">
               {t('godparents.godmother')}
             </div>

@@ -15,22 +15,40 @@ const Locations = () => {
           <div className="text-4xl mb-3">⛪</div>
           <h3 className="font-playfair italic text-2xl text-xv-gold-light mb-2">{t('locations.ceremony')}</h3>
           <p className="font-cormorant text-[#F5EEB0] text-lg mb-1">{CONFIG.church.name}</p>
-          <p className="font-josefin text-sm text-gray-300 mb-4">{CONFIG.church.address}</p>
+          
+          <a 
+            href={CONFIG.church.dirUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            onClick={() => navigator.vibrate?.(50)}
+            className="hover:text-xv-gold transition-colors duration-300 inline-block"
+          >
+            <p className="font-josefin text-sm text-gray-300 mb-4 hover:underline cursor-pointer flex items-center justify-center gap-1">
+              <MapPin size={14} className="inline text-xv-gold" /> {CONFIG.church.address}
+            </p>
+          </a>
+
           <div className="font-josefin text-xv-gold mb-6 font-semibold flex items-center justify-center gap-2">
             ⏳ {CONFIG.church.time}
           </div>
           
-          <div className="w-full h-48 bg-black/20 rounded-xl mb-6 relative border border-white/10 flex items-center justify-center overflow-hidden shadow-inner">
+          <a 
+            href={CONFIG.church.dirUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            onClick={() => navigator.vibrate?.(50)}
+            className="w-full h-48 bg-black/20 rounded-xl mb-6 relative border border-white/10 flex items-center justify-center overflow-hidden shadow-inner block group cursor-pointer"
+          >
             <iframe
               src={`https://maps.google.com/maps?q=${encodeURIComponent(CONFIG.church.name + ", " + CONFIG.church.address)}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
-              className="w-full h-full opacity-80 mix-blend-luminosity hover:opacity-100 hover:mix-blend-normal transition-all duration-500"
+              className="w-full h-full opacity-80 mix-blend-luminosity group-hover:opacity-100 group-hover:mix-blend-normal transition-all duration-500 pointer-events-none"
               style={{ border: 0, filter: 'contrast(1.2) sepia(0.3) hue-rotate(-10deg)' }}
               allowFullScreen={false}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
-            <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-xv-gold/20 rounded-xl"></div>
-          </div>
+            <div className="absolute inset-0 bg-transparent ring-1 ring-inset ring-xv-gold/20 rounded-xl"></div>
+          </a>
 
           <a 
             href={CONFIG.church.dirUrl} 
@@ -48,22 +66,38 @@ const Locations = () => {
           <div className="text-4xl mb-3">🥂</div>
           <h3 className="font-playfair italic text-2xl text-xv-gold-light mb-2">{t('locations.reception')}</h3>
           <p className="font-cormorant text-[#F5EEB0] text-lg mb-1">{CONFIG.venue.name}</p>
-          <p className="font-josefin text-sm text-gray-300 mb-4">{CONFIG.venue.address}</p>
+          
+          <a 
+            href={CONFIG.venue.dirUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            onClick={() => navigator.vibrate?.(50)}
+            className="hover:text-xv-gold transition-colors duration-300 inline-block"
+          >
+            <p className="font-josefin text-sm text-gray-300 mb-4 hover:underline cursor-pointer flex items-center justify-center gap-1">
+              <MapPin size={14} className="inline text-xv-gold" /> {CONFIG.venue.address}
+            </p>
+          </a>
+
           <div className="font-josefin text-xv-gold mb-6 font-semibold flex items-center justify-center gap-2">
             ⏳ {CONFIG.venue.time}
           </div>
           
-          <div className="w-full h-48 bg-black/20 rounded-xl mb-6 relative border border-white/10 flex items-center justify-center overflow-hidden shadow-inner">
-            <iframe
-              src={`https://maps.google.com/maps?q=${encodeURIComponent("20°45'37.0\"N 100°02'25.9\"W")}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
-              className="w-full h-full opacity-80 mix-blend-luminosity hover:opacity-100 hover:mix-blend-normal transition-all duration-500"
-              style={{ border: 0, filter: 'contrast(1.2) sepia(0.3) hue-rotate(-10deg)' }}
-              allowFullScreen={false}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-            <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-xv-gold/20 rounded-xl"></div>
-          </div>
+          <a 
+            href={CONFIG.venue.dirUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            onClick={() => navigator.vibrate?.(50)}
+            className="w-full h-48 bg-black/40 rounded-xl mb-6 relative border border-white/10 flex items-center justify-center overflow-hidden shadow-md block group cursor-pointer"
+          >
+            <img 
+              src="/Fotos/Mapas/Fiesta.png"
+              alt="Croquis Recepción"
+              className="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-transparent ring-1 ring-inset ring-xv-gold/20 rounded-xl"></div>
+          </a>
 
           <a 
             href={CONFIG.venue.dirUrl} 

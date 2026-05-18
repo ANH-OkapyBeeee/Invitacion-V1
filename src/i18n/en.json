@@ -16,13 +16,13 @@
     "itinerary": {
       "title": "Itinerary",
       "events": [
-        { "time": "3:00 PM", "title": "Religious Ceremony", "desc": "Iglesia de Nuestra Señora de Guadalupe", "emoji": "⛪" },
-        { "time": "4:00 PM", "title": "Reception", "desc": "Salón Salitrito", "emoji": "🥂" },
+        { "time": "3:00 PM", "title": "Religious Ceremony", "desc": "Iglesia de Nuestra Señora de Guadalupe, Ajuchitlán, Colón, Qro.", "emoji": "⛪" },
+        { "time": "3:50 PM", "title": "Surprise Moment", "desc": "Shh... A beautiful surprise for the Quinceañera! (Please keep the secret)", "emoji": "🤫" },
+        { "time": "4:00 PM", "title": "Reception", "desc": "Salón Salitrito, Camino a el CBTA 115, Colonia Salitre, 76286 Colón, Qro.", "emoji": "🥂" },
         { "time": "5:00 PM", "title": "Banquet", "desc": "Delicious dinner to share", "emoji": "🍽️" },
         { "time": "7:00 PM", "title": "Waltz", "desc": "A magical moment", "emoji": "💃" },
         { "time": "8:00 PM", "title": "Toast", "desc": "Words from the family", "emoji": "🍾" },
-        { "time": "9:00 PM", "title": "Dance Floor Opens", "desc": "Let's dance!", "emoji": "🎵" },
-        { "time": "11:00 PM", "title": "Mariachi", "desc": "Musical surprise", "emoji": "🎺" }
+        { "time": "9:00 PM", "title": "Dance Floor Opens", "desc": "Let's dance!", "emoji": "🎵" }
       ]
     },
     "locations": {

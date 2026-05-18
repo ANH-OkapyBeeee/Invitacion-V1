@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCountdown } from '../hooks/useCountdown';
 import { CONFIG } from '../config';
@@ -22,6 +22,37 @@ const Hero = () => {
   const { days, hours, minutes, seconds } = useCountdown(eventDateStr);
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const [visiblePieces, setVisiblePieces] = useState<number[]>([]);
+
+  // Swipe detection refs & handlers
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchEndX.current === null) return;
+    
+    const diffX = touchStartX.current - touchEndX.current;
+    const swipeThreshold = 55;
+    
+    if (diffX > swipeThreshold) {
+      navigator.vibrate?.([40, 20, 40]);
+      handleNext();
+    } else if (diffX < -swipeThreshold) {
+      navigator.vibrate?.([40, 20, 40]);
+      handlePrev();
+    }
+    
+    touchStartX.current = null;
+    touchEndX.current = null;
+  };
 
   // Phase Logic for Messages
   const isEventDay = now.getFullYear() === 2026 && now.getMonth() === 7 && now.getDate() === 22;
@@ -53,20 +84,35 @@ const Hero = () => {
   }
 
   const photos = [
-    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600',
-    'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=600',
-    'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=600',
-    'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&q=80&w=600',
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=600'
+    '/Fotos/1.JPG',
+    '/Fotos/2.JPG',
+    '/Fotos/3.JPG',
+    '/Fotos/4.JPG',
+    '/Fotos/4.2.jpeg',
+    '/Fotos/5.JPG',
+    '/Fotos/7.jpg',
+    '/Fotos/9.JPG',
+    '/Fotos/10.jpg'
   ];
+
+  const prevPhoto = (currentPhoto - 1 + photos.length) % photos.length;
+  const nextPhoto = (currentPhoto + 1) % photos.length;
+
+  const handleNext = () => {
+    setCurrentPhoto((prev) => (prev + 1) % photos.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentPhoto((prev) => (prev - 1 + photos.length) % photos.length);
+  };
 
   // Cycle through photos
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentPhoto((prev) => (prev + 1) % photos.length);
+    const timer = setTimeout(() => {
+      handleNext();
     }, 7500); // 7.5 seconds per photo
-    return () => clearInterval(timer);
-  }, []);
+    return () => clearTimeout(timer);
+  }, [currentPhoto]);
 
   // Handle puzzle piece assembly
   useEffect(() => {
@@ -102,45 +148,103 @@ const Hero = () => {
 
       {/* Floating horseshoe removed */}
 
-      {/* Photo Slideshow with Puzzle Effect and Gold Glow Border */}
-      <div className="z-10 mb-10 relative">
-        <div className="p-[2px] bg-gradient-to-r from-xv-gold via-[#F5D76E] to-xv-gold rounded-2xl shadow-[0_0_30px_rgba(212,175,55,0.35)] animate-glow">
-          <div className="w-[200px] h-[280px] md:w-[240px] md:h-[330px] bg-[#1a0f0f] rounded-[14px] overflow-hidden relative">
-            
-            {/* Puzzle Grid */}
-            {Array.from({ length: GRID_ROWS * GRID_COLS }).map((_, i) => {
-              const row = Math.floor(i / GRID_COLS);
-              const col = i % GRID_COLS;
-              const isVisible = visiblePieces.includes(i);
-              
-              return (
-                <div 
-                  key={i}
-                  className="absolute transition-all duration-1000 ease-out"
-                  style={{
-                    width: `${100 / GRID_COLS + 0.4}%`, // SLight overlap to prevent lines
-                    height: `${100 / GRID_ROWS + 0.4}%`,
-                    left: `${col * (100 / GRID_COLS)}%`,
-                    top: `${row * (100 / GRID_ROWS)}%`,
-                    backgroundImage: `url(${photos[currentPhoto]})`,
-                    backgroundSize: `${GRID_COLS * 100}% ${GRID_ROWS * 100}%`,
-                    backgroundPosition: `${(col / (GRID_COLS - 1)) * 100}% ${(row / (GRID_ROWS - 1)) * 100}%`,
-                    opacity: isVisible ? 1 : 0,
-                    transform: isVisible ? 'scale(1) rotate(0deg)' : `scale(0.2) rotate(${(Math.random() - 0.5) * 90}deg)`,
-                    zIndex: isVisible ? 1 : 0
-                  }}
-                />
-              );
-            })}
+      {/* Premium Carousel Section with viewport-clipped edges */}
+      <div 
+        className="z-10 mb-10 w-screen max-w-full overflow-hidden py-4 flex justify-center touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        <div className="flex items-center justify-center gap-3 sm:gap-4 md:gap-8 relative">
+          
+          {/* Left Rectangle (Previous Photo) */}
+          <button
+            onClick={() => {
+              navigator.vibrate?.([40, 20, 40]);
+              handlePrev();
+            }}
+            className="group w-[120px] h-[170px] sm:w-[135px] sm:h-[190px] md:w-[195px] md:h-[275px] rounded-xl overflow-hidden border border-white/20 filter grayscale opacity-35 transition-all duration-700 hover:opacity-80 hover:scale-105 active:scale-95 shadow-md flex-shrink-0 cursor-pointer focus:outline-none -translate-x-3 sm:-translate-x-4 md:-translate-x-0 relative"
+            style={{
+              backgroundImage: `url(${photos[prevPhoto]})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+            {/* Left Chevron Overlay (Desktop only, high-contrast gray/black design) */}
+            <div className="hidden md:flex absolute inset-0 bg-black/5 items-center justify-center transition-all duration-700 group-hover:bg-black/20 z-20">
+              <div className="p-2.5 rounded-full bg-white/80 border border-black/10 backdrop-blur-sm text-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.15)] group-hover:scale-110 group-hover:bg-white group-hover:text-black transition-all duration-500 animate-bounce-left">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+              </div>
+            </div>
+          </button>
 
-            {/* Overlay gradient for premium feel */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-[10]" />
+          {/* Center Rectangle (Active Photo with Gold Glow Border & Puzzle Effect) */}
+          <div className="relative flex-shrink-0 transition-all duration-700 transform scale-100 z-10">
+            <div className="p-[2px] bg-gradient-to-r from-xv-gold via-[#F5D76E] to-xv-gold rounded-2xl shadow-[0_0_35px_rgba(212,175,55,0.45)] animate-glow">
+              <div className="w-[190px] h-[270px] sm:w-[210px] sm:h-[300px] md:w-[260px] md:h-[370px] bg-[#1a0f0f] rounded-[14px] overflow-hidden relative">
+                
+                {/* Puzzle Grid */}
+                {Array.from({ length: GRID_ROWS * GRID_COLS }).map((_, i) => {
+                  const row = Math.floor(i / GRID_COLS);
+                  const col = i % GRID_COLS;
+                  const isVisible = visiblePieces.includes(i);
+                  
+                  return (
+                    <div 
+                      key={i}
+                      className="absolute transition-all duration-1000 ease-out"
+                      style={{
+                        width: `${100 / GRID_COLS + 0.4}%`, // SLight overlap to prevent lines
+                        height: `${100 / GRID_ROWS + 0.4}%`,
+                        left: `${col * (100 / GRID_COLS)}%`,
+                        top: `${row * (100 / GRID_ROWS)}%`,
+                        backgroundImage: `url(${photos[currentPhoto]})`,
+                        backgroundSize: `${GRID_COLS * 100}% ${GRID_ROWS * 100}%`,
+                        backgroundPosition: `${(col / (GRID_COLS - 1)) * 100}% ${(row / (GRID_ROWS - 1)) * 100}%`,
+                        opacity: isVisible ? 1 : 0,
+                        transform: isVisible ? 'scale(1) rotate(0deg)' : `scale(0.2) rotate(${(Math.random() - 0.5) * 90}deg)`,
+                        zIndex: isVisible ? 1 : 0
+                      }}
+                    />
+                  );
+                })}
+
+                {/* Overlay gradient for premium feel */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-[10]" />
+              </div>
+            </div>
           </div>
+
+          {/* Right Rectangle (Next Photo) */}
+          <button
+            onClick={() => {
+              navigator.vibrate?.([40, 20, 40]);
+              handleNext();
+            }}
+            className="group w-[120px] h-[170px] sm:w-[135px] sm:h-[190px] md:w-[195px] md:h-[275px] rounded-xl overflow-hidden border border-white/20 filter grayscale opacity-35 transition-all duration-700 hover:opacity-80 hover:scale-105 active:scale-95 shadow-md flex-shrink-0 cursor-pointer focus:outline-none translate-x-3 sm:translate-x-4 md:translate-x-0 relative"
+            style={{
+              backgroundImage: `url(${photos[nextPhoto]})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+            {/* Right Chevron Overlay (Desktop only, high-contrast gray/black design) */}
+            <div className="hidden md:flex absolute inset-0 bg-black/5 items-center justify-center transition-all duration-700 group-hover:bg-black/20 z-20">
+              <div className="p-2.5 rounded-full bg-white/80 border border-black/10 backdrop-blur-sm text-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.15)] group-hover:scale-110 group-hover:bg-white group-hover:text-black transition-all duration-500 animate-bounce-right">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </div>
+            </div>
+          </button>
+
         </div>
       </div>
 
       {/* Main Title */}
-      <div className="z-10 animate-shimmer text-xv-gold font-josefin tracking-[0.2em] mb-2">
+      <div className="z-10 animate-shimmer text-xv-gold font-josefin text-2xl md:text-3xl font-bold tracking-[0.25em] mb-2">
         ✦ {t('heroTitle')} ✦
       </div>
       
@@ -148,7 +252,7 @@ const Hero = () => {
         {CONFIG.quinceañeraName}
       </h1>
 
-      <div className="z-10 font-josefin uppercase text-xv-gold opacity-55 tracking-widest mb-12">
+      <div className="z-10 font-josefin uppercase text-xv-gold opacity-75 text-[15px] md:text-[18px] font-semibold tracking-[0.25em] mb-12">
         {new Date(CONFIG.eventDate).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}
       </div>
 
@@ -161,11 +265,11 @@ const Hero = () => {
 
       {/* Countdown or Status Message */}
       {showCountdown ? (
-        <div className="z-10 flex gap-3 md:gap-4 mb-16">
+        <div className="z-10 flex gap-3 md:gap-6 mb-16">
           {timeBlocks.map((block, idx) => (
-            <div key={idx} className="flex flex-col items-center justify-center w-[70px] h-[80px] md:w-[85px] md:h-[95px] bg-xv-gold/5 border border-xv-gold/20 rounded-lg animate-border-pulse backdrop-blur-sm shadow-[0_4px_15px_rgba(0,0,0,0.2)]">
-              <span className="font-playfair text-3xl md:text-4xl text-xv-pearl mb-1">{block.value}</span>
-              <span className="font-josefin uppercase text-[10px] md:text-xs text-xv-gold opacity-55">{block.label}</span>
+            <div key={idx} className="flex flex-col items-center justify-center w-[78px] h-[90px] md:w-[105px] md:h-[115px] bg-xv-gold/[0.08] border border-xv-gold/30 rounded-xl animate-border-pulse backdrop-blur-sm shadow-[0_4px_25px_rgba(212,175,55,0.15)] transition-all duration-300">
+              <span className="font-playfair text-4xl md:text-5xl text-xv-pearl mb-1 font-bold">{block.value}</span>
+              <span className="font-josefin uppercase text-[11px] md:text-[13px] text-xv-gold tracking-widest opacity-80">{block.label}</span>
             </div>
           ))}
         </div>

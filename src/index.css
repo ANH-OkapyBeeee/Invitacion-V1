@@ -295,3 +295,21 @@ html, body {
 .animate-twinkle {
   animation: twinkle var(--duration, 3s) infinite ease-in-out;
 }
+
+@keyframes bounceLeft {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-4px); }
+}
+
+@keyframes bounceRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+.animate-bounce-left {
+  animation: bounceLeft 1.2s infinite ease-in-out;
+}
+
+.animate-bounce-right {
+  animation: bounceRight 1.2s infinite ease-in-out;
+}

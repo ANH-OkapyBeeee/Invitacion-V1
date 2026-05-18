@@ -16,13 +16,13 @@
     "itinerary": {
       "title": "Itinerario",
       "events": [
-        { "time": "3:00 PM", "title": "Ceremonia Religiosa", "desc": "Iglesia de Nuestra Señora de Guadalupe", "emoji": "⛪" },
-        { "time": "4:00 PM", "title": "Recepción", "desc": "Salón Salitrito", "emoji": "🥂" },
+        { "time": "3:00 PM", "title": "Ceremonia Religiosa", "desc": "Iglesia de Nuestra Señora de Guadalupe, Ajuchitlán, Colón, Qro.", "emoji": "⛪" },
+        { "time": "3:50 PM", "title": "Momento Sorpresa", "desc": "Shh... ¡Una hermosa sorpresa para la Quinceañera! (Favor de guardar el secreto)", "emoji": "🤫" },
+        { "time": "4:00 PM", "title": "Recepción", "desc": "Salón Salitrito, Camino a el CBTA 115, Colonia Salitre, 76286 Colón, Qro.", "emoji": "🥂" },
         { "time": "5:00 PM", "title": "Banquete", "desc": "Una deliciosa cena para compartir en familia", "emoji": "🍽️" },
         { "time": "7:00 PM", "title": "Vals", "desc": "Un momento mágico", "emoji": "💃" },
         { "time": "8:00 PM", "title": "Brindis", "desc": "Palabras de la familia", "emoji": "🍾" },
-        { "time": "9:00 PM", "title": "Apertura de Pista", "desc": "¡A bailar se ha dicho!", "emoji": "🎵" },
-        { "time": "11:00 PM", "title": "Mariachi", "desc": "Sorpresa musical", "emoji": "🎺" }
+        { "time": "9:00 PM", "title": "Apertura de Pista", "desc": "¡A bailar se ha dicho!", "emoji": "🎵" }
       ]
     },
     "locations": {

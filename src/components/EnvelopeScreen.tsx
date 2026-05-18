@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import Confetti from './Confetti';
 import { CONFIG } from '../config';
 import { requestShakePermission } from './ShakeCelebration';
+import confetti from 'canvas-confetti';
 
 interface Props {
   onOpen: () => void;
@@ -12,6 +13,86 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+
+  // Trigger majestic golden star explosion automatically when opening the link / reloading
+  useEffect(() => {
+    // Detect if current screen is desktop (width >= 1024px)
+    const isDesktop = window.innerWidth >= 1024;
+    
+    // We rasterize at scalar 6.0 for desktop to keep the textures ultra-crisp at massive sizes, and 3.8 for mobile
+    const textScalar = isDesktop ? 6.0 : 3.8;
+    
+    // Create custom shapes with colors explicitly defined at creation to prevent the black rendering bug.
+    const customShapes = [
+      // Gold Sparkles (✦)
+      confetti.shapeFromText({ text: '✦', color: '#D4AF37', scalar: textScalar }),
+      confetti.shapeFromText({ text: '✦', color: '#F5D76E', scalar: textScalar }),
+      // White/Silver Sparkles (✦)
+      confetti.shapeFromText({ text: '✦', color: '#FFFFFF', scalar: textScalar }),
+      confetti.shapeFromText({ text: '✦', color: '#FDFBF7', scalar: textScalar }),
+      
+      // Gold Classics (★)
+      confetti.shapeFromText({ text: '★', color: '#D4AF37', scalar: textScalar }),
+      confetti.shapeFromText({ text: '★', color: '#F5D76E', scalar: textScalar }),
+      // White/Silver Classics (★)
+      confetti.shapeFromText({ text: '★', color: '#FFFFFF', scalar: textScalar }),
+      confetti.shapeFromText({ text: '★', color: '#FDFBF7', scalar: textScalar })
+    ];
+
+    // Responsive size scales - enlarged even further!
+    const burstScalar = isDesktop ? 4.8 : 2.6;
+    const rainMinScalar = isDesktop ? 3.0 : 1.8;
+    const rainRangeScalar = isDesktop ? 2.0 : 1.2;
+
+    // 1. Initial Left Corner Burst (Shoots towards center-top)
+    confetti({
+      particleCount: 85,
+      angle: 45,
+      spread: 60,
+      origin: { x: 0, y: 0.3 },
+      shapes: customShapes,
+      scalar: burstScalar,
+      gravity: 0.75,
+      ticks: 180
+    });
+
+    // 2. Initial Right Corner Burst (Shoots towards center-top)
+    confetti({
+      particleCount: 85,
+      angle: 135,
+      spread: 60,
+      origin: { x: 1, y: 0.3 },
+      shapes: customShapes,
+      scalar: burstScalar,
+      gravity: 0.75,
+      ticks: 180
+    });
+
+    // 3. Immersive Continuous Rain of Stars across the whole screen width
+    const duration = 2.5 * 1000; // 2.5 seconds of star rain
+    const end = Date.now() + duration;
+
+    const rainFrame = () => {
+      // Spawn 3 stars randomly across the horizontal screen top
+      confetti({
+        particleCount: 3,
+        angle: 270, // Direct downward gravity
+        spread: 90,
+        origin: { x: Math.random(), y: Math.random() * 0.15 }, // Top of screen
+        shapes: customShapes,
+        scalar: Math.random() * rainRangeScalar + rainMinScalar, // Responsive sparkling stars
+        gravity: Math.random() * 0.3 + 0.45,
+        drift: (Math.random() - 0.5) * 1.5, // Elegant sway
+        ticks: 150
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(rainFrame);
+      }
+    };
+
+    rainFrame();
+  }, []);
 
   const handleOpen = async () => {
     if (isOpen) return;
