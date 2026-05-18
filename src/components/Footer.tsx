@@ -302,9 +302,42 @@ const Footer = () => {
           {/* Gold Gradient Line */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-xv-gold to-transparent opacity-40" />
           
-          <div className="font-josefin text-[10px] uppercase tracking-[0.25em] opacity-40 flex flex-col gap-2">
-            <div>{t('footer.legal')}</div>
-            <div>© 2026 {t('footer.gugu')} {t('footer.rights')}</div>
+          <div className="font-josefin text-[10px] uppercase tracking-[0.25em] flex flex-col gap-3 select-none">
+            {/* Split legal terms into individual hoverable buttons with pointer cursor */}
+            <div className="flex flex-wrap justify-center gap-x-2 gap-y-1 opacity-50 hover:opacity-85 transition-opacity duration-300">
+              {t('footer.legal').split(' · ').map((term, i, arr) => (
+                <React.Fragment key={i}>
+                  <button 
+                    onClick={() => {
+                      navigator.vibrate?.(30);
+                      alert(term);
+                    }}
+                    className="hover:text-xv-gold hover:opacity-100 transition-all duration-300 cursor-pointer focus:outline-none font-semibold"
+                  >
+                    {term}
+                  </button>
+                  {i < arr.length - 1 && <span className="opacity-50">·</span>}
+                </React.Fragment>
+              ))}
+            </div>
+
+            {/* Copyright with hoverable developer brand and pointer cursor */}
+            <div className="opacity-50 hover:opacity-85 transition-opacity duration-300">
+              © 2026{' '}
+              <button 
+                onClick={() => {
+                  navigator.vibrate?.(40);
+                  setExpanded(true);
+                  setTimeout(() => {
+                    footerRef.current?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="hover:text-xv-gold hover:opacity-100 transition-all duration-300 cursor-pointer focus:outline-none font-bold"
+              >
+                {t('footer.gugu')}
+              </button>{' '}
+              {t('footer.rights').toUpperCase()}
+            </div>
           </div>
         </div>
 
