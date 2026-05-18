@@ -14,6 +14,35 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
+  // Generate stable coordinates and random properties for background stars once on mount
+  const [backgroundStars] = useState(() => {
+    return [...Array(65)].map((_, i) => ({
+      id: i,
+      isGold: i % 3 === 0,
+      sizeMultiplier: i % 8 === 0 ? 2.4 : (i % 3 === 0 ? 1.6 : 1),
+      top: Math.random() * 100,
+      left: Math.random() * 100,
+      fallDuration: (Math.random() * 1.2 + 1.8) + 's', // Fall duration between 1.8s and 3.0s
+      fallDelay: (Math.random() * 0.8) + 's', // Staggered delay
+      driftX: (Math.random() * 80 - 40) + 'px', // Elegant wind drift
+      twinkleDuration: (Math.random() * 2 + 2) + 's',
+      twinkleDelay: (Math.random() * 3) + 's',
+      char: i % 4 === 0 ? '✦' : '★'
+    }));
+  });
+
+  // Transition orchestration states for a magical progressive entry
+  const [isBackgroundStarsVisible, setIsBackgroundStarsVisible] = useState(false);
+  const [areStarsSettled, setAreStarsSettled] = useState(false);
+  const [isTitleVisible, setIsTitleVisible] = useState(false);
+  
+  // Origami envelope assembly states
+  const [isBackVisible, setIsBackVisible] = useState(false);
+  const [isFlapsVisible, setIsFlapsVisible] = useState(false);
+  const [isBottomFlapVisible, setIsBottomFlapVisible] = useState(false);
+  const [isTopFlapVisible, setIsTopFlapVisible] = useState(false);
+  const [isWaxSealVisible, setIsWaxSealVisible] = useState(false);
+
   // Trigger majestic golden star explosion automatically when opening the link / reloading
   useEffect(() => {
     // Detect if current screen is desktop (width >= 1024px)
@@ -72,6 +101,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
     const duration = 2.5 * 1000; // 2.5 seconds of star rain
     const end = Date.now() + duration;
 
+    let animId: number;
     const rainFrame = () => {
       // Spawn 3 stars randomly across the horizontal screen top
       confetti({
@@ -87,11 +117,35 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
       });
 
       if (Date.now() < end) {
-        requestAnimationFrame(rainFrame);
+        animId = requestAnimationFrame(rainFrame);
       }
     };
 
     rainFrame();
+
+    // Orchestrated progressive entry of elements
+    const t1 = setTimeout(() => setIsBackgroundStarsVisible(true), 300); // Container fades in
+    const tStars = setTimeout(() => setAreStarsSettled(true), 3800); // Fall finishes, start continuous twinkle loop
+    const t2 = setTimeout(() => setIsTitleVisible(true), 750); // Title, names and date fade in
+    
+    // Origami Envelope progressive assembly delays
+    const tBack = setTimeout(() => setIsBackVisible(true), 1100); // Envelope Back card fades and spins straight
+    const tFlaps = setTimeout(() => setIsFlapsVisible(true), 1500); // Left and Right flaps fold in
+    const tBottom = setTimeout(() => setIsBottomFlapVisible(true), 1900); // Bottom flap folds up
+    const tTop = setTimeout(() => setIsTopFlapVisible(true), 2300); // Top opening flap folds down
+    const tSeal = setTimeout(() => setIsWaxSealVisible(true), 2700); // Glowing wax seal bounces into the center!
+
+    return () => {
+      cancelAnimationFrame(animId);
+      clearTimeout(t1);
+      clearTimeout(tStars);
+      clearTimeout(t2);
+      clearTimeout(tBack);
+      clearTimeout(tFlaps);
+      clearTimeout(tBottom);
+      clearTimeout(tTop);
+      clearTimeout(tSeal);
+    };
   }, []);
 
   const handleOpen = async () => {
@@ -113,65 +167,119 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
       style={{ opacity: isOpen ? 0 : 1, pointerEvents: isOpen ? 'none' : 'auto' }}
     >
       
-      {/* Twinkling Stars Background with Safe Zone Mask */}
+      {/* Falling and Settling Background Stars with Safe Zone Mask */}
       <div 
-        className="absolute inset-0 z-0 overflow-hidden pointer-events-none"
+        className="absolute inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-[2000ms] ease-out"
         style={{
           maskImage: 'radial-gradient(ellipse at center, transparent 35%, black 75%)',
           WebkitMaskImage: 'radial-gradient(ellipse at center, transparent 35%, black 75%)',
+          opacity: isBackgroundStarsVisible ? 1 : 0
         }}
       >
-        {[...Array(80)].map((_, i) => (
+        {backgroundStars.map((star) => (
           <div
-            key={i}
-            className={`absolute animate-twinkle ${i % 3 === 0 ? 'text-xv-gold' : 'text-white'}`}
+            key={star.id}
+            className={`absolute ${areStarsSettled ? 'animate-twinkle' : 'animate-star-fall'} ${star.isGold ? 'text-xv-gold' : 'text-white'}`}
             style={{
-              fontSize: `calc(var(--star-base-size) * ${i % 8 === 0 ? 2.4 : (i % 3 === 0 ? 1.6 : 1)})`,
-              top: Math.random() * 100 + '%',
-              left: Math.random() * 100 + '%',
-              '--duration': (Math.random() * 2 + 2) + 's',
-              animationDelay: (Math.random() * 3) + 's',
+              fontSize: `calc(var(--star-base-size) * ${star.sizeMultiplier})`,
+              top: star.top + '%',
+              left: star.left + '%',
+              '--fall-duration': star.fallDuration,
+              '--fall-delay': star.fallDelay,
+              '--drift-x': star.driftX,
+              '--duration': star.twinkleDuration,
+              animationDelay: star.twinkleDelay,
               filter: 'drop-shadow(0 0 5px currentColor)',
             } as React.CSSProperties}
           >
-            {i % 4 === 0 ? '✦' : '★'}
+            {star.char}
           </div>
         ))}
       </div>
 
-      {/* Title */}
-      <h1 className="mt-6 mb-10 text-4xl md:text-5xl font-josefin tracking-[0.3em] text-xv-gold animate-shimmer uppercase relative z-10 text-center">
+      {/* Title - Progressive entry */}
+      <h1 
+        className="mt-6 mb-10 text-4xl md:text-5xl font-josefin tracking-[0.3em] text-xv-gold animate-shimmer uppercase relative z-10 text-center transition-all duration-[2000ms] ease-out"
+        style={{
+          opacity: isTitleVisible ? 1 : 0,
+          transform: isTitleVisible ? 'scale(1)' : 'scale(0.95)'
+        }}
+      >
         {t('envelopeTitle')}
       </h1>
 
-      {/* Envelope wrapper */}
-      <div className="relative w-80 h-56 max-w-[85vw] perspective-[1000px] z-10">
+      {/* Envelope wrapper - progressive origami entry perspective */}
+      <div 
+        className="relative w-80 h-56 max-w-[85vw] perspective-[1000px] z-10 transition-all duration-[2000ms] ease-out"
+        style={{
+          opacity: isOpen ? 0 : 1,
+          transform: isOpen ? 'scale(1.05)' : 'scale(1)',
+          pointerEvents: isWaxSealVisible && !isOpen ? 'auto' : 'none'
+        }}
+      >
         
-        {/* Envelope back */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#E8DEC1] to-[#D5C69A] shadow-2xl rounded-sm" />
+        {/* Envelope back - Part 1: Scales and rotates straight */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-br from-[#E8DEC1] to-[#D5C69A] shadow-2xl rounded-sm transition-all duration-[1200ms] ease-out"
+          style={{
+            opacity: isBackVisible ? 1 : 0,
+            transform: isBackVisible ? 'scale(1) rotate(0deg)' : 'scale(0.85) rotate(-3deg)',
+          }}
+        />
         
-        {/* Envelope front flaps (left, right, bottom) */}
+        {/* Envelope front flaps (left, right, bottom) - Part 2 & 3: Fold in from 3D axis */}
         <div className="absolute inset-0 overflow-hidden">
-          {/* Left flap with defined edge */}
-          <div className="absolute inset-0 bg-[#F6EECC] origin-left border-r border-[#D5C69A]" style={{ clipPath: 'polygon(0 0, 50% 50%, 0 100%)' }}>
+          {/* Left flap - folds in from 3D Y axis */}
+          <div 
+            className="absolute inset-0 bg-[#F6EECC] border-r border-[#D5C69A] transition-all duration-[1000ms] ease-out" 
+            style={{ 
+              clipPath: 'polygon(0 0, 50% 50%, 0 100%)',
+              opacity: isFlapsVisible ? 1 : 0,
+              transform: isFlapsVisible ? 'rotateY(0deg)' : 'rotateY(-90deg)',
+              transformOrigin: 'left center',
+              backfaceVisibility: 'hidden'
+            }}
+          >
             <div className="absolute inset-0 bg-gradient-to-r from-black/5 to-transparent" />
           </div>
-          {/* Right flap with defined edge */}
-          <div className="absolute inset-0 bg-[#F6EECC] origin-right border-l border-[#D5C69A]" style={{ clipPath: 'polygon(100% 0, 50% 50%, 100% 100%)' }}>
+          
+          {/* Right flap - folds in from 3D Y axis */}
+          <div 
+            className="absolute inset-0 bg-[#F6EECC] border-l border-[#D5C69A] transition-all duration-[1000ms] ease-out" 
+            style={{ 
+              clipPath: 'polygon(100% 0, 50% 50%, 100% 100%)',
+              opacity: isFlapsVisible ? 1 : 0,
+              transform: isFlapsVisible ? 'rotateY(0deg)' : 'rotateY(90deg)',
+              transformOrigin: 'right center',
+              backfaceVisibility: 'hidden'
+            }}
+          >
             <div className="absolute inset-0 bg-gradient-to-l from-black/5 to-transparent" />
           </div>
-          {/* Bottom flap with shadow and defined top edge */}
-          <div className="absolute inset-0 bg-[#F6EECC] origin-bottom border-t border-[#D5C69A] shadow-[0_-10px_20px_rgba(0,0,0,0.15)]" style={{ clipPath: 'polygon(0 100%, 50% 50%, 100% 100%)' }}>
+          
+          {/* Bottom flap - folds up from 3D X axis */}
+          <div 
+            className="absolute inset-0 bg-[#F6EECC] border-t border-[#D5C69A] shadow-[0_-10px_20px_rgba(0,0,0,0.15)] transition-all duration-[1000ms] ease-out" 
+            style={{ 
+              clipPath: 'polygon(0 100%, 50% 50%, 100% 100%)',
+              opacity: isBottomFlapVisible ? 1 : 0,
+              transform: isBottomFlapVisible ? 'rotateX(0deg)' : 'rotateX(-90deg)',
+              transformOrigin: 'bottom center',
+              backfaceVisibility: 'hidden'
+            }}
+          >
             <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent" />
           </div>
         </div>
 
-        {/* Envelope top flap (The one that opens) */}
+        {/* Envelope top flap - Part 4: Folds down from 3D X axis */}
         <div 
-          className="absolute inset-0 origin-top bg-[#F9F4E0] transition-transform duration-800 ease-in-out z-20"
+          className="absolute inset-0 bg-[#F9F4E0] transition-all duration-[1000ms] ease-out z-20"
           style={{ 
             clipPath: 'polygon(0 0, 50% 60%, 100% 0)',
-            transform: isOpen ? 'rotateX(-180deg)' : 'rotateX(0deg)',
+            transform: isOpen ? 'rotateX(-180deg)' : (isTopFlapVisible ? 'rotateX(0deg)' : 'rotateX(90deg)'),
+            opacity: isTopFlapVisible ? 1 : 0,
+            transformOrigin: 'top center',
             backfaceVisibility: 'hidden',
             filter: 'drop-shadow(0 5px 10px rgba(0,0,0,0.2))'
           }}
@@ -181,14 +289,19 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
           <div className="absolute inset-0 border-b-2 border-[#D5C69A]/60" style={{ clipPath: 'polygon(0 0, 50% 60%, 100% 0)' }} />
         </div>
 
-        {/* Wax seal */}
+        {/* Wax seal - Part 5: Pops in with an elastic spring scale */}
         <div 
-          className="absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 z-30 cursor-pointer"
+          className="absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 z-30 cursor-pointer transition-all duration-[800ms]"
           onClick={() => {
+            if (!isWaxSealVisible || isOpen) return;
             navigator.vibrate?.(60);
             handleOpen();
           }}
-          style={{ transition: 'opacity 0.3s', opacity: isOpen ? 0 : 1 }}
+          style={{ 
+            opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
+            transform: `translate(-50%, -50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
+            transitionTimingFunction: isWaxSealVisible && !isOpen ? 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' : 'ease-in-out'
+          }}
         >
           <div className="w-[88px] h-[88px] rounded-full bg-gradient-to-br from-[#4A050A] to-[#1A0404] flex items-center justify-center animate-glow shadow-[0_4px_10px_rgba(0,0,0,0.5)] border-[2.5px] border-xv-gold relative hover:scale-105 transition-transform">
             <div className="absolute inset-1 rounded-full border border-xv-gold opacity-50" />
@@ -199,7 +312,14 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
         </div>
       </div>
 
-      <div className="mt-12 text-center relative z-10 transition-opacity duration-500" style={{ opacity: isOpen ? 0 : 1 }}>
+      {/* Footer Wrapper (Names/Date) - Progressive entry */}
+      <div 
+        className="mt-12 text-center relative z-10 transition-all duration-[2000ms] ease-out" 
+        style={{ 
+          opacity: isOpen ? 0 : (isTitleVisible ? 1 : 0),
+          transform: isTitleVisible ? 'scale(1)' : 'scale(0.95)'
+        }}
+      >
         <h2 className="font-playfair italic text-3xl text-xv-gold-light mb-2">{CONFIG.quinceañeraName}</h2>
         <p className="font-josefin uppercase text-sm md:text-base text-xv-gold opacity-80 tracking-widest mb-4">
           {new Date(CONFIG.eventDate).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}

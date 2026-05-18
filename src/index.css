@@ -313,3 +313,24 @@ html, body {
 .animate-bounce-right {
   animation: bounceRight 1.2s infinite ease-in-out;
 }
+
+@keyframes starFall {
+  0% {
+    transform: translateY(-100vh) translateX(var(--drift-x, 0px)) scale(2.2);
+    opacity: 0;
+    filter: drop-shadow(0 0 12px currentColor) blur(1px);
+  }
+  15% {
+    opacity: 1;
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+  100% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.8;
+    filter: drop-shadow(0 0 4px currentColor);
+  }
+}
+
+.animate-star-fall {
+  animation: starFall var(--fall-duration, 2.2s) var(--fall-delay, 0s) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
