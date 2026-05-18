@@ -321,7 +321,32 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             transitionTimingFunction: isWaxSealVisible && !isOpen ? 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' : 'ease-in-out'
           }}
         >
-          <div className="w-[88px] h-[88px] lg:w-[115px] lg:h-[115px] rounded-full bg-gradient-to-br from-[#4A050A] to-[#1A0404] flex items-center justify-center animate-glow shadow-[0_4px_10px_rgba(0,0,0,0.5)] border-[2.5px] border-xv-gold relative hover:scale-105 transition-transform">
+          {/* Left Horse touching the seal with snout */}
+          <div 
+            className="absolute right-[42px] lg:right-[56px] top-1/2 w-[70px] h-[70px] lg:w-[95px] lg:h-[95px] pointer-events-none z-20"
+            style={{ transform: 'translateY(-50%) scaleX(-1)' }}
+          >
+            <img 
+              src="/Fotos/Sobre/Sobre.png" 
+              alt="Caballo Izquierdo" 
+              className="w-full h-full object-contain filter-gold-to-burgundy" 
+            />
+          </div>
+
+          {/* Right Horse touching the seal with snout */}
+          <div 
+            className="absolute left-[42px] lg:left-[56px] top-1/2 w-[70px] h-[70px] lg:w-[95px] lg:h-[95px] pointer-events-none z-20"
+            style={{ transform: 'translateY(-50%)' }}
+          >
+            <img 
+              src="/Fotos/Sobre/Sobre.png" 
+              alt="Caballo Derecho" 
+              className="w-full h-full object-contain filter-gold-to-burgundy" 
+            />
+          </div>
+
+          {/* Sello Rojo Button */}
+          <div className="w-[88px] h-[88px] lg:w-[115px] lg:h-[115px] rounded-full bg-gradient-to-br from-[#4A050A] to-[#1A0404] flex items-center justify-center animate-glow shadow-[0_4px_10px_rgba(0,0,0,0.5)] border-[2.5px] border-xv-gold relative hover:scale-105 transition-transform z-30">
             <div className="absolute inset-1 rounded-full border border-xv-gold opacity-50" />
             <div className="flex flex-col items-center animate-beat pointer-events-none">
               <span className="font-cormorant italic font-bold text-xv-pearl text-[21px] lg:text-[26px] leading-none mt-1 tracking-wide">{t('open')}</span>
