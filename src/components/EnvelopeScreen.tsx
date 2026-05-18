@@ -309,7 +309,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
         {/* Left Horse stretching from left-0 to seal border */}
         <div 
-          className="absolute left-0 right-1/2 mr-[40px] lg:mr-[55px] top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-0 right-1/2 mr-[52px] lg:mr-[70px] top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -327,7 +327,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
         {/* Right Horse stretching from seal border to right-0 */}
         <div 
-          className="absolute left-1/2 ml-[40px] lg:ml-[55px] right-0 top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-1/2 ml-[52px] lg:ml-[70px] right-0 top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -358,7 +358,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           }}
         >
           {/* Sello Rojo Button */}
-          <div className="w-[88px] h-[88px] lg:w-[115px] lg:h-[115px] rounded-full flex items-center justify-center relative hover:scale-105 transition-transform z-30 filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]">
+          <div className="w-[110px] h-[110px] lg:w-[145px] lg:h-[145px] rounded-full flex items-center justify-center relative hover:scale-105 transition-transform z-30 filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]">
             <img 
               src="/Fotos/Sobre/sello.png" 
               alt="Sello de Cera" 
