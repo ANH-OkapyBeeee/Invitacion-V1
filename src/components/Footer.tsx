@@ -19,20 +19,20 @@ const serviceMetadata = [
 ];
 
 const bubblePositions = [
-  { top: "6%", left: "4%", duration: "12s", delay: "0s" },
-  { top: "8%", left: "37%", duration: "16s", delay: "-3s" },
-  { top: "5%", left: "68%", duration: "14s", delay: "-6s" },
-  { top: "28%", left: "16%", duration: "13s", delay: "-1.5s" },
-  { top: "32%", left: "48%", duration: "18s", delay: "-8s" },
-  { top: "26%", left: "78%", duration: "15s", delay: "-4s" },
-  { top: "52%", left: "5%", duration: "17s", delay: "-11s" },
-  { top: "56%", left: "36%", duration: "11s", delay: "-2.5s" },
-  { top: "50%", left: "68%", duration: "13s", delay: "-9s" },
-  { top: "76%", left: "16%", duration: "15s", delay: "-5s" },
-  { top: "78%", left: "50%", duration: "12s", delay: "-7s" },
-  { top: "76%", left: "78%", duration: "14s", delay: "-12s" },
+  { top: "12%", left: "10%", duration: "12s", delay: "0s" },  // Index 0 (Web & Tiendas - large)
+  { top: "10%", left: "42%", duration: "16s", delay: "-3s" }, // Index 1
+  { top: "12%", left: "74%", duration: "14s", delay: "-6s" }, // Index 2
+  { top: "32%", left: "14%", duration: "13s", delay: "-1.5s" }, // Index 3
+  { top: "34%", left: "46%", duration: "18s", delay: "-8s" }, // Index 4
+  { top: "30%", left: "76%", duration: "15s", delay: "-4s" }, // Index 5
+  { top: "54%", left: "10%", duration: "17s", delay: "-11s" }, // Index 6
+  { top: "56%", left: "44%", duration: "11s", delay: "-2.5s" }, // Index 7
+  { top: "52%", left: "74%", duration: "13s", delay: "-9s" }, // Index 8
+  { top: "76%", left: "15%", duration: "15s", delay: "-5s" }, // Index 9 (Ciberseguridad - large)
+  { top: "78%", left: "45%", duration: "12s", delay: "-7s" }, // Index 10
+  { top: "75%", left: "73%", duration: "14s", delay: "-12s" }, // Index 11 (Tuning Móvil - large)
   // Extra one for English 13th item
-  { top: "45%", left: "82%", duration: "16s", delay: "-10s" }
+  { top: "48%", left: "80%", duration: "16s", delay: "-10s" }
 ];
 
 const Footer = () => {
@@ -276,7 +276,7 @@ const Footer = () => {
 
             {/* Floating Bubbles Canvas */}
             <div className="relative w-full my-4 px-4">
-              <div className="relative w-full h-[380px] md:h-[420px] overflow-hidden bg-black/60 rounded-3xl border border-white/5 shadow-inner">
+              <div className="relative w-full h-[480px] md:h-[540px] overflow-hidden bg-black/60 rounded-3xl border border-white/5 shadow-inner">
                 {(() => {
                   const servicesArray = t('footer.services', { returnObjects: true }) as string[];
                   const isEnglishList = servicesArray.length === 13;
