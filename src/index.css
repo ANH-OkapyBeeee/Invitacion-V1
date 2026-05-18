@@ -11,7 +11,7 @@
   --gold:       #D4AF37;
   --gold-light: #FDE08B;
   --pearl:      #FDFBF7; /* Blanco perla */
-  --black-bg:   #0A0304; /* Negro con sutil tinte borgoña */
+  --black-bg:   #000000; /* Negro profundo y puro */
 }
 
 html, body {

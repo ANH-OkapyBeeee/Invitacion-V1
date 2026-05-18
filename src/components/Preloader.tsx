@@ -94,7 +94,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete, onStartFadeOut }) => 
 
   return (
     <div 
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#020202] bg-[radial-gradient(circle_at_center,_#0b0b0b_0%,_#020202_100%)] transition-opacity duration-1000 ease-in-out select-none ${
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#000000] transition-opacity duration-1000 ease-in-out select-none ${
         fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >

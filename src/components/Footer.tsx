@@ -201,7 +201,7 @@ const Footer = () => {
   };
 
   return (
-    <footer ref={footerRef} className="bg-[#080108] text-gray-400 py-10 px-4 text-center transition-all duration-500">
+    <footer ref={footerRef} className="bg-[#000000] text-gray-400 py-10 px-4 text-center transition-all duration-500">
       <div className="max-w-[480px] mx-auto">
         
         <button 
