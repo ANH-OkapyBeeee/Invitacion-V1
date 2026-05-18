@@ -455,6 +455,10 @@ html, body {
   display: none !important;
 }
 
+.flap-date {
+  display: none !important;
+}
+
 /* ==========================================
    Envelope Screen Short Height Adjustments
    ========================================== */
@@ -542,7 +546,10 @@ html, body {
     margin-bottom: 0.25rem !important;
   }
   .envelope-footer p {
-    margin-bottom: 0.5rem !important;
+    display: none !important;
+  }
+  .flap-date {
+    display: block !important;
   }
 }
 

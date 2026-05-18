@@ -296,6 +296,13 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             <div className="absolute inset-0 bg-gradient-to-t from-white/25 via-transparent to-black/15 pointer-events-none" />
             {/* Fold highlight crease */}
             <div className="absolute left-0 right-0 bottom-0 h-[1.5px] bg-white/30 pointer-events-none" />
+            
+            {/* Date inside bottom flap (appears on short heights like mobile landscape) */}
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-[3%] lg:bottom-[4%] z-10 pointer-events-none flap-date">
+              <p className="font-josefin uppercase text-[9px] lg:text-[11px] text-xv-gold tracking-[0.18em] text-center whitespace-nowrap opacity-[0.98] font-bold">
+                {new Date(CONFIG.eventDate).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}
+              </p>
+            </div>
           </div>
         </div>
 
@@ -323,11 +330,11 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             <div className="absolute inset-x-0 top-0 h-[2px] bg-white/40 pointer-events-none" />
             
             {/* Crown inside the top flap (appears on short viewports or when the top crown is hidden) */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-[2%] lg:top-[3%] w-[100px] h-[70px] lg:w-[140px] lg:h-[97px] pointer-events-none z-10 flap-crown">
+            <div className="absolute left-1/2 -translate-x-1/2 top-[0.2%] lg:top-[0.4%] w-[110px] h-[76px] lg:w-[155px] lg:h-[108px] pointer-events-none z-10 flap-crown">
               <img 
                 src="/Fotos/Corona/corona.png" 
                 alt="Corona Solapa" 
-                className="w-full h-full object-contain filter-gold-to-burgundy opacity-[0.85]" 
+                className="w-full h-full object-contain filter-gold-to-burgundy opacity-[0.98]" 
               />
             </div>
           </div>
@@ -346,10 +353,10 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           <img 
             src="/Fotos/Sobre/Sobre.png" 
             alt="Caballo Izquierdo" 
-            className="w-full h-full object-contain mix-blend-multiply opacity-[0.35]" 
+            className="w-full h-full object-contain opacity-[0.95]" 
             style={{ 
               objectPosition: 'right center',
-              filter: 'drop-shadow(1px 1px 1px rgba(255,255,255,0.7)) drop-shadow(-1px -1px 1px rgba(0,0,0,0.12)) sepia(0.3) saturate(1.2)'
+              filter: 'drop-shadow(1px 1px 1.5px rgba(0,0,0,0.15)) sepia(0.2) saturate(1.2)'
             }}
           />
         </div>
@@ -367,11 +374,11 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           <img 
             src="/Fotos/Sobre/Sobre.png" 
             alt="Caballo Derecho" 
-            className="w-full h-full object-contain mix-blend-multiply opacity-[0.35]" 
+            className="w-full h-full object-contain opacity-[0.95]" 
             style={{ 
               objectPosition: 'right center', 
               transform: 'scaleX(-1)',
-              filter: 'drop-shadow(-1px 1px 1px rgba(255,255,255,0.7)) drop-shadow(1px -1px 1px rgba(0,0,0,0.12)) sepia(0.3) saturate(1.2)'
+              filter: 'drop-shadow(-1px 1px 1.5px rgba(0,0,0,0.15)) sepia(0.2) saturate(1.2)'
             }}
           />
         </div>
