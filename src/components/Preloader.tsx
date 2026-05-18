@@ -94,31 +94,29 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete, onStartFadeOut }) => 
 
   return (
     <div 
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-b from-[#FDFBF7] to-[#F5F1E9] transition-opacity duration-1000 ease-in-out select-none ${
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0A0304] bg-[radial-gradient(circle_at_center,_rgba(110,20,35,0.12)_0%,_#0A0304_100%)] transition-opacity duration-1000 ease-in-out select-none ${
         fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
       <div className="flex flex-col items-center max-w-xs text-center px-4">
-        {/* Pulsing Star SVG Logo */}
+        {/* Pulsing GUGU Logo with gold gradient border */}
         <div className="relative mb-8 flex items-center justify-center">
           {/* Inner Pulsing Glow Rings */}
-          <div className="absolute w-24 h-24 rounded-full bg-[#D4AF37]/15 animate-ping opacity-75" />
-          <div className="absolute w-16 h-16 rounded-full bg-[#6E1423]/10 animate-pulse" />
+          <div className="absolute w-28 h-28 rounded-full bg-[#D4AF37]/15 animate-ping opacity-75" />
+          <div className="absolute w-24 h-24 rounded-full bg-[#6E1423]/20 animate-pulse" />
           
-          {/* Core Star Logo */}
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            className="w-16 h-16 text-[#D4AF37] stroke-[1.5] filter drop-shadow-[0_0_15px_rgba(212,175,55,0.6)] animate-pulse relative z-10"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499c.172-.44.869-.44 1.04 0l2.584 6.594 7.039.605c.477.041.667.632.31.956l-5.32 4.887 1.584 6.911c.108.47-.406.844-.816.588L12 17.755l-6.223 3.69c-.41.256-.924-.117-.816-.588l1.584-6.911-5.32-4.887c-.357-.324-.167-.915.31-.956l7.039-.605 2.584-6.594z" />
-          </svg>
+          {/* Core Logo Image with gold border */}
+          <div className="relative w-20 h-20 rounded-full p-[2px] bg-gradient-to-r from-[#8A5A19] via-[#D4AF37] to-[#8A5A19] z-10 filter drop-shadow-[0_0_15px_rgba(212,175,55,0.45)]">
+            <img 
+              src="/logo-gugu.jpg" 
+              alt="GUGU Logo" 
+              className="w-full h-full object-cover rounded-full" 
+            />
+          </div>
         </div>
 
         {/* Brand / Quinceañera Subtitle */}
-        <div className="font-josefin text-[10px] uppercase tracking-[0.25em] text-[#6E1423]/70 mb-2 font-bold">
+        <div className="font-josefin text-[10px] uppercase tracking-[0.25em] text-[#D4AF37] mb-2 font-bold">
           {CONFIG.quinceañeraName} • {t('heroTitle', 'XV AÑOS')}
         </div>
 
@@ -126,12 +124,12 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete, onStartFadeOut }) => 
         <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mb-6 opacity-60" />
 
         {/* Loading Text */}
-        <p className="font-playfair italic text-lg text-[#400B14] tracking-wide animate-pulse">
+        <p className="font-playfair italic text-lg text-[#FDFBF7]/90 tracking-wide animate-pulse">
           {t('preloader.loadingText', 'Cargando contenido...')}
         </p>
 
         {/* Elegant Micro-Progress Bar */}
-        <div className="w-32 h-[2px] bg-[#6E1423]/10 rounded-full overflow-hidden mt-6">
+        <div className="w-32 h-[2px] bg-white/10 rounded-full overflow-hidden mt-6">
           <div className="h-full bg-gradient-to-r from-[#D4AF37] via-[#6E1423] to-[#D4AF37] animate-loading-bar rounded-full" />
         </div>
       </div>
