@@ -415,25 +415,18 @@ function App() {
                     <h3 className="font-playfair italic text-3xl text-xv-red mb-4">Tip de Vestimenta</h3>
                     <div className="w-16 h-0.5 bg-xv-gold/40 mx-auto mb-6" />
                     <div className="font-cormorant text-xl text-xv-black-bg mb-8 italic leading-relaxed font-medium space-y-4">
-                      <p className="font-bold text-xv-red not-italic text-2xl mb-2">
-                        ¡Ayúdanos a que la festejada brille!
-                      </p>
-                      
                       <p>
                         Con mucho cariño, pedimos a nuestras invitadas evitar 🚫 los vestidos en:
                       </p>
                       
-                      <ul className="inline-block text-left space-y-2 my-4 bg-xv-pearl/50 border border-xv-gold/20 p-4 rounded-xl shadow-inner min-w-[220px]">
+                      <ul className="inline-block text-left space-y-2 my-4 bg-xv-pearl/50 border border-xv-gold/20 p-4 rounded-xl shadow-inner min-w-[200px]">
                         <li className="flex items-center gap-3 text-lg not-italic font-josefin font-semibold text-xv-black-bg">
-                          <span className="text-xl">👗</span>
                           <span>🔴 Rojo</span>
                         </li>
                         <li className="flex items-center gap-3 text-lg not-italic font-josefin font-semibold text-xv-black-bg">
-                          <span className="text-xl">👗</span>
                           <span>👑 Dorado</span>
                         </li>
                         <li className="flex items-center gap-3 text-lg not-italic font-josefin font-semibold text-xv-black-bg">
-                          <span className="text-xl">👗</span>
                           <span>⚪ Blanco Perla</span>
                         </li>
                       </ul>
