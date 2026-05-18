@@ -18,23 +18,46 @@ import ShakeCelebration from './components/ShakeCelebration';
 function App() {
   const { t, i18n } = useTranslation();
   const [isOpened, setIsOpened] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isButtonsVisible, setIsButtonsVisible] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true); // Default playing state active from the envelope screen
   const playerRef = useRef<any>(null);
-  const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const resetButtonsTimer = () => {
-    setIsButtonsVisible(true);
-    if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
-    idleTimerRef.current = setTimeout(() => {
-      setIsButtonsVisible(false);
-    }, 5000);
+  // Custom Floating Action Buttons (FAB) State Machine
+  const [isCollapsed, setIsCollapsed] = useState(false); // Start expanded on load
+  const [isTenue, setIsTenue] = useState(false);
+  const [isFABVisible, setIsFABVisible] = useState(false); // Magical organic delay timed with stars
+  
+  const collapseTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const tenueTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const isLongPressActive = useRef(false);
+
+  const resetIdleTimers = () => {
+    setIsTenue(false);
+    if (collapseTimerRef.current) clearTimeout(collapseTimerRef.current);
+    if (tenueTimerRef.current) clearTimeout(tenueTimerRef.current);
+
+    // 1. Auto-collapse expanded options after 3 seconds of no interaction
+    collapseTimerRef.current = setTimeout(() => {
+      setIsCollapsed(true);
+    }, 3000);
+
+    // 2. Go tenue/semi-transparent after 3.5 seconds of no interaction
+    tenueTimerRef.current = setTimeout(() => {
+      setIsTenue(true);
+    }, 3500);
   };
 
   useEffect(() => {
-    resetButtonsTimer();
+    // Organically materialize the buttons from the magical stardust
+    const materializationTimer = setTimeout(() => {
+      setIsFABVisible(true);
+      resetIdleTimers();
+    }, 4500); // timed perfectly with the falling stars rainfall and envelope origami card
+
     return () => {
-      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+      clearTimeout(materializationTimer);
+      if (collapseTimerRef.current) clearTimeout(collapseTimerRef.current);
+      if (tenueTimerRef.current) clearTimeout(tenueTimerRef.current);
     };
   }, []);
 
@@ -57,13 +80,13 @@ function App() {
   }, [isOpened, isPlaying, hasPromptedMusic]);
 
   const toggleLanguage = () => {
-    resetButtonsTimer();
+    resetIdleTimers();
     const nextLang = i18n.language === 'es' ? 'en' : 'es';
     i18n.changeLanguage(nextLang);
   };
 
   const toggleAudio = () => {
-    resetButtonsTimer();
+    resetIdleTimers();
     try {
       if (playerRef.current) {
         const state = playerRef.current.getPlayerState();
@@ -75,9 +98,12 @@ function App() {
           playerRef.current.playVideo();
           setIsPlaying(true);
         }
+      } else {
+        setIsPlaying(prev => !prev);
       }
     } catch (e) {
       console.error("Error toggling audio:", e);
+      setIsPlaying(prev => !prev);
     }
   };
 
@@ -106,6 +132,9 @@ function App() {
   useEffect(() => {
     // When opened, try to play audio automatically and trigger celebration
     if (isOpened) {
+      // Wake up the FAB buttons and make them fully opaque so the user can easily see and interact with them immediately!
+      resetIdleTimers();
+
       // Trigger magical star shower
       const duration = 4 * 1000;
       const end = Date.now() + duration;
@@ -159,6 +188,34 @@ function App() {
     },
   };
 
+  const handleMusicClick = (e: React.MouseEvent | React.TouchEvent) => {
+    if (isLongPressActive.current) {
+      isLongPressActive.current = false;
+      return;
+    }
+    resetIdleTimers();
+    navigator.vibrate?.(40);
+    toggleAudio();
+  };
+
+  const handleStartPress = () => {
+    resetIdleTimers();
+    isLongPressActive.current = false;
+    if (longPressTimerRef.current) clearTimeout(longPressTimerRef.current);
+    longPressTimerRef.current = setTimeout(() => {
+      isLongPressActive.current = true;
+      setIsCollapsed(prev => !prev); // Toggle collapsed/expanded on long press!
+      navigator.vibrate?.([60, 30, 60]); // Premium vibration feedback!
+    }, 500); // 500ms long press threshold
+  };
+
+  const handleEndPress = (e: React.MouseEvent | React.TouchEvent) => {
+    if (longPressTimerRef.current) clearTimeout(longPressTimerRef.current);
+    if (isLongPressActive.current) {
+      e.preventDefault(); // Prevent standard click event if it was a long press!
+      e.stopPropagation();
+    }
+  };
 
   return (
     <div className="relative w-full max-w-[100vw] overflow-x-hidden font-josefin text-xv-pearl bg-xv-black-bg min-h-[100svh]">
@@ -169,40 +226,66 @@ function App() {
           videoId="M3CbRJ6jgQc" 
           opts={opts} 
           onReady={onPlayerReady} 
-          onPlay={() => setIsPlaying(true)}
-          onPause={() => setIsPlaying(false)}
+          onPlay={() => {
+            setIsPlaying(true);
+            resetIdleTimers();
+          }}
+          onPause={() => {
+            setIsPlaying(false);
+            resetIdleTimers();
+          }}
         />
       </div>
 
-      {/* Floating Buttons */}
+      {/* Custom Floating Action Buttons (FAB) System */}
       <div 
-        className={`absolute top-4 right-4 z-[60] flex gap-3 transition-opacity duration-1000 ${isButtonsVisible ? 'opacity-100' : 'opacity-20'}`}
-        onClick={resetButtonsTimer}
-        onTouchStart={resetButtonsTimer}
+        className={`fixed bottom-6 right-6 z-[60] flex flex-row-reverse items-center transition-all duration-[2000ms] ease-out ${
+          isFABVisible 
+            ? `${isTenue ? 'opacity-30' : 'opacity-100'} scale-100` 
+            : 'opacity-0 scale-75 pointer-events-none'
+        } ${isCollapsed ? 'gap-0' : 'gap-3'}`}
+        onMouseEnter={resetIdleTimers}
+        onMouseMove={resetIdleTimers}
+        onTouchStart={resetIdleTimers}
       >
+        {/* Primary Music Button */}
         <button 
-          onClick={() => {
-            navigator.vibrate?.(40);
-            toggleAudio();
-          }}
-          className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-xv-gold flex items-center justify-center text-xl shadow-lg transition-transform active:scale-95"
+          onClick={handleMusicClick}
+          onTouchStart={handleStartPress}
+          onTouchEnd={handleEndPress}
+          onMouseDown={handleStartPress}
+          onMouseUp={handleEndPress}
+          onMouseLeave={handleEndPress}
+          className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white text-gray-800 flex items-center justify-center text-2xl md:text-3xl shadow-[0_8px_30px_rgba(0,0,0,0.15)] transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer border border-gray-100 relative group select-none"
+          title={isPlaying ? 'Silenciar' : 'Reproducir'}
         >
+          {isPlaying && (
+            <span className="absolute inset-0 rounded-full bg-green-500/10 animate-ping pointer-events-none" />
+          )}
           {isPlaying ? '🎵' : '🔇'}
         </button>
 
+        {/* Language Button */}
         <button 
           onClick={() => {
             navigator.vibrate?.(40);
             toggleLanguage();
           }}
-          className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-xv-gold flex items-center justify-center text-sm font-bold shadow-lg transition-transform active:scale-95 text-xv-gold uppercase"
+          className={`w-12 h-12 md:w-14 md:h-14 rounded-full bg-white text-gray-800 flex items-center justify-center text-sm md:text-base font-bold shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer border border-gray-100 select-none ${
+            isCollapsed 
+              ? 'opacity-0 scale-50 pointer-events-none w-0 h-0 border-none shadow-none gap-0 overflow-hidden' 
+              : 'opacity-100 scale-100'
+          }`}
+          title="Idioma"
         >
           {i18n.language === 'es' ? 'EN' : 'ES'}
         </button>
 
+        {/* Admin/Config Button */}
         <button 
           onClick={() => {
             navigator.vibrate?.(40);
+            resetIdleTimers();
             const user = prompt('Usuario:');
             if (user === null) return;
             if (user !== 'ANH') { alert('Usuario incorrecto'); return; }
@@ -210,7 +293,11 @@ function App() {
             if (pass === 'lupita#15./') setIsAdminOpen(prev => !prev);
             else if (pass !== null) alert('Contraseña incorrecta');
           }}
-          className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-xv-gold flex items-center justify-center text-lg shadow-lg transition-transform active:scale-95"
+          className={`w-12 h-12 md:w-14 md:h-14 rounded-full bg-white text-gray-800 flex items-center justify-center text-xl md:text-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer border border-gray-100 select-none ${
+            isCollapsed 
+              ? 'opacity-0 scale-50 pointer-events-none w-0 h-0 border-none shadow-none gap-0 overflow-hidden' 
+              : 'opacity-100 scale-100'
+          }`}
           title="Administrador"
         >
           ⚙️
