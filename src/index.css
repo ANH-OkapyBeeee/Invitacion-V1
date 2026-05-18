@@ -450,6 +450,164 @@ html, body {
   animation: floatOrganicB 7s ease-in-out infinite;
 }
 
+/* ==========================================
+   Envelope Screen Short Height Adjustments
+   ========================================== */
+
+/* Laptops like 11.6" (vertical space typically < 720px) */
+@media (max-height: 720px) {
+  /* Reduce outer container top padding */
+  .fixed.inset-0.flex-col {
+    padding-top: 1.25rem !important; /* pt-5 */
+  }
+
+  /* Scale down the royal crown */
+  .crown-container {
+    width: 110px !important;
+    height: 78px !important;
+    margin-top: 0.25rem !important;
+    margin-bottom: -0.5rem !important;
+  }
+
+  /* Scale down the title text size and margins */
+  .envelope-title {
+    font-size: 2.25rem !important; /* text-4xl */
+    margin-top: 0.5rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  /* Scale envelope to perfect 1.428 aspect ratio without distortion */
+  .envelope-wrapper {
+    width: 280px !important;
+    height: 196px !important;
+  }
+
+  /* Laptop size scaling: if widescreen but short height */
+  @media (min-width: 1024px) {
+    .envelope-wrapper {
+      width: 380px !important;
+      height: 266px !important;
+    }
+  }
+
+  /* Scale horses proportionally inside the smaller envelope wrapper */
+  .left-horse, .right-horse {
+    height: 170px !important;
+  }
+  .left-horse {
+    margin-right: 42px !important;
+  }
+  .right-horse {
+    margin-left: 42px !important;
+  }
+
+  @media (min-width: 1024px) {
+    .left-horse, .right-horse {
+      height: 230px !important;
+    }
+    .left-horse {
+      margin-right: 56px !important;
+    }
+    .right-horse {
+      margin-left: 56px !important;
+    }
+  }
+
+  /* Scale wax seal button proportionally */
+  .wax-seal-btn {
+    width: 90px !important;
+    height: 90px !important;
+  }
+
+  @media (min-width: 1024px) {
+    .wax-seal-btn {
+      width: 120px !important;
+      height: 120px !important;
+    }
+  }
+
+  /* Scale down footer and names spacing */
+  .envelope-footer {
+    margin-top: 0.75rem !important;
+  }
+  .envelope-footer h2 {
+    font-size: 1.625rem !important; /* text-2xl-ish */
+    margin-bottom: 0.25rem !important;
+  }
+  .envelope-footer p {
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+/* Extremely short viewports (vertical space < 600px) */
+@media (max-height: 600px) {
+  .fixed.inset-0.flex-col {
+    padding-top: 0.75rem !important; /* pt-3 */
+  }
+
+  /* Hide the crown to rescue valuable vertical space */
+  .crown-container {
+    display: none !important;
+  }
+
+  .envelope-title {
+    font-size: 1.75rem !important; /* text-3xl-ish */
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .envelope-wrapper {
+    width: 250px !important;
+    height: 175px !important;
+  }
+
+  @media (min-width: 1024px) {
+    .envelope-wrapper {
+      width: 320px !important;
+      height: 224px !important;
+    }
+  }
+
+  .left-horse, .right-horse {
+    height: 150px !important;
+  }
+  .left-horse {
+    margin-right: 36px !important;
+  }
+  .right-horse {
+    margin-left: 36px !important;
+  }
+
+  @media (min-width: 1024px) {
+    .left-horse, .right-horse {
+      height: 190px !important;
+    }
+    .left-horse {
+      margin-right: 48px !important;
+    }
+    .right-horse {
+      margin-left: 48px !important;
+    }
+  }
+
+  .wax-seal-btn {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  @media (min-width: 1024px) {
+    .wax-seal-btn {
+      width: 100px !important;
+      height: 100px !important;
+    }
+  }
+
+  .envelope-footer {
+    margin-top: 0.5rem !important;
+  }
+}
+
+
 
 
 

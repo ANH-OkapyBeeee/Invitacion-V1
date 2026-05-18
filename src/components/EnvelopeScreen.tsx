@@ -202,7 +202,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
       {/* Majestic Crown Image above Title */}
       <div 
-        className="w-[155px] h-[110px] md:w-[195px] md:h-[135px] relative z-10 transition-all duration-[2000ms] ease-out mt-4 -mb-4"
+        className="w-[155px] h-[110px] md:w-[195px] md:h-[135px] relative z-10 transition-all duration-[2000ms] ease-out mt-4 -mb-4 crown-container"
         style={{
           opacity: isTitleVisible ? 1 : 0,
           transform: isTitleVisible ? 'scale(1)' : 'scale(0.95)'
@@ -217,7 +217,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
       {/* Title - Progressive entry */}
       <h1 
-        className="mt-6 mb-10 text-5xl md:text-6xl font-playfair text-xv-gold animate-shimmer relative z-10 text-center transition-all duration-[2000ms] ease-out"
+        className="mt-6 mb-10 text-5xl md:text-6xl font-playfair text-xv-gold animate-shimmer relative z-10 text-center transition-all duration-[2000ms] ease-out envelope-title"
         style={{
           opacity: isTitleVisible ? 1 : 0,
           transform: isTitleVisible ? 'scale(1)' : 'scale(0.95)'
@@ -228,7 +228,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
       {/* Envelope wrapper - progressive origami entry perspective */}
       <div 
-        className="relative w-80 h-56 lg:w-[480px] lg:h-[336px] max-w-[85vw] perspective-[1000px] z-10 transition-all duration-[2000ms] ease-out"
+        className="relative w-80 h-56 lg:w-[480px] lg:h-[336px] max-w-[85vw] perspective-[1000px] z-10 transition-all duration-[2000ms] ease-out flex-shrink-0 envelope-wrapper"
         style={{
           opacity: isOpen ? 0 : 1,
           transform: isOpen ? 'scale(1.05)' : 'scale(1)',
@@ -326,7 +326,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
         {/* Left Horse stretching from left-0 to seal border - Styled to look blind-embossed inside the paper */}
         <div 
-          className="absolute left-0 right-1/2 mr-[54px] lg:mr-[71px] top-[55%] h-[205px] lg:h-[295px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-0 right-1/2 mr-[54px] lg:mr-[71px] top-[55%] h-[205px] lg:h-[295px] pointer-events-none z-20 transition-all duration-[800ms] left-horse"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -347,7 +347,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
         {/* Right Horse stretching from seal border to right-0 - Styled to look blind-embossed inside the paper */}
         <div 
-          className="absolute left-1/2 ml-[54px] lg:ml-[71px] right-0 top-[55%] h-[205px] lg:h-[295px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-1/2 ml-[54px] lg:ml-[71px] right-0 top-[55%] h-[205px] lg:h-[295px] pointer-events-none z-20 transition-all duration-[800ms] right-horse"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -382,7 +382,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           }}
         >
           {/* Sello Rojo Button */}
-          <div className="w-[115px] h-[115px] lg:w-[150px] lg:h-[150px] rounded-full flex items-center justify-center relative hover:scale-105 transition-transform z-30 filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.55)]">
+          <div className="w-[115px] h-[115px] lg:w-[150px] lg:h-[150px] rounded-full flex items-center justify-center relative hover:scale-105 transition-transform z-30 filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.55)] wax-seal-btn">
             <img 
               src="/Fotos/Sobre/sello.png" 
               alt="Sello de Cera" 
@@ -409,7 +409,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
       {/* Footer Wrapper (Names/Date) - Progressive entry */}
       <div 
-        className="mt-6 md:mt-12 text-center relative z-10 transition-all duration-[2000ms] ease-out" 
+        className="mt-6 md:mt-12 text-center relative z-10 transition-all duration-[2000ms] ease-out envelope-footer" 
         style={{ 
           opacity: isOpen ? 0 : (isTitleVisible ? 1 : 0),
           transform: isTitleVisible ? 'scale(1)' : 'scale(0.95)'
