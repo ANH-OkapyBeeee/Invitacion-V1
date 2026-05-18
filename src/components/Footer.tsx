@@ -43,7 +43,7 @@ const Footer = () => {
   const [isShakingWA, setIsShakingWA] = useState(false);
   const [activeHighlight, setActiveHighlight] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [activeServiceIndex, setActiveServiceIndex] = useState(0);
+  const [activeServiceIndex, setActiveServiceIndex] = useState<number | null>(null);
   const footerRef = useRef<HTMLElement>(null);
   const developerRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<number[]>([]);
@@ -259,7 +259,7 @@ const Footer = () => {
             "{t('footer.slogan')}"
           </p>
 
-          <div className="bg-[#0A0A0F] rounded-2xl p-8 border border-xv-gold/30 hover:border-xv-gold/60 mb-6 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.4),_0_0_15px_rgba(212,175,55,0.05)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4),_0_0_25px_rgba(212,175,55,0.15)] transition-all duration-500">
+          <div className="bg-white/5 border border-white/10 rounded-[2.2rem] p-8 mb-6 mx-4 text-center shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:-translate-y-1 hover:scale-[1.01] hover:bg-white/10 hover:border-xv-gold/35 transition-all duration-500 backdrop-blur-lg">
             <h5 className="font-josefin text-sm md:text-base text-xv-gold uppercase tracking-[0.25em] mb-4 font-bold">
               Más allá de las invitaciones
             </h5>
@@ -269,7 +269,7 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="bg-[#0A0A0F] rounded-2xl py-8 border border-xv-gold/30 hover:border-xv-gold/60 mb-8 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.4),_0_0_15px_rgba(212,175,55,0.05)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4),_0_0_25px_rgba(212,175,55,0.15)] transition-all duration-500 overflow-hidden">
+          <div className="bg-white/5 border border-white/10 rounded-[2.2rem] py-8 mb-8 mx-4 text-center shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:-translate-y-1 hover:scale-[1.01] hover:bg-white/10 hover:border-xv-gold/35 transition-all duration-500 backdrop-blur-lg overflow-hidden relative">
             <p className="font-josefin text-base md:text-[17px] text-xv-gold-light mb-4 leading-relaxed font-semibold tracking-wide px-6">
               Estas son algunas de las soluciones tecnológicas que diseñamos para potenciar tu crecimiento:
             </p>
@@ -331,47 +331,65 @@ const Footer = () => {
                 })()}
               </div>
 
-              {/* Selected Service Detailed Description Box */}
-              <div className="mx-2 mt-6 p-5 rounded-2xl bg-[#09090E] border border-xv-gold/30 text-center shadow-[0_8px_32px_rgba(0,0,0,0.4),_inset_0_0_12px_rgba(212,175,55,0.03)] transition-all duration-300">
-                {(() => {
-                  const servicesArray = t('footer.services', { returnObjects: true }) as string[];
-                  const isEnglishList = servicesArray.length === 13;
-                  
-                  const getBubbleMetadata = (idx: number, isEn: boolean) => {
-                    if (isEn) {
-                      if (idx === 0) {
-                        return { emoji: "✨", shortLabel: "Invitations" };
-                      }
-                      const meta = serviceMetadata[idx - 1] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service" };
-                      return { emoji: meta.emoji, shortLabel: meta.shortEn };
-                    } else {
-                      const meta = serviceMetadata[idx] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service" };
-                      return { emoji: meta.emoji, shortLabel: meta.shortEs };
+              {/* Backdrop-blur Focus concentration detailed popup popover */}
+              {activeServiceIndex !== null && (() => {
+                const servicesArray = t('footer.services', { returnObjects: true }) as string[];
+                const isEnglishList = servicesArray.length === 13;
+                
+                const getBubbleMetadata = (idx: number, isEn: boolean) => {
+                  if (isEn) {
+                    if (idx === 0) {
+                      return { emoji: "✨", shortLabel: "Invitations" };
                     }
-                  };
+                    const meta = serviceMetadata[idx - 1] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service" };
+                    return { emoji: meta.emoji, shortLabel: meta.shortEn };
+                  } else {
+                    const meta = serviceMetadata[idx] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service" };
+                    return { emoji: meta.emoji, shortLabel: meta.shortEs };
+                  }
+                };
 
-                  const { emoji, shortLabel } = getBubbleMetadata(activeServiceIndex, isEnglishList);
-                  const selectedServiceText = servicesArray[activeServiceIndex] || "";
+                const { emoji, shortLabel } = getBubbleMetadata(activeServiceIndex, isEnglishList);
+                const selectedServiceText = servicesArray[activeServiceIndex] || "";
 
-                  return (
-                    <>
-                      <div className="flex items-center justify-center gap-2 mb-3">
-                        <span className="text-2xl select-none">{emoji}</span>
-                        <h5 className="font-josefin text-[11px] md:text-xs uppercase tracking-[0.2em] text-xv-gold font-bold">
-                          {shortLabel}
-                        </h5>
+                return (
+                  <div 
+                    onClick={() => {
+                      navigator.vibrate?.(20);
+                      setActiveServiceIndex(null);
+                    }}
+                    className="absolute inset-0 z-30 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-300 animate-scale-up cursor-pointer"
+                  >
+                    <div 
+                      onClick={(e) => e.stopPropagation()}
+                      className="bg-gradient-to-br from-white to-gray-50 text-[#080108] p-6 rounded-3xl border-2 border-xv-gold shadow-[0_12px_40px_rgba(212,175,55,0.3)] w-full max-w-[290px] text-center transform scale-100 transition-all duration-300 cursor-default"
+                    >
+                      <div className="text-5xl mb-3 select-none animate-bounce-slow">
+                        {emoji}
                       </div>
-                      <p className="font-josefin text-sm md:text-[15px] text-white/95 leading-relaxed font-medium">
+                      <h5 className="font-josefin text-xs uppercase tracking-[0.2em] text-[#8A5A19] font-extrabold mb-3 select-none">
+                        {shortLabel}
+                      </h5>
+                      <p className="font-josefin text-sm text-gray-800 leading-relaxed font-semibold mb-6 px-1">
                         {selectedServiceText}
                       </p>
-                    </>
-                  );
-                })()}
-              </div>
+                      <button 
+                        onClick={() => {
+                          navigator.vibrate?.(20);
+                          setActiveServiceIndex(null);
+                        }}
+                        className="px-6 py-2 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#8A5A19] text-white font-josefin text-xs uppercase tracking-widest font-bold shadow-[0_4px_12px_rgba(212,175,55,0.3)] hover:scale-105 active:scale-95 transition-all duration-200"
+                      >
+                        Entendido
+                      </button>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           </div>
 
-          <div ref={developerRef} className="bg-[#0A0A0F] rounded-2xl p-6 border border-xv-gold/30 hover:border-xv-gold/60 mb-8 mx-4 shadow-[0_20px_50px_rgba(0,0,0,0.4),_0_0_15px_rgba(212,175,55,0.05)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4),_0_0_25px_rgba(212,175,55,0.15)] transition-all duration-500">
+          <div ref={developerRef} className="bg-white/5 border border-white/10 rounded-[2.2rem] p-6 mb-8 mx-4 shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:-translate-y-1 hover:scale-[1.01] hover:bg-white/10 hover:border-xv-gold/35 transition-all duration-500 backdrop-blur-lg">
             <h4 className="font-josefin uppercase tracking-widest text-xs text-xv-gold mb-4">{t('footer.dev')}</h4>
             <p className="font-playfair text-lg text-white mb-6">Ing. Alexis Nicolás Hurtado</p>
             
