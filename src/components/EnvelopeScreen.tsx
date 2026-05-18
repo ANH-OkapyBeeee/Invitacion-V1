@@ -238,7 +238,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
         
         {/* Envelope back - Part 1: Scales and rotates straight */}
         <div 
-          className="absolute inset-0 bg-gradient-to-br from-[#E8DEC1] to-[#D5C69A] shadow-2xl rounded-sm transition-all duration-[1200ms] ease-out"
+          className="absolute inset-0 bg-gradient-to-br from-[#FAF6E5] via-[#E8DCB8] to-[#C7B787] shadow-[0_20px_50px_rgba(0,0,0,0.55),0_8px_20px_rgba(0,0,0,0.35),inset_0_1px_1px_rgba(255,255,255,0.2)] rounded-sm transition-all duration-[1200ms] ease-out"
           style={{
             opacity: isBackVisible ? 1 : 0,
             transform: isBackVisible ? 'scale(1) rotate(0deg)' : 'scale(0.85) rotate(-3deg)',
@@ -246,70 +246,87 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
         />
         
         {/* Envelope front flaps (left, right, bottom) - Part 2 & 3: Fold in from 3D axis */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden rounded-sm">
           {/* Left flap - folds in from 3D Y axis */}
           <div 
-            className="absolute inset-0 bg-[#F6EECC] border-r border-[#D5C69A] transition-all duration-[1000ms] ease-out" 
+            className="absolute inset-0 bg-gradient-to-br from-[#FCF9EC] via-[#EADBAC] to-[#C7B787] transition-all duration-[1000ms] ease-out" 
             style={{ 
               clipPath: 'polygon(0 0, 50% 50%, 0 100%)',
               opacity: isFlapsVisible ? 1 : 0,
               transform: isFlapsVisible ? 'rotateY(0deg)' : 'rotateY(-90deg)',
               transformOrigin: 'left center',
-              backfaceVisibility: 'hidden'
+              backfaceVisibility: 'hidden',
+              filter: 'drop-shadow(2px 0 4px rgba(0,0,0,0.15))'
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-black/5 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-black/10 pointer-events-none" />
+            {/* Fold highlight crease */}
+            <div className="absolute left-0 top-0 bottom-0 w-[1.5px] bg-white/30 pointer-events-none" />
           </div>
           
           {/* Right flap - folds in from 3D Y axis */}
           <div 
-            className="absolute inset-0 bg-[#F6EECC] border-l border-[#D5C69A] transition-all duration-[1000ms] ease-out" 
+            className="absolute inset-0 bg-gradient-to-bl from-[#FCF9EC] via-[#EADBAC] to-[#C7B787] transition-all duration-[1000ms] ease-out" 
             style={{ 
               clipPath: 'polygon(100% 0, 50% 50%, 100% 100%)',
               opacity: isFlapsVisible ? 1 : 0,
               transform: isFlapsVisible ? 'rotateY(0deg)' : 'rotateY(90deg)',
               transformOrigin: 'right center',
-              backfaceVisibility: 'hidden'
+              backfaceVisibility: 'hidden',
+              filter: 'drop-shadow(-2px 0 4px rgba(0,0,0,0.15))'
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-l from-black/5 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-l from-white/20 via-transparent to-black/10 pointer-events-none" />
+            {/* Fold highlight crease */}
+            <div className="absolute right-0 top-0 bottom-0 w-[1.5px] bg-white/30 pointer-events-none" />
           </div>
           
           {/* Bottom flap - folds up from 3D X axis */}
           <div 
-            className="absolute inset-0 bg-[#F6EECC] border-t border-[#D5C69A] shadow-[0_-10px_20px_rgba(0,0,0,0.15)] transition-all duration-[1000ms] ease-out" 
+            className="absolute inset-0 bg-gradient-to-t from-[#EADBAC] via-[#F6F0D5] to-[#BCAF7F] transition-all duration-[1000ms] ease-out" 
             style={{ 
               clipPath: 'polygon(0 100%, 50% 50%, 100% 100%)',
               opacity: isBottomFlapVisible ? 1 : 0,
               transform: isBottomFlapVisible ? 'rotateX(0deg)' : 'rotateX(-90deg)',
               transformOrigin: 'bottom center',
-              backfaceVisibility: 'hidden'
+              backfaceVisibility: 'hidden',
+              filter: 'drop-shadow(0 -5px 8px rgba(0,0,0,0.22))'
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-white/25 via-transparent to-black/15 pointer-events-none" />
+            {/* Fold highlight crease */}
+            <div className="absolute left-0 right-0 bottom-0 h-[1.5px] bg-white/30 pointer-events-none" />
           </div>
         </div>
 
-        {/* Envelope top flap - Part 4: Folds down from 3D X axis */}
+        {/* Envelope top flap container - Part 4: Folds down from 3D X axis with photorealistic cast shadow */}
         <div 
-          className="absolute inset-0 bg-[#F9F4E0] transition-all duration-[1000ms] ease-out z-20"
+          className="absolute inset-0 transition-all duration-[1000ms] ease-out z-20"
           style={{ 
-            clipPath: 'polygon(0 0, 50% 60%, 100% 0)',
             transform: isOpen ? 'rotateX(-180deg)' : (isTopFlapVisible ? 'rotateX(0deg)' : 'rotateX(90deg)'),
             opacity: isTopFlapVisible ? 1 : 0,
             transformOrigin: 'top center',
             backfaceVisibility: 'hidden',
-            filter: 'drop-shadow(0 5px 10px rgba(0,0,0,0.2))'
+            filter: 'drop-shadow(0 10px 18px rgba(0,0,0,0.4))'
           }}
         >
-          {/* Definition lines for the top flap (The V shape) */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/10" style={{ clipPath: 'polygon(0 0, 50% 60%, 100% 0)' }} />
-          <div className="absolute inset-0 border-b-2 border-[#D5C69A]/60" style={{ clipPath: 'polygon(0 0, 50% 60%, 100% 0)' }} />
+          {/* Clipped Top Flap inner content */}
+          <div 
+            className="absolute inset-0 bg-gradient-to-b from-[#FCF9EC] via-[#EADBAC] to-[#C0B081]"
+            style={{ 
+              clipPath: 'polygon(0 0, 50% 60%, 100% 0)',
+            }}
+          >
+            {/* Crease highlights and soft shadowing to give paper depth and thickness */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/15 pointer-events-none" />
+            <div className="absolute inset-0 border-b-2 border-xv-gold/40 pointer-events-none" style={{ clipPath: 'polygon(0 0, 50% 60%, 100% 0)' }} />
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-white/40 pointer-events-none" />
+          </div>
         </div>
 
         {/* Left Horse stretching from left-0 to seal border */}
         <div 
-          className="absolute left-0 right-1/2 mr-[59px] lg:mr-[78px] top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-0 right-1/2 mr-[64px] lg:mr-[83px] top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -327,7 +344,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
         {/* Right Horse stretching from seal border to right-0 */}
         <div 
-          className="absolute left-1/2 ml-[59px] lg:ml-[78px] right-0 top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-1/2 ml-[64px] lg:ml-[83px] right-0 top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -358,7 +375,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           }}
         >
           {/* Sello Rojo Button */}
-          <div className="w-[125px] h-[125px] lg:w-[165px] lg:h-[165px] rounded-full flex items-center justify-center relative hover:scale-105 transition-transform z-30 filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]">
+          <div className="w-[135px] h-[135px] lg:w-[175px] lg:h-[175px] rounded-full flex items-center justify-center relative hover:scale-105 transition-transform z-30 filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.55)]">
             <img 
               src="/Fotos/Sobre/sello.png" 
               alt="Sello de Cera" 
@@ -366,13 +383,13 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             />
             <div className="absolute inset-0 flex items-center justify-center animate-beat pointer-events-none z-10 w-full h-full">
               <svg viewBox="0 0 100 100" className="w-full h-full">
-                {/* Curved path for the 'Abrir' text to curve inside the horseshoe */}
+                {/* Repositioned curve path to fit PERFECTLY inside the gold horseshoe shape */}
                 <path 
                   id="textCurve" 
-                  d="M 16,56 A 34,34 0 0,0 84,56" 
+                  d="M 28,45 A 22,22 0 0,1 72,45" 
                   fill="none" 
                 />
-                <text className="font-cormorant italic font-bold fill-xv-pearl" style={{ fontSize: '13.5px', letterSpacing: '0.04em' }}>
+                <text className="font-cormorant italic font-bold fill-xv-pearl" style={{ fontSize: '12.5px', letterSpacing: '0.04em' }}>
                   <textPath href="#textCurve" startOffset="50%" textAnchor="middle">
                     {t('open')}
                   </textPath>
