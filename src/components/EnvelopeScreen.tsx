@@ -309,7 +309,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
         {/* Left Horse stretching from left-0 to seal border */}
         <div 
-          className="absolute left-0 right-1/2 mr-[40px] lg:mr-[55px] top-[55%] h-[88px] lg:h-[115px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-0 right-1/2 mr-[40px] lg:mr-[55px] top-[55%] h-[125px] lg:h-[185px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -327,10 +327,10 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
         {/* Right Horse stretching from seal border to right-0 */}
         <div 
-          className="absolute left-1/2 ml-[40px] lg:ml-[55px] right-0 top-[55%] h-[88px] lg:h-[115px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-1/2 ml-[40px] lg:ml-[55px] right-0 top-[55%] h-[125px] lg:h-[185px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
-            transform: `translateY(-50%) scaleX(-1) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
+            transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
             transitionTimingFunction: isWaxSealVisible && !isOpen ? 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' : 'ease-in-out',
             transformOrigin: 'right center'
           }}
@@ -339,7 +339,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             src="/Fotos/Sobre/Sobre.png" 
             alt="Caballo Derecho" 
             className="w-full h-full object-contain filter-gold-to-burgundy" 
-            style={{ objectPosition: 'right center' }}
+            style={{ objectPosition: 'right center', transform: 'scaleX(-1)' }}
           />
         </div>
 
