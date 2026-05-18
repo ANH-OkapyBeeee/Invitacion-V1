@@ -11,9 +11,38 @@ const Footer = () => {
   const [isShakingWA, setIsShakingWA] = useState(false);
   const [activeHighlight, setActiveHighlight] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [activeServiceIndex, setActiveServiceIndex] = useState(0);
   const footerRef = useRef<HTMLElement>(null);
+  const serviceScrollRef = useRef<HTMLDivElement>(null);
+  const serviceRefs = useRef<(HTMLDivElement | null)[]>([]);
   const timersRef = useRef<number[]>([]);
   const hasTriggeredInitial = useRef(false);
+
+  // Intersection observer for services carousel active card tracking
+  useEffect(() => {
+    if (!expanded) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number(entry.target.getAttribute('data-service-index'));
+            setActiveServiceIndex(index);
+          }
+        });
+      },
+      {
+        root: serviceScrollRef.current,
+        threshold: 0.6,
+      }
+    );
+
+    serviceRefs.current.forEach((card) => {
+      if (card) observer.observe(card);
+    });
+
+    return () => observer.disconnect();
+  }, [expanded]);
 
   // Separate effect for hand pointers cycle
   useEffect(() => {
@@ -228,18 +257,61 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="bg-white/5 rounded-2xl p-8 border border-white/10 mb-8 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
-            <p className="font-josefin text-base md:text-[17px] text-xv-gold-light mb-8 leading-relaxed font-semibold tracking-wide">
+          <div className="bg-white/5 rounded-2xl py-8 border border-white/10 mb-8 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden">
+            <p className="font-josefin text-base md:text-[17px] text-xv-gold-light mb-4 leading-relaxed font-semibold tracking-wide px-6">
               Estas son algunas de las soluciones tecnológicas que diseñamos para potenciar tu crecimiento:
             </p>
 
-            <div className="flex flex-col gap-5 text-left font-josefin text-sm md:text-[15px]">
-              {(t('footer.services', { returnObjects: true }) as string[]).map((service, idx) => (
-                <div key={idx} className="flex items-start gap-3 group">
-                  <span className="text-xv-gold mt-[2px] text-xs transition-transform group-hover:scale-125 select-none">✦</span>
-                  <span className="text-gray-200 leading-relaxed tracking-wide group-hover:text-white transition-colors">{service}</span>
-                </div>
-              ))}
+            {/* Horizontal Snapping Services Carousel */}
+            <div className="relative w-full overflow-hidden my-4">
+              <div 
+                ref={serviceScrollRef}
+                className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 no-scrollbar scroll-smooth px-8"
+              >
+                {(t('footer.services', { returnObjects: true }) as string[]).map((service, idx) => (
+                  <div 
+                    key={idx}
+                    ref={el => { serviceRefs.current[idx] = el; }}
+                    data-service-index={idx}
+                    className={`flex-shrink-0 w-[220px] h-[190px] snap-center transition-all duration-300 cursor-pointer
+                      ${activeServiceIndex === idx ? 'scale-100 opacity-100 z-10' : 'scale-95 opacity-40'}`}
+                    onClick={() => {
+                      navigator.vibrate?.(30);
+                      serviceRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    }}
+                  >
+                    <div className="relative w-full h-full bg-white/5 border border-white/10 rounded-2xl p-5 text-center flex flex-col items-center justify-center hover:border-xv-gold/30 transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
+                      {/* Decorative Gold Badge / Number */}
+                      <div className="absolute top-4 left-4 font-josefin text-[10px] tracking-widest text-xv-gold font-bold opacity-60 select-none">
+                        {String(idx + 1).padStart(2, '0')}
+                      </div>
+                      
+                      <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-xv-gold text-lg mb-3 shadow-inner select-none">
+                        ✦
+                      </div>
+                      
+                      <h4 className="font-josefin text-sm font-semibold leading-relaxed text-white tracking-wide px-1">
+                        {service}
+                      </h4>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Visual carousel indicators */}
+              <div className="flex justify-center items-center gap-1.5 mt-2">
+                {(t('footer.services', { returnObjects: true }) as string[]).map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      navigator.vibrate?.(20);
+                      serviceRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    }}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${activeServiceIndex === idx ? 'w-5 bg-xv-gold' : 'w-1.5 bg-white/20'}`}
+                    aria-label={`Go to service ${idx + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
 
