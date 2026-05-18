@@ -166,7 +166,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
   return (
     <div 
-      className="fixed inset-0 flex flex-col items-center justify-center bg-[radial-gradient(circle,_#2D0808_0%,_#0D0305_100%)] z-50 overflow-hidden transition-opacity duration-700 ease-in-out"
+      className="fixed inset-0 flex flex-col items-center justify-start pt-12 sm:pt-16 md:pt-20 bg-[radial-gradient(circle,_#2D0808_0%,_#0D0305_100%)] z-50 overflow-hidden transition-opacity duration-700 ease-in-out"
       style={{ opacity: isOpen ? 0 : 1, pointerEvents: isOpen ? 'none' : 'auto' }}
     >
       
@@ -202,7 +202,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
       {/* Majestic Crown Image above Title */}
       <div 
-        className="w-[100px] h-[70px] md:w-[130px] md:h-[90px] relative z-10 transition-all duration-[2000ms] ease-out mt-4 -mb-4"
+        className="w-[155px] h-[110px] md:w-[195px] md:h-[135px] relative z-10 transition-all duration-[2000ms] ease-out mt-4 -mb-4"
         style={{
           opacity: isTitleVisible ? 1 : 0,
           transform: isTitleVisible ? 'scale(1)' : 'scale(0.95)'
@@ -332,7 +332,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
       {/* Footer Wrapper (Names/Date) - Progressive entry */}
       <div 
-        className="mt-12 text-center relative z-10 transition-all duration-[2000ms] ease-out" 
+        className="mt-6 md:mt-12 text-center relative z-10 transition-all duration-[2000ms] ease-out" 
         style={{ 
           opacity: isOpen ? 0 : (isTitleVisible ? 1 : 0),
           transform: isTitleVisible ? 'scale(1)' : 'scale(0.95)'
