@@ -323,7 +323,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             <div className="absolute inset-x-0 top-0 h-[2px] bg-white/40 pointer-events-none" />
             
             {/* Crown inside the top flap (appears on short viewports or when the top crown is hidden) */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-[10%] lg:top-[12%] w-[48px] h-[33px] lg:w-[68px] lg:h-[47px] pointer-events-none z-10 flap-crown">
+            <div className="absolute left-1/2 -translate-x-1/2 top-[6%] lg:top-[8%] w-[82px] h-[57px] lg:w-[115px] lg:h-[80px] pointer-events-none z-10 flap-crown">
               <img 
                 src="/Fotos/Corona/corona.png" 
                 alt="Corona Solapa" 
