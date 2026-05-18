@@ -193,8 +193,13 @@ const Footer = () => {
                   <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="w-full h-full object-contain" />
                 </div>
               </div>
-              <div className="font-josefin text-sm uppercase tracking-widest animate-pulse mt-2">
-                {t('footer.tapMore')}
+              <div className="flex justify-center mt-2">
+                <div className="font-josefin text-sm uppercase tracking-widest animate-pulse relative inline-block">
+                  <span className="absolute -left-7 top-1/2 -translate-y-1/2 text-lg animate-hand-pointing pointer-events-none z-10">
+                    👉
+                  </span>
+                  {t('footer.tapMore')}
+                </div>
               </div>
             </>
           )}
