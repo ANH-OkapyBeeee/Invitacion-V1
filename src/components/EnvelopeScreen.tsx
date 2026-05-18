@@ -211,7 +211,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
         <img 
           src="/Fotos/Corona/corona.png" 
           alt="Corona Real" 
-          className="w-full h-full object-contain filter-gold-to-burgundy"
+          className="w-full h-full object-contain"
         />
       </div>
 
@@ -334,7 +334,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
               <img 
                 src="/Fotos/Corona/corona.png" 
                 alt="Corona Solapa" 
-                className="w-full h-full object-contain filter-gold-to-burgundy opacity-[0.98]" 
+                className="w-full h-full object-contain opacity-[0.98]" 
               />
             </div>
           </div>
