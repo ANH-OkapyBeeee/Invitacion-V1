@@ -189,17 +189,16 @@ const Footer = () => {
           {!expanded && (
             <>
               <div className="flex justify-center mb-4">
-                <div className={`bg-white rounded-xl p-2 shadow-lg border border-white/10 w-20 h-20 flex items-center justify-center overflow-hidden transition-all duration-300 ${isShaking ? 'animate-earthquake' : ''}`}>
+                <div className={`relative bg-white rounded-xl p-2 shadow-lg border border-white/10 w-20 h-20 flex items-center justify-center transition-all duration-300 ${isShaking ? 'animate-earthquake' : ''}`}>
                   <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="w-full h-full object-contain" />
+                  {/* Floating Tap Hand Emoji 👆 at the bottom-right corner with 'handCycle' click animation */}
+                  <span className="absolute -bottom-2 -right-2 text-2xl animate-hand-1 pointer-events-none z-10">
+                    👆
+                  </span>
                 </div>
               </div>
-              <div className="flex justify-center mt-2">
-                <div className="font-josefin text-sm uppercase tracking-widest animate-pulse relative inline-block">
-                  <span className="absolute -left-7 top-1/2 -translate-y-1/2 text-lg animate-hand-pointing pointer-events-none z-10">
-                    👉
-                  </span>
-                  {t('footer.tapMore')}
-                </div>
+              <div className="font-josefin text-sm uppercase tracking-widest animate-pulse mt-2">
+                {t('footer.tapMore')}
               </div>
             </>
           )}
