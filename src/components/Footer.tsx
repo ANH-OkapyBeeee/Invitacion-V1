@@ -159,7 +159,7 @@ const Footer = () => {
           {value}
         </button>
         {activeMenu === id && (
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-[#150a15] border border-xv-gold/30 rounded-2xl shadow-2xl overflow-hidden z-20 flex flex-col">
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-[#0A0A0F] border border-xv-gold/45 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.8),_0_0_15px_rgba(212,175,55,0.2)] overflow-hidden z-20 flex flex-col transition-all duration-300">
             <button 
               onClick={() => copyToClipboard(value)} 
               className="p-3 text-xs tracking-wider border-b border-white/10 hover:bg-white/10 transition-colors uppercase text-white"
@@ -244,7 +244,7 @@ const Footer = () => {
                 navigator.vibrate?.([30, 20, 30]);
                 developerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
               }}
-              className={`bg-white rounded-2xl p-4 shadow-[0_15px_40px_rgba(0,0,0,0.6)] border border-white/10 transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 hover:border-xv-gold/50 ${isShaking ? 'animate-earthquake' : ''}`}
+              className={`bg-white rounded-2xl p-4 shadow-[0_15px_40px_rgba(0,0,0,0.6),_0_0_20px_rgba(212,175,55,0.15)] border-2 border-xv-gold transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 hover:shadow-[0_15px_40px_rgba(0,0,0,0.6),_0_0_30px_rgba(212,175,55,0.35)] ${isShaking ? 'animate-earthquake' : ''}`}
               title="Ver datos del desarrollador"
             >
               <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="h-28 object-contain" />
@@ -255,7 +255,7 @@ const Footer = () => {
             "{t('footer.slogan')}"
           </p>
 
-          <div className="bg-[#0A0A0F] rounded-2xl p-8 border border-xv-gold/25 mb-6 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+          <div className="bg-[#0A0A0F] rounded-2xl p-8 border border-xv-gold/30 hover:border-xv-gold/60 mb-6 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.4),_0_0_15px_rgba(212,175,55,0.05)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4),_0_0_25px_rgba(212,175,55,0.15)] transition-all duration-500">
             <h5 className="font-josefin text-sm md:text-base text-xv-gold uppercase tracking-[0.25em] mb-4 font-bold">
               Más allá de las invitaciones
             </h5>
@@ -265,7 +265,7 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="bg-[#0A0A0F] rounded-2xl py-8 border border-xv-gold/25 mb-8 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden">
+          <div className="bg-[#0A0A0F] rounded-2xl py-8 border border-xv-gold/30 hover:border-xv-gold/60 mb-8 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.4),_0_0_15px_rgba(212,175,55,0.05)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4),_0_0_25px_rgba(212,175,55,0.15)] transition-all duration-500 overflow-hidden">
             <p className="font-josefin text-base md:text-[17px] text-xv-gold-light mb-4 leading-relaxed font-semibold tracking-wide px-6">
               Estas son algunas de las soluciones tecnológicas que diseñamos para potenciar tu crecimiento:
             </p>
@@ -323,7 +323,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div ref={developerRef} className="bg-[#0A0A0F] rounded-2xl p-6 border border-xv-gold/25 mb-8 mx-4 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+          <div ref={developerRef} className="bg-[#0A0A0F] rounded-2xl p-6 border border-xv-gold/30 hover:border-xv-gold/60 mb-8 mx-4 shadow-[0_20px_50px_rgba(0,0,0,0.4),_0_0_15px_rgba(212,175,55,0.05)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.4),_0_0_25px_rgba(212,175,55,0.15)] transition-all duration-500">
             <h4 className="font-josefin uppercase tracking-widest text-xs text-xv-gold mb-4">{t('footer.dev')}</h4>
             <p className="font-playfair text-lg text-white mb-6">Ing. Alexis Nicolás Hurtado</p>
             
