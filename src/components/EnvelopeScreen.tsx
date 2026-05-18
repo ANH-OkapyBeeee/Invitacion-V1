@@ -15,6 +15,10 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
 
+  // Parse the event date into an elegant typewriter format like '22 • 08 • 2026'
+  const [year, month, day] = CONFIG.eventDate.split('T')[0].split('-');
+  const formattedDate = `${day} • ${month} • ${year}`;
+
   // Generate stable coordinates and random properties for background stars once on mount
   const [backgroundStars] = useState(() => {
     return [...Array(65)].map((_, i) => ({
@@ -299,8 +303,8 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             
             {/* Date inside bottom flap (appears on short heights like mobile landscape) */}
             <div className="absolute left-1/2 -translate-x-1/2 bottom-[3%] lg:bottom-[4%] z-10 pointer-events-none flap-date">
-              <p className="font-josefin uppercase text-[9px] lg:text-[11px] text-xv-gold tracking-[0.18em] text-center whitespace-nowrap opacity-[0.98] font-bold">
-                {new Date(CONFIG.eventDate).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}
+              <p className="font-typewriter uppercase text-[10px] lg:text-[12px] text-xv-gold tracking-[0.2em] text-center whitespace-nowrap opacity-[0.98] font-bold">
+                {formattedDate}
               </p>
             </div>
           </div>
@@ -432,8 +436,8 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
         }}
       >
         <h2 className="font-playfair italic text-3xl text-xv-gold-light mb-2">{CONFIG.quinceañeraName}</h2>
-        <p className="font-josefin uppercase text-sm md:text-base text-xv-gold opacity-80 tracking-widest mb-4">
-          {new Date(CONFIG.eventDate).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}
+        <p className="font-typewriter uppercase text-xs md:text-sm text-xv-gold opacity-80 tracking-[0.25em] mb-4">
+          {formattedDate}
         </p>
       </div>
     </div>
