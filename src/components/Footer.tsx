@@ -3,6 +3,38 @@ import { useTranslation } from 'react-i18next';
 import { CONFIG } from '../config';
 import { QRCodeSVG } from 'qrcode.react';
 
+const serviceMetadata = [
+  { emoji: "🖥️", shortEs: "Web & Tiendas", shortEn: "Web & Shops" },
+  { emoji: "🎨", shortEs: "Diseño & Video", shortEn: "Design & Video" },
+  { emoji: "💻", shortEs: "Software", shortEn: "Software" },
+  { emoji: "🤖", shortEs: "I.A. & Bots", shortEn: "A.I. & Bots" },
+  { emoji: "📊", shortEs: "ERP (Odoo/SAP)", shortEn: "ERP (Odoo/SAP)" },
+  { emoji: "🧊", shortEs: "Modelado 3D", shortEn: "3D Modeling" },
+  { emoji: "☁️", shortEs: "Nube Cloud", shortEn: "Cloud & Devops" },
+  { emoji: "📈", shortEs: "Marketing", shortEn: "Marketing" },
+  { emoji: "🔍", shortEs: "Forense", shortEn: "Forensics" },
+  { emoji: "🔒", shortEs: "Ciberseguridad", shortEn: "Cybersecurity" },
+  { emoji: "💾", shortEs: "Recuperar Datos", shortEn: "Data Recovery" },
+  { emoji: "📱", shortEs: "Tuning Móvil", shortEn: "Mobile Tuning" }
+];
+
+const bubblePositions = [
+  { top: "6%", left: "4%", duration: "12s", delay: "0s" },
+  { top: "8%", left: "37%", duration: "16s", delay: "-3s" },
+  { top: "5%", left: "68%", duration: "14s", delay: "-6s" },
+  { top: "28%", left: "16%", duration: "13s", delay: "-1.5s" },
+  { top: "32%", left: "48%", duration: "18s", delay: "-8s" },
+  { top: "26%", left: "78%", duration: "15s", delay: "-4s" },
+  { top: "52%", left: "5%", duration: "17s", delay: "-11s" },
+  { top: "56%", left: "36%", duration: "11s", delay: "-2.5s" },
+  { top: "50%", left: "68%", duration: "13s", delay: "-9s" },
+  { top: "76%", left: "16%", duration: "15s", delay: "-5s" },
+  { top: "78%", left: "50%", duration: "12s", delay: "-7s" },
+  { top: "76%", left: "78%", duration: "14s", delay: "-12s" },
+  // Extra one for English 13th item
+  { top: "45%", left: "82%", duration: "16s", delay: "-10s" }
+];
+
 const Footer = () => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
@@ -13,37 +45,9 @@ const Footer = () => {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
   const footerRef = useRef<HTMLElement>(null);
-  const serviceScrollRef = useRef<HTMLDivElement>(null);
-  const serviceRefs = useRef<(HTMLDivElement | null)[]>([]);
   const developerRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<number[]>([]);
   const hasTriggeredInitial = useRef(false);
-
-  // Intersection observer for services carousel active card tracking
-  useEffect(() => {
-    if (!expanded) return;
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = Number(entry.target.getAttribute('data-service-index'));
-            setActiveServiceIndex(index);
-          }
-        });
-      },
-      {
-        root: serviceScrollRef.current,
-        threshold: 0.6,
-      }
-    );
-
-    serviceRefs.current.forEach((card) => {
-      if (card) observer.observe(card);
-    });
-
-    return () => observer.disconnect();
-  }, [expanded]);
 
   // Separate effect for hand pointers cycle
   useEffect(() => {
@@ -270,55 +274,99 @@ const Footer = () => {
               Estas son algunas de las soluciones tecnológicas que diseñamos para potenciar tu crecimiento:
             </p>
 
-            {/* Horizontal Snapping Services Carousel */}
-            <div className="relative w-full overflow-hidden my-4">
-              <div 
-                ref={serviceScrollRef}
-                className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 no-scrollbar scroll-smooth px-8"
-              >
-                {(t('footer.services', { returnObjects: true }) as string[]).map((service, idx) => (
-                  <div 
-                    key={idx}
-                    ref={el => { serviceRefs.current[idx] = el; }}
-                    data-service-index={idx}
-                    className={`flex-shrink-0 w-[200px] h-[260px] snap-center transition-all duration-300 cursor-pointer
-                      ${activeServiceIndex === idx ? 'scale-100 opacity-100 z-10' : 'scale-95 opacity-40'}`}
-                    onClick={() => {
-                      navigator.vibrate?.(30);
-                      serviceRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                    }}
-                  >
-                    <div className="relative w-full h-full bg-white border border-gray-100 rounded-3xl p-6 text-center flex flex-col items-center justify-between hover:border-xv-gold/50 transition-all duration-300 shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
-                      {/* Decorative Gold Badge / Number */}
-                      <div className="absolute top-5 left-5 font-josefin text-xs tracking-widest text-xv-gold font-bold opacity-80 select-none">
-                        {String(idx + 1).padStart(2, '0')}
-                      </div>
-                      
-                      <div className="w-12 h-12 rounded-full bg-xv-red/5 flex items-center justify-center text-xv-gold text-xl mt-6 shadow-inner select-none">
-                        ✦
-                      </div>
-                      
-                      <h4 className="font-josefin text-sm md:text-base font-bold leading-relaxed text-[#080108] tracking-wide mb-6 px-1">
-                        {service}
-                      </h4>
-                    </div>
-                  </div>
-                ))}
+            {/* Floating Bubbles Canvas */}
+            <div className="relative w-full my-4 px-4">
+              <div className="relative w-full h-[380px] md:h-[420px] overflow-hidden bg-black/60 rounded-3xl border border-white/5 shadow-inner">
+                {(() => {
+                  const servicesArray = t('footer.services', { returnObjects: true }) as string[];
+                  const isEnglishList = servicesArray.length === 13;
+                  
+                  const getBubbleMetadata = (idx: number, isEn: boolean) => {
+                    if (isEn) {
+                      if (idx === 0) {
+                        return { emoji: "✨", shortLabel: "Invitations" };
+                      }
+                      const meta = serviceMetadata[idx - 1] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service" };
+                      return { emoji: meta.emoji, shortLabel: meta.shortEn };
+                    } else {
+                      const meta = serviceMetadata[idx] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service" };
+                      return { emoji: meta.emoji, shortLabel: meta.shortEs };
+                    }
+                  };
+
+                  return servicesArray.map((_, idx) => {
+                    const { emoji, shortLabel } = getBubbleMetadata(idx, isEnglishList);
+                    const isSelected = activeServiceIndex === idx;
+                    const pos = bubblePositions[idx] || { top: "50%", left: "50%", duration: "15s", delay: "0s" };
+
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          navigator.vibrate?.([30, 20]);
+                          setActiveServiceIndex(idx);
+                        }}
+                        style={{
+                          top: pos.top,
+                          left: pos.left,
+                          animationDuration: pos.duration,
+                          animationDelay: pos.delay,
+                        }}
+                        className={`absolute rounded-full flex flex-col items-center justify-center transition-all duration-300 animate-float-bubble select-none cursor-pointer
+                          w-[78px] h-[78px] md:w-[90px] md:h-[90px]
+                          ${isSelected 
+                            ? 'bg-gradient-to-br from-[#D4AF37] to-[#8A5A19] border-2 border-white shadow-[0_0_25px_rgba(212,175,55,0.45)] scale-110 z-20' 
+                            : 'bg-white/95 border border-xv-gold/40 hover:border-xv-gold shadow-[0_4px_15px_rgba(0,0,0,0.15)] hover:scale-105 active:scale-95 z-10'}`}
+                      >
+                        <span className={`text-2xl md:text-3xl mb-0.5 transition-transform ${isSelected ? 'scale-110' : ''}`}>
+                          {emoji}
+                        </span>
+                        <span className={`text-[8px] md:text-[9px] uppercase tracking-wider font-extrabold font-josefin leading-tight px-1 text-center line-clamp-2
+                          ${isSelected ? 'text-white' : 'text-[#080108]'}`}>
+                          {shortLabel}
+                        </span>
+                      </button>
+                    );
+                  });
+                })()}
               </div>
 
-              {/* Visual carousel indicators */}
-              <div className="flex justify-center items-center gap-1.5 mt-2">
-                {(t('footer.services', { returnObjects: true }) as string[]).map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      navigator.vibrate?.(20);
-                      serviceRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                    }}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${activeServiceIndex === idx ? 'w-5 bg-xv-gold' : 'w-1.5 bg-white/20'}`}
-                    aria-label={`Go to service ${idx + 1}`}
-                  />
-                ))}
+              {/* Selected Service Detailed Description Box */}
+              <div className="mx-2 mt-6 p-5 rounded-2xl bg-[#09090E] border border-xv-gold/30 text-center shadow-[0_8px_32px_rgba(0,0,0,0.4),_inset_0_0_12px_rgba(212,175,55,0.03)] transition-all duration-300">
+                {(() => {
+                  const servicesArray = t('footer.services', { returnObjects: true }) as string[];
+                  const isEnglishList = servicesArray.length === 13;
+                  
+                  const getBubbleMetadata = (idx: number, isEn: boolean) => {
+                    if (isEn) {
+                      if (idx === 0) {
+                        return { emoji: "✨", shortLabel: "Invitations" };
+                      }
+                      const meta = serviceMetadata[idx - 1] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service" };
+                      return { emoji: meta.emoji, shortLabel: meta.shortEn };
+                    } else {
+                      const meta = serviceMetadata[idx] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service" };
+                      return { emoji: meta.emoji, shortLabel: meta.shortEs };
+                    }
+                  };
+
+                  const { emoji, shortLabel } = getBubbleMetadata(activeServiceIndex, isEnglishList);
+                  const selectedServiceText = servicesArray[activeServiceIndex] || "";
+
+                  return (
+                    <>
+                      <div className="flex items-center justify-center gap-2 mb-3">
+                        <span className="text-2xl select-none">{emoji}</span>
+                        <h5 className="font-josefin text-[11px] md:text-xs uppercase tracking-[0.2em] text-xv-gold font-bold">
+                          {shortLabel}
+                        </h5>
+                      </div>
+                      <p className="font-josefin text-sm md:text-[15px] text-white/95 leading-relaxed font-medium">
+                        {selectedServiceText}
+                      </p>
+                    </>
+                  );
+                })()}
               </div>
             </div>
           </div>
