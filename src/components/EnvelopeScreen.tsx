@@ -326,7 +326,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
         {/* Left Horse stretching from left-0 to seal border - Styled to look blind-embossed inside the paper */}
         <div 
-          className="absolute left-0 right-1/2 mr-[54px] lg:mr-[71px] top-[55%] h-[185px] lg:h-[265px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-0 right-1/2 mr-[54px] lg:mr-[71px] top-[55%] h-[205px] lg:h-[295px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -347,7 +347,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
         {/* Right Horse stretching from seal border to right-0 - Styled to look blind-embossed inside the paper */}
         <div 
-          className="absolute left-1/2 ml-[54px] lg:ml-[71px] right-0 top-[55%] h-[185px] lg:h-[265px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-1/2 ml-[54px] lg:ml-[71px] right-0 top-[55%] h-[205px] lg:h-[295px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -396,7 +396,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
                   d="M 30,44 A 24,24 0 0,0 70,44" 
                   fill="none" 
                 />
-                <text className="font-cormorant italic font-bold fill-xv-pearl" style={{ fontSize: '12.5px', letterSpacing: '0.04em' }}>
+                <text className="font-josefin font-bold fill-[#D4AF37]" style={{ fontSize: '10px', letterSpacing: '0.12em' }}>
                   <textPath href="#textCurve" startOffset="50%" textAnchor="middle">
                     {t('open')}
                   </textPath>
