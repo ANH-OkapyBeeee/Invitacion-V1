@@ -200,6 +200,21 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
         ))}
       </div>
 
+      {/* Majestic Crown Image above Title */}
+      <div 
+        className="w-[100px] h-[70px] md:w-[130px] md:h-[90px] relative z-10 transition-all duration-[2000ms] ease-out mt-4 -mb-4"
+        style={{
+          opacity: isTitleVisible ? 1 : 0,
+          transform: isTitleVisible ? 'scale(1)' : 'scale(0.95)'
+        }}
+      >
+        <img 
+          src="/Fotos/Corona/corona.png" 
+          alt="Corona Real" 
+          className="w-full h-full object-contain filter-gold-to-burgundy"
+        />
+      </div>
+
       {/* Title - Progressive entry */}
       <h1 
         className="mt-6 mb-10 text-5xl md:text-6xl font-playfair text-xv-gold animate-shimmer relative z-10 text-center transition-all duration-[2000ms] ease-out"
