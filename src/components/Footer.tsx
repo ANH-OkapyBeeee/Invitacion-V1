@@ -15,6 +15,7 @@ const Footer = () => {
   const footerRef = useRef<HTMLElement>(null);
   const serviceScrollRef = useRef<HTMLDivElement>(null);
   const serviceRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const developerRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<number[]>([]);
   const hasTriggeredInitial = useRef(false);
 
@@ -238,7 +239,14 @@ const Footer = () => {
         <div className={`overflow-hidden transition-all duration-500 ease-in-out ${expanded ? 'max-h-[2500px] opacity-100 mt-8' : 'max-h-0 opacity-0'}`}>
           
           <div className="flex justify-center mb-8">
-            <div className={`bg-white rounded-2xl p-4 shadow-[0_15px_40px_rgba(0,0,0,0.6)] border border-white/10 transition-all duration-300 ${isShaking ? 'animate-earthquake' : ''}`}>
+            <div 
+              onClick={() => {
+                navigator.vibrate?.([30, 20, 30]);
+                developerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }}
+              className={`bg-white rounded-2xl p-4 shadow-[0_15px_40px_rgba(0,0,0,0.6)] border border-white/10 transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 hover:border-xv-gold/50 ${isShaking ? 'animate-earthquake' : ''}`}
+              title="Ver datos del desarrollador"
+            >
               <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="h-28 object-contain" />
             </div>
           </div>
@@ -247,7 +255,7 @@ const Footer = () => {
             "{t('footer.slogan')}"
           </p>
 
-          <div className="bg-white/5 rounded-2xl p-8 border border-white/10 mb-6 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+          <div className="bg-[#0A0A0F] rounded-2xl p-8 border border-xv-gold/25 mb-6 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
             <h5 className="font-josefin text-sm md:text-base text-xv-gold uppercase tracking-[0.25em] mb-4 font-bold">
               Más allá de las invitaciones
             </h5>
@@ -257,7 +265,7 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="bg-white/5 rounded-2xl py-8 border border-white/10 mb-8 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden">
+          <div className="bg-[#0A0A0F] rounded-2xl py-8 border border-xv-gold/25 mb-8 mx-4 text-center shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden">
             <p className="font-josefin text-base md:text-[17px] text-xv-gold-light mb-4 leading-relaxed font-semibold tracking-wide px-6">
               Estas son algunas de las soluciones tecnológicas que diseñamos para potenciar tu crecimiento:
             </p>
@@ -273,24 +281,24 @@ const Footer = () => {
                     key={idx}
                     ref={el => { serviceRefs.current[idx] = el; }}
                     data-service-index={idx}
-                    className={`flex-shrink-0 w-[220px] h-[190px] snap-center transition-all duration-300 cursor-pointer
+                    className={`flex-shrink-0 w-[200px] h-[260px] snap-center transition-all duration-300 cursor-pointer
                       ${activeServiceIndex === idx ? 'scale-100 opacity-100 z-10' : 'scale-95 opacity-40'}`}
                     onClick={() => {
                       navigator.vibrate?.(30);
                       serviceRefs.current[idx]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     }}
                   >
-                    <div className="relative w-full h-full bg-white/5 border border-white/10 rounded-2xl p-5 text-center flex flex-col items-center justify-center hover:border-xv-gold/30 transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.2)]">
+                    <div className="relative w-full h-full bg-white border border-gray-100 rounded-3xl p-6 text-center flex flex-col items-center justify-between hover:border-xv-gold/50 transition-all duration-300 shadow-[0_12px_40px_rgba(0,0,0,0.15)]">
                       {/* Decorative Gold Badge / Number */}
-                      <div className="absolute top-4 left-4 font-josefin text-[10px] tracking-widest text-xv-gold font-bold opacity-60 select-none">
+                      <div className="absolute top-5 left-5 font-josefin text-xs tracking-widest text-xv-gold font-bold opacity-80 select-none">
                         {String(idx + 1).padStart(2, '0')}
                       </div>
                       
-                      <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-xv-gold text-lg mb-3 shadow-inner select-none">
+                      <div className="w-12 h-12 rounded-full bg-xv-red/5 flex items-center justify-center text-xv-gold text-xl mt-6 shadow-inner select-none">
                         ✦
                       </div>
                       
-                      <h4 className="font-josefin text-sm font-semibold leading-relaxed text-white tracking-wide px-1">
+                      <h4 className="font-josefin text-sm md:text-base font-bold leading-relaxed text-[#080108] tracking-wide mb-6 px-1">
                         {service}
                       </h4>
                     </div>
@@ -315,7 +323,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="bg-white/5 rounded-2xl p-6 border border-white/10 mb-8">
+          <div ref={developerRef} className="bg-[#0A0A0F] rounded-2xl p-6 border border-xv-gold/25 mb-8 mx-4 shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
             <h4 className="font-josefin uppercase tracking-widest text-xs text-xv-gold mb-4">{t('footer.dev')}</h4>
             <p className="font-playfair text-lg text-white mb-6">Ing. Alexis Nicolás Hurtado</p>
             
