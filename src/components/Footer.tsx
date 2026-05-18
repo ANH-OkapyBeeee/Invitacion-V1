@@ -49,6 +49,120 @@ const Footer = () => {
   const timersRef = useRef<number[]>([]);
   const hasTriggeredInitial = useRef(false);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const bubbleRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const bubblesData = useRef<{
+    x: number;
+    y: number;
+    vx: number;
+    vy: number;
+    size: number;
+  }[]>([]);
+
+  // Physics elastic bouncing simulation for bubbles
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const servicesArray = t('footer.services', { returnObjects: true }) as string[];
+    const isEnglishList = servicesArray.length === 13;
+    const servicesLength = isEnglishList ? 13 : 12;
+
+    const getBubbleMetadata = (idx: number, isEn: boolean) => {
+      if (isEn) {
+        if (idx === 0) {
+          return { emoji: "✨", shortLabel: "Invitations", large: false };
+        }
+        const meta = serviceMetadata[idx - 1] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service", large: false };
+        return { emoji: meta.emoji, shortLabel: meta.shortEn, large: !!(meta as any).large };
+      } else {
+        const meta = serviceMetadata[idx] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service", large: false };
+        return { emoji: meta.emoji, shortLabel: meta.shortEs, large: !!(meta as any).large };
+      }
+    };
+
+    const width = container.clientWidth || (window.innerWidth < 768 ? 320 : 800);
+    const height = container.clientHeight || (window.innerWidth < 768 ? 480 : 540);
+
+    // Initialize bubbles physics data
+    const newBubbles = [];
+    for (let i = 0; i < servicesLength; i++) {
+      const pos = bubblePositions[i] || { top: "50%", left: "50%" };
+      const leftPercent = parseFloat(pos.left) / 100;
+      const topPercent = parseFloat(pos.top) / 100;
+      
+      const { large } = getBubbleMetadata(i, isEnglishList);
+      const isMobile = window.innerWidth < 768;
+      const size = large ? (isMobile ? 104 : 118) : (isMobile ? 78 : 90);
+
+      // Distribute initial positions cleanly inside container boundaries
+      const startX = leftPercent * (width - size);
+      const startY = topPercent * (height - size);
+
+      // Soft physical drift speed
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 0.4 + Math.random() * 0.4; // smooth gentle physics
+      const vx = Math.cos(angle) * speed;
+      const vy = Math.sin(angle) * speed;
+
+      newBubbles.push({
+        x: startX,
+        y: startY,
+        vx,
+        vy,
+        size
+      });
+    }
+    bubblesData.current = newBubbles;
+
+    let animationFrameId: number;
+
+    const updatePhysics = () => {
+      if (!containerRef.current) return;
+      const w = containerRef.current.clientWidth || 300;
+      const h = containerRef.current.clientHeight || 480;
+
+      bubblesData.current.forEach((b, idx) => {
+        // Update position
+        b.x += b.vx;
+        b.y += b.vy;
+
+        // Bounce left/right boundaries
+        if (b.x <= 0) {
+          b.x = 0;
+          b.vx = Math.abs(b.vx);
+        } else if (b.x + b.size >= w) {
+          b.x = w - b.size;
+          b.vx = -Math.abs(b.vx);
+        }
+
+        // Bounce top/bottom boundaries
+        if (b.y <= 0) {
+          b.y = 0;
+          b.vy = Math.abs(b.vy);
+        } else if (b.y + b.size >= h) {
+          b.y = h - b.size;
+          b.vy = -Math.abs(b.vy);
+        }
+
+        // Direct hardware accelerated DOM updates
+        const el = bubbleRefs.current[idx];
+        if (el) {
+          el.style.transform = `translate3d(${b.x}px, ${b.y}px, 0)`;
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(updatePhysics);
+    };
+
+    animationFrameId = requestAnimationFrame(updatePhysics);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [t]);
+
+
   // Separate effect for hand pointers cycle
   useEffect(() => {
     const interval = setInterval(() => {
@@ -276,7 +390,7 @@ const Footer = () => {
 
             {/* Floating Bubbles Canvas */}
             <div className="relative w-full my-4 px-4">
-              <div className="relative w-full h-[480px] md:h-[540px] overflow-hidden bg-black/60 rounded-3xl border border-white/5 shadow-inner">
+              <div ref={containerRef} className="relative w-full h-[480px] md:h-[540px] overflow-hidden bg-black/60 rounded-3xl border border-white/5 shadow-inner">
                 {(() => {
                   const servicesArray = t('footer.services', { returnObjects: true }) as string[];
                   const isEnglishList = servicesArray.length === 13;
@@ -297,22 +411,21 @@ const Footer = () => {
                   return servicesArray.map((_, idx) => {
                     const { emoji, shortLabel, large } = getBubbleMetadata(idx, isEnglishList);
                     const isSelected = activeServiceIndex === idx;
-                    const pos = bubblePositions[idx] || { top: "50%", left: "50%", duration: "15s", delay: "0s" };
 
                     return (
                       <button
                         key={idx}
+                        ref={el => { bubbleRefs.current[idx] = el; }}
                         onClick={() => {
                           navigator.vibrate?.([30, 20]);
                           setActiveServiceIndex(idx);
                         }}
                         style={{
-                          top: pos.top,
-                          left: pos.left,
-                          animationDuration: pos.duration,
-                          animationDelay: pos.delay,
+                          top: 0,
+                          left: 0,
+                          transform: 'translate3d(0px, 0px, 0)'
                         }}
-                        className={`absolute rounded-full flex flex-col items-center justify-center transition-all duration-300 animate-float-bubble select-none cursor-pointer
+                        className={`absolute rounded-full flex flex-col items-center justify-center select-none cursor-pointer transition-[background-color,border-color,box-shadow,color] duration-300
                           ${large ? 'w-[104px] h-[104px] md:w-[118px] md:h-[118px]' : 'w-[78px] h-[78px] md:w-[90px] md:h-[90px]'}
                           ${isSelected 
                             ? 'bg-gradient-to-br from-[#D4AF37] to-[#8A5A19] border-2 border-white shadow-[0_0_25px_rgba(212,175,55,0.45)] scale-110 z-20' 
