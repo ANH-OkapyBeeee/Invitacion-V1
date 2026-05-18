@@ -166,7 +166,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
   return (
     <div 
-      className="fixed inset-0 flex flex-col items-center justify-start pt-12 sm:pt-16 md:pt-20 bg-[radial-gradient(circle,_#2D0808_0%,_#0D0305_100%)] z-50 overflow-hidden transition-opacity duration-700 ease-in-out"
+      className="fixed inset-0 flex flex-col items-center justify-start pt-12 sm:pt-12 md:pt-8 bg-[radial-gradient(circle,_#2D0808_0%,_#0D0305_100%)] z-50 overflow-hidden transition-opacity duration-700 ease-in-out"
       style={{ opacity: isOpen ? 0 : 1, pointerEvents: isOpen ? 'none' : 'auto' }}
     >
       
@@ -324,7 +324,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           {/* Left Horse touching the seal with snout */}
           <div 
             className="absolute right-[42px] lg:right-[56px] top-1/2 w-[70px] h-[70px] lg:w-[95px] lg:h-[95px] pointer-events-none z-20"
-            style={{ transform: 'translateY(-50%) scaleX(-1)' }}
+            style={{ transform: 'translateY(-50%)' }}
           >
             <img 
               src="/Fotos/Sobre/Sobre.png" 
@@ -336,7 +336,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           {/* Right Horse touching the seal with snout */}
           <div 
             className="absolute left-[42px] lg:left-[56px] top-1/2 w-[70px] h-[70px] lg:w-[95px] lg:h-[95px] pointer-events-none z-20"
-            style={{ transform: 'translateY(-50%)' }}
+            style={{ transform: 'translateY(-50%) scaleX(-1)' }}
           >
             <img 
               src="/Fotos/Sobre/Sobre.png" 
