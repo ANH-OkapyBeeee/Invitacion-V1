@@ -52,14 +52,14 @@ const Footer = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const bubbleRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const bubblesData = useRef<{
-    x: number;
-    y: number;
+    ox: number;
+    oy: number;
     vx: number;
     vy: number;
     size: number;
   }[]>([]);
 
-  // Physics elastic bouncing simulation for bubbles
+  // Physics elastic bouncing simulation for bubbles (localized offsets)
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -81,33 +81,26 @@ const Footer = () => {
       }
     };
 
-    const width = container.clientWidth || (window.innerWidth < 768 ? 320 : 800);
-    const height = container.clientHeight || (window.innerWidth < 768 ? 480 : 540);
-
-    // Initialize bubbles physics data
+    // Initialize bubble offset positions and velocities
     const newBubbles = [];
     for (let i = 0; i < servicesLength; i++) {
-      const pos = bubblePositions[i] || { top: "50%", left: "50%" };
-      const leftPercent = parseFloat(pos.left) / 100;
-      const topPercent = parseFloat(pos.top) / 100;
-      
       const { large } = getBubbleMetadata(i, isEnglishList);
       const isMobile = window.innerWidth < 768;
       const size = large ? (isMobile ? 104 : 118) : (isMobile ? 78 : 90);
 
-      // Distribute initial positions cleanly inside container boundaries
-      const startX = leftPercent * (width - size);
-      const startY = topPercent * (height - size);
+      // Random small starting offsets inside home radius
+      const ox = (Math.random() - 0.5) * 12;
+      const oy = (Math.random() - 0.5) * 12;
 
       // Soft physical drift speed
       const angle = Math.random() * Math.PI * 2;
-      const speed = 0.4 + Math.random() * 0.4; // smooth gentle physics
+      const speed = 0.2 + Math.random() * 0.2; // extremely smooth, gentle drift
       const vx = Math.cos(angle) * speed;
       const vy = Math.sin(angle) * speed;
 
       newBubbles.push({
-        x: startX,
-        y: startY,
+        ox,
+        oy,
         vx,
         vy,
         size
@@ -123,32 +116,49 @@ const Footer = () => {
       const h = containerRef.current.clientHeight || 480;
 
       bubblesData.current.forEach((b, idx) => {
-        // Update position
-        b.x += b.vx;
-        b.y += b.vy;
+        // Calculate dynamic grid home position
+        const pos = bubblePositions[idx] || { top: "50%", left: "50%" };
+        const leftPercent = parseFloat(pos.left) / 100;
+        const topPercent = parseFloat(pos.top) / 100;
+        
+        const homeX = leftPercent * (w - b.size);
+        const homeY = topPercent * (h - b.size);
 
-        // Bounce left/right boundaries
-        if (b.x <= 0) {
-          b.x = 0;
+        // Update offset positions
+        b.ox += b.vx;
+        b.oy += b.vy;
+
+        const rangeX = 22; // max local drift horizontal
+        const rangeY = 22; // max local drift vertical
+
+        // Dynamic boundaries relative to dynamic home position and overall container limits
+        const minOffsetK = -Math.min(rangeX, homeX);
+        const maxOffsetK = Math.min(rangeX, w - b.size - homeX);
+        const minOffsetV = -Math.min(rangeY, homeY);
+        const maxOffsetV = Math.min(rangeY, h - b.size - homeY);
+
+        // Bounce horizontal (left & right localized bounds)
+        if (b.ox <= minOffsetK) {
+          b.ox = minOffsetK;
           b.vx = Math.abs(b.vx);
-        } else if (b.x + b.size >= w) {
-          b.x = w - b.size;
+        } else if (b.ox >= maxOffsetK) {
+          b.ox = maxOffsetK;
           b.vx = -Math.abs(b.vx);
         }
 
-        // Bounce top/bottom boundaries
-        if (b.y <= 0) {
-          b.y = 0;
+        // Bounce vertical (top & bottom localized bounds)
+        if (b.oy <= minOffsetV) {
+          b.oy = minOffsetV;
           b.vy = Math.abs(b.vy);
-        } else if (b.y + b.size >= h) {
-          b.y = h - b.size;
+        } else if (b.oy >= maxOffsetV) {
+          b.oy = maxOffsetV;
           b.vy = -Math.abs(b.vy);
         }
 
-        // Direct hardware accelerated DOM updates
+        // Apply style via translate3d for GPU hardware acceleration
         const el = bubbleRefs.current[idx];
         if (el) {
-          el.style.transform = `translate3d(${b.x}px, ${b.y}px, 0)`;
+          el.style.transform = `translate3d(${homeX + b.ox}px, ${homeY + b.oy}px, 0)`;
         }
       });
 
