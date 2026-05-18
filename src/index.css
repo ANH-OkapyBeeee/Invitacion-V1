@@ -412,18 +412,44 @@ html, body {
   mix-blend-mode: multiply;
 }
 
-@keyframes floatGently {
-  0%, 100% {
-    transform: translateY(0);
+@keyframes floatOrganicA {
+  0% {
+    transform: translate(0, 0);
   }
-  50% {
-    transform: translateY(-5px);
+  33% {
+    transform: translate(5px, -6px);
+  }
+  66% {
+    transform: translate(-5px, -3px);
+  }
+  100% {
+    transform: translate(0, 0);
   }
 }
 
-.animate-float-gently {
-  animation: floatGently 6s ease-in-out infinite;
+@keyframes floatOrganicB {
+  0% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(-5px, -3px);
+  }
+  66% {
+    transform: translate(5px, -6px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
 }
+
+.animate-float-organic-a {
+  animation: floatOrganicA 8s ease-in-out infinite;
+}
+
+.animate-float-organic-b {
+  animation: floatOrganicB 9s ease-in-out infinite;
+}
+
 
 
 

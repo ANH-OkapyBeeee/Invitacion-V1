@@ -296,7 +296,7 @@ const Footer = () => {
                           style={{
                             animationDelay: `${idx * 0.35}s`
                           }}
-                          className={`rounded-full flex flex-col items-center justify-center select-none cursor-pointer transition-[background-color,border-color,box-shadow,color,transform] duration-300 animate-float-gently
+                          className={`rounded-full flex flex-col items-center justify-center select-none cursor-pointer transition-[background-color,border-color,box-shadow,color,transform] duration-300 ${idx % 2 === 0 ? 'animate-float-organic-a' : 'animate-float-organic-b'}
                             ${large ? 'w-[84px] h-[84px] md:w-[106px] md:h-[106px]' : 'w-[76px] h-[76px] md:w-[92px] md:h-[92px]'}
                             ${isLastItemEn ? 'col-span-3 justify-self-center' : ''}
                             ${isSelected 
