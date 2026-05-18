@@ -324,9 +324,9 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           </div>
         </div>
 
-        {/* Left Horse stretching from left-0 to seal border */}
+        {/* Left Horse stretching from left-0 to seal border - Styled to look blind-embossed inside the paper */}
         <div 
-          className="absolute left-0 right-1/2 mr-[54px] lg:mr-[71px] top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-0 right-1/2 mr-[54px] lg:mr-[71px] top-[55%] h-[185px] lg:h-[265px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -337,14 +337,17 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           <img 
             src="/Fotos/Sobre/Sobre.png" 
             alt="Caballo Izquierdo" 
-            className="w-full h-full object-contain filter-gold-to-burgundy" 
-            style={{ objectPosition: 'right center' }}
+            className="w-full h-full object-contain mix-blend-multiply opacity-[0.35]" 
+            style={{ 
+              objectPosition: 'right center',
+              filter: 'drop-shadow(1px 1px 1px rgba(255,255,255,0.7)) drop-shadow(-1px -1px 1px rgba(0,0,0,0.12)) sepia(0.3) saturate(1.2)'
+            }}
           />
         </div>
 
-        {/* Right Horse stretching from seal border to right-0 */}
+        {/* Right Horse stretching from seal border to right-0 - Styled to look blind-embossed inside the paper */}
         <div 
-          className="absolute left-1/2 ml-[54px] lg:ml-[71px] right-0 top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-1/2 ml-[54px] lg:ml-[71px] right-0 top-[55%] h-[185px] lg:h-[265px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -355,8 +358,12 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           <img 
             src="/Fotos/Sobre/Sobre.png" 
             alt="Caballo Derecho" 
-            className="w-full h-full object-contain filter-gold-to-burgundy" 
-            style={{ objectPosition: 'right center', transform: 'scaleX(-1)' }}
+            className="w-full h-full object-contain mix-blend-multiply opacity-[0.35]" 
+            style={{ 
+              objectPosition: 'right center', 
+              transform: 'scaleX(-1)',
+              filter: 'drop-shadow(-1px 1px 1px rgba(255,255,255,0.7)) drop-shadow(1px -1px 1px rgba(0,0,0,0.12)) sepia(0.3) saturate(1.2)'
+            }}
           />
         </div>
 
@@ -386,7 +393,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
                 {/* Repositioned curve path to fit PERFECTLY inside the gold horseshoe shape as a smile curve raised slightly */}
                 <path 
                   id="textCurve" 
-                  d="M 30,48 A 22,22 0 0,0 70,48" 
+                  d="M 30,44 A 24,24 0 0,0 70,44" 
                   fill="none" 
                 />
                 <text className="font-cormorant italic font-bold fill-xv-pearl" style={{ fontSize: '12.5px', letterSpacing: '0.04em' }}>
