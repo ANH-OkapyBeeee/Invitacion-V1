@@ -358,9 +358,13 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           }}
         >
           {/* Sello Rojo Button */}
-          <div className="w-[88px] h-[88px] lg:w-[115px] lg:h-[115px] rounded-full bg-gradient-to-br from-[#4A050A] to-[#1A0404] flex items-center justify-center animate-glow shadow-[0_4px_10px_rgba(0,0,0,0.5)] border-[2.5px] border-xv-gold relative hover:scale-105 transition-transform z-30">
-            <div className="absolute inset-1 rounded-full border border-xv-gold opacity-50" />
-            <div className="flex flex-col items-center animate-beat pointer-events-none">
+          <div className="w-[88px] h-[88px] lg:w-[115px] lg:h-[115px] rounded-full flex items-center justify-center relative hover:scale-105 transition-transform z-30 filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]">
+            <img 
+              src="/Fotos/Sobre/sello.png" 
+              alt="Sello de Cera" 
+              className="absolute inset-0 w-full h-full object-contain pointer-events-none animate-glow-soft rounded-full" 
+            />
+            <div className="flex flex-col items-center animate-beat pointer-events-none z-10">
               <span className="font-cormorant italic font-bold text-xv-pearl text-[21px] lg:text-[26px] leading-none mt-1 tracking-wide">{t('open')}</span>
             </div>
           </div>
