@@ -383,10 +383,10 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             />
             <div className="absolute inset-0 flex items-center justify-center animate-beat pointer-events-none z-10 w-full h-full">
               <svg viewBox="0 0 100 100" className="w-full h-full">
-                {/* Repositioned curve path to fit PERFECTLY inside the gold horseshoe shape */}
+                {/* Repositioned curve path to fit PERFECTLY inside the gold horseshoe shape as a smile curve */}
                 <path 
                   id="textCurve" 
-                  d="M 28,45 A 22,22 0 0,1 72,45" 
+                  d="M 30,52 A 20,20 0 0,0 70,52" 
                   fill="none" 
                 />
                 <text className="font-cormorant italic font-bold fill-xv-pearl" style={{ fontSize: '12.5px', letterSpacing: '0.04em' }}>
