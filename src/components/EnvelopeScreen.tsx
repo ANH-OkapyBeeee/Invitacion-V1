@@ -309,7 +309,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
         {/* Left Horse stretching from left-0 to seal border */}
         <div 
-          className="absolute left-0 right-1/2 mr-[52px] lg:mr-[70px] top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-0 right-1/2 mr-[59px] lg:mr-[78px] top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -327,7 +327,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
         {/* Right Horse stretching from seal border to right-0 */}
         <div 
-          className="absolute left-1/2 ml-[52px] lg:ml-[70px] right-0 top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-1/2 ml-[59px] lg:ml-[78px] right-0 top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -358,14 +358,26 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           }}
         >
           {/* Sello Rojo Button */}
-          <div className="w-[110px] h-[110px] lg:w-[145px] lg:h-[145px] rounded-full flex items-center justify-center relative hover:scale-105 transition-transform z-30 filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]">
+          <div className="w-[125px] h-[125px] lg:w-[165px] lg:h-[165px] rounded-full flex items-center justify-center relative hover:scale-105 transition-transform z-30 filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]">
             <img 
               src="/Fotos/Sobre/sello.png" 
               alt="Sello de Cera" 
               className="absolute inset-0 w-full h-full object-contain pointer-events-none animate-glow-soft rounded-full" 
             />
-            <div className="flex flex-col items-center animate-beat pointer-events-none z-10">
-              <span className="font-cormorant italic font-bold text-xv-pearl text-[21px] lg:text-[26px] leading-none mt-1 tracking-wide">{t('open')}</span>
+            <div className="absolute inset-0 flex items-center justify-center animate-beat pointer-events-none z-10 w-full h-full">
+              <svg viewBox="0 0 100 100" className="w-full h-full">
+                {/* Curved path for the 'Abrir' text to curve inside the horseshoe */}
+                <path 
+                  id="textCurve" 
+                  d="M 16,56 A 34,34 0 0,0 84,56" 
+                  fill="none" 
+                />
+                <text className="font-cormorant italic font-bold fill-xv-pearl" style={{ fontSize: '13.5px', letterSpacing: '0.04em' }}>
+                  <textPath href="#textCurve" startOffset="50%" textAnchor="middle">
+                    {t('open')}
+                  </textPath>
+                </text>
+              </svg>
             </div>
           </div>
         </div>
