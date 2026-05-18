@@ -344,17 +344,18 @@ const Footer = () => {
 
         {/* Delayed 'Back to Top' Button */}
         {showBackToTop && (
-          <div className="mt-16 animate-scale-up">
+          <div className="mt-16 animate-scale-up pb-8">
             <button 
               onClick={scrollToTop}
-              className="flex flex-col items-center gap-2 w-full group focus:outline-none animate-float"
+              className="flex flex-col items-center justify-center w-full py-6 px-4 group focus:outline-none cursor-pointer select-none active:scale-95 transition-all duration-300 pointer-events-auto"
             >
-              <div className="flex gap-4 mb-2">
-                <span className="text-xv-gold text-lg animate-scroll-hint">↑</span>
-                <span className="font-josefin text-xs uppercase tracking-[0.3em] text-xv-gold transition-colors">
+              {/* Elegant pill button to guarantee massive tap area on mobile */}
+              <div className="flex items-center justify-center gap-3 px-8 py-3 bg-white/5 hover:bg-white/10 active:bg-white/20 border border-white/10 rounded-full transition-all duration-300 shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:border-xv-gold/30">
+                <span className="text-xv-gold text-base animate-bounce select-none">↑</span>
+                <span className="font-josefin text-xs uppercase tracking-[0.25em] text-xv-gold font-bold transition-colors group-hover:text-xv-gold-light">
                   Volver al Inicio
                 </span>
-                <span className="text-xv-gold text-lg animate-scroll-hint">↑</span>
+                <span className="text-xv-gold text-base animate-bounce select-none">↑</span>
               </div>
             </button>
           </div>
