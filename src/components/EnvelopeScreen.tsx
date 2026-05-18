@@ -307,6 +307,42 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           <div className="absolute inset-0 border-b-2 border-[#D5C69A]/60" style={{ clipPath: 'polygon(0 0, 50% 60%, 100% 0)' }} />
         </div>
 
+        {/* Left Horse stretching from left-0 to seal border */}
+        <div 
+          className="absolute left-0 right-1/2 mr-[40px] lg:mr-[55px] top-[55%] h-[88px] lg:h-[115px] pointer-events-none z-20 transition-all duration-[800ms]"
+          style={{ 
+            opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
+            transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
+            transitionTimingFunction: isWaxSealVisible && !isOpen ? 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' : 'ease-in-out',
+            transformOrigin: 'left center'
+          }}
+        >
+          <img 
+            src="/Fotos/Sobre/Sobre.png" 
+            alt="Caballo Izquierdo" 
+            className="w-full h-full object-contain filter-gold-to-burgundy" 
+            style={{ objectPosition: 'right center' }}
+          />
+        </div>
+
+        {/* Right Horse stretching from seal border to right-0 */}
+        <div 
+          className="absolute left-1/2 ml-[40px] lg:ml-[55px] right-0 top-[55%] h-[88px] lg:h-[115px] pointer-events-none z-20 transition-all duration-[800ms]"
+          style={{ 
+            opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
+            transform: `translateY(-50%) scaleX(-1) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
+            transitionTimingFunction: isWaxSealVisible && !isOpen ? 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' : 'ease-in-out',
+            transformOrigin: 'right center'
+          }}
+        >
+          <img 
+            src="/Fotos/Sobre/Sobre.png" 
+            alt="Caballo Derecho" 
+            className="w-full h-full object-contain filter-gold-to-burgundy" 
+            style={{ objectPosition: 'right center' }}
+          />
+        </div>
+
         {/* Wax seal - Part 5: Pops in with an elastic spring scale */}
         <div 
           className="absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 z-30 cursor-pointer transition-all duration-[800ms]"
@@ -321,30 +357,6 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             transitionTimingFunction: isWaxSealVisible && !isOpen ? 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' : 'ease-in-out'
           }}
         >
-          {/* Left Horse touching the seal with snout */}
-          <div 
-            className="absolute right-[42px] lg:right-[56px] top-1/2 w-[70px] h-[70px] lg:w-[95px] lg:h-[95px] pointer-events-none z-20"
-            style={{ transform: 'translateY(-50%)' }}
-          >
-            <img 
-              src="/Fotos/Sobre/Sobre.png" 
-              alt="Caballo Izquierdo" 
-              className="w-full h-full object-contain filter-gold-to-burgundy" 
-            />
-          </div>
-
-          {/* Right Horse touching the seal with snout */}
-          <div 
-            className="absolute left-[42px] lg:left-[56px] top-1/2 w-[70px] h-[70px] lg:w-[95px] lg:h-[95px] pointer-events-none z-20"
-            style={{ transform: 'translateY(-50%) scaleX(-1)' }}
-          >
-            <img 
-              src="/Fotos/Sobre/Sobre.png" 
-              alt="Caballo Derecho" 
-              className="w-full h-full object-contain filter-gold-to-burgundy" 
-            />
-          </div>
-
           {/* Sello Rojo Button */}
           <div className="w-[88px] h-[88px] lg:w-[115px] lg:h-[115px] rounded-full bg-gradient-to-br from-[#4A050A] to-[#1A0404] flex items-center justify-center animate-glow shadow-[0_4px_10px_rgba(0,0,0,0.5)] border-[2.5px] border-xv-gold relative hover:scale-105 transition-transform z-30">
             <div className="absolute inset-1 rounded-full border border-xv-gold opacity-50" />
