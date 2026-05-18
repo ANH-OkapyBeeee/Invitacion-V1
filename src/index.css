@@ -475,9 +475,9 @@ html, body {
 
 /* Laptops like 11.6" (vertical space typically < 720px) */
 @media (max-height: 720px) {
-  /* Reduce outer container top padding */
+  /* Reduce outer container top padding to allow perfect vertical centering */
   .fixed.inset-0.flex-col {
-    padding-top: 1.25rem !important; /* pt-5 */
+    padding-top: 0 !important;
   }
 
   /* Hide the royal crown at the top to save space */
@@ -570,7 +570,7 @@ html, body {
 /* Extremely short viewports (vertical space < 600px) */
 @media (max-height: 600px) {
   .fixed.inset-0.flex-col {
-    padding-top: 0.75rem !important; /* pt-3 */
+    padding-top: 0 !important;
   }
 
   /* Hide the top crown */
