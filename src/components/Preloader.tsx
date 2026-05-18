@@ -115,17 +115,22 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete, onStartFadeOut }) => 
           </div>
         </div>
 
-        {/* Brand / Quinceañera Subtitle */}
-        <div className="font-josefin text-[10px] uppercase tracking-[0.25em] text-[#D4AF37] mb-2 font-bold">
-          {CONFIG.quinceañeraName} • {t('heroTitle', 'XV AÑOS')}
+        {/* Brand / Developer Credits (identical to footer style) */}
+        <div className="flex flex-col items-center gap-1 mb-3">
+          <div className="font-josefin text-[9px] uppercase tracking-[0.25em] text-gray-500 font-bold">
+            DESARROLLADO POR
+          </div>
+          <div className="font-cormorant text-lg text-xv-gold font-bold">
+            GuGu | Laboratorio Creativo®
+          </div>
         </div>
 
         {/* Pulsing Star Accent Divider */}
         <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mb-6 opacity-60" />
 
-        {/* Loading Text */}
-        <p className="font-playfair italic text-lg text-[#FDFBF7]/90 tracking-wide animate-pulse">
-          {t('preloader.loadingText', 'Cargando contenido...')}
+        {/* Loading Text - Professional, Serious, Non-Italic Sans-Serif */}
+        <p className="font-josefin font-semibold uppercase tracking-[0.22em] text-[11px] text-[#FDFBF7]/80 animate-pulse">
+          {t('preloader.loadingText', 'Cargando contenido...').toUpperCase()}
         </p>
 
         {/* Elegant Micro-Progress Bar */}
