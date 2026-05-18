@@ -4,7 +4,7 @@ import { CONFIG } from '../config';
 import { QRCodeSVG } from 'qrcode.react';
 
 const serviceMetadata = [
-  { emoji: "🖥️", shortEs: "Web & Tiendas", shortEn: "Web & Shops" },
+  { emoji: "🖥️", shortEs: "Web & Tiendas", shortEn: "Web & Shops", large: true },
   { emoji: "🎨", shortEs: "Diseño & Video", shortEn: "Design & Video" },
   { emoji: "💻", shortEs: "Software", shortEn: "Software" },
   { emoji: "🤖", shortEs: "I.A. & Bots", shortEn: "A.I. & Bots" },
@@ -13,9 +13,9 @@ const serviceMetadata = [
   { emoji: "☁️", shortEs: "Nube Cloud", shortEn: "Cloud & Devops" },
   { emoji: "📈", shortEs: "Marketing", shortEn: "Marketing" },
   { emoji: "🔍", shortEs: "Forense", shortEn: "Forensics" },
-  { emoji: "🔒", shortEs: "Ciberseguridad", shortEn: "Cybersecurity" },
+  { emoji: "🔒", shortEs: "Ciberseguridad", shortEn: "Cybersecurity", large: true },
   { emoji: "💾", shortEs: "Recuperar Datos", shortEn: "Data Recovery" },
-  { emoji: "📱", shortEs: "Tuning Móvil", shortEn: "Mobile Tuning" }
+  { emoji: "📱", shortEs: "Tuning Móvil", shortEn: "Mobile Tuning", large: true }
 ];
 
 const bubblePositions = [
@@ -284,18 +284,18 @@ const Footer = () => {
                   const getBubbleMetadata = (idx: number, isEn: boolean) => {
                     if (isEn) {
                       if (idx === 0) {
-                        return { emoji: "✨", shortLabel: "Invitations" };
+                        return { emoji: "✨", shortLabel: "Invitations", large: false };
                       }
-                      const meta = serviceMetadata[idx - 1] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service" };
-                      return { emoji: meta.emoji, shortLabel: meta.shortEn };
+                      const meta = serviceMetadata[idx - 1] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service", large: false };
+                      return { emoji: meta.emoji, shortLabel: meta.shortEn, large: !!(meta as any).large };
                     } else {
-                      const meta = serviceMetadata[idx] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service" };
-                      return { emoji: meta.emoji, shortLabel: meta.shortEs };
+                      const meta = serviceMetadata[idx] || { emoji: "✨", shortEs: "Servicio", shortEn: "Service", large: false };
+                      return { emoji: meta.emoji, shortLabel: meta.shortEs, large: !!(meta as any).large };
                     }
                   };
 
                   return servicesArray.map((_, idx) => {
-                    const { emoji, shortLabel } = getBubbleMetadata(idx, isEnglishList);
+                    const { emoji, shortLabel, large } = getBubbleMetadata(idx, isEnglishList);
                     const isSelected = activeServiceIndex === idx;
                     const pos = bubblePositions[idx] || { top: "50%", left: "50%", duration: "15s", delay: "0s" };
 
@@ -313,7 +313,7 @@ const Footer = () => {
                           animationDelay: pos.delay,
                         }}
                         className={`absolute rounded-full flex flex-col items-center justify-center transition-all duration-300 animate-float-bubble select-none cursor-pointer
-                          w-[78px] h-[78px] md:w-[90px] md:h-[90px]
+                          ${large ? 'w-[104px] h-[104px] md:w-[118px] md:h-[118px]' : 'w-[78px] h-[78px] md:w-[90px] md:h-[90px]'}
                           ${isSelected 
                             ? 'bg-gradient-to-br from-[#D4AF37] to-[#8A5A19] border-2 border-white shadow-[0_0_25px_rgba(212,175,55,0.45)] scale-110 z-20' 
                             : 'bg-white/95 border border-xv-gold/40 hover:border-xv-gold shadow-[0_4px_15px_rgba(0,0,0,0.15)] hover:scale-105 active:scale-95 z-10'}`}
