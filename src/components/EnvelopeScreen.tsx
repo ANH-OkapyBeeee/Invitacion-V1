@@ -436,8 +436,8 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
         }}
       >
         <h2 className="font-playfair italic text-3xl text-xv-gold-light mb-2">{CONFIG.quinceañeraName}</h2>
-        <p className="font-typewriter uppercase text-xs md:text-sm text-xv-gold opacity-80 tracking-[0.25em] mb-4">
-          {formattedDate}
+        <p className="font-josefin uppercase text-sm md:text-base text-xv-gold opacity-80 tracking-widest mb-4">
+          {new Date(CONFIG.eventDate).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}
         </p>
       </div>
     </div>
