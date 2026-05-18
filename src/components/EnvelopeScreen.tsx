@@ -210,7 +210,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
 
       {/* Envelope wrapper - progressive origami entry perspective */}
       <div 
-        className="relative w-80 h-56 max-w-[85vw] perspective-[1000px] z-10 transition-all duration-[2000ms] ease-out"
+        className="relative w-80 h-56 lg:w-[480px] lg:h-[336px] max-w-[85vw] perspective-[1000px] z-10 transition-all duration-[2000ms] ease-out"
         style={{
           opacity: isOpen ? 0 : 1,
           transform: isOpen ? 'scale(1.05)' : 'scale(1)',
@@ -303,10 +303,10 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
             transitionTimingFunction: isWaxSealVisible && !isOpen ? 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' : 'ease-in-out'
           }}
         >
-          <div className="w-[88px] h-[88px] rounded-full bg-gradient-to-br from-[#4A050A] to-[#1A0404] flex items-center justify-center animate-glow shadow-[0_4px_10px_rgba(0,0,0,0.5)] border-[2.5px] border-xv-gold relative hover:scale-105 transition-transform">
+          <div className="w-[88px] h-[88px] lg:w-[115px] lg:h-[115px] rounded-full bg-gradient-to-br from-[#4A050A] to-[#1A0404] flex items-center justify-center animate-glow shadow-[0_4px_10px_rgba(0,0,0,0.5)] border-[2.5px] border-xv-gold relative hover:scale-105 transition-transform">
             <div className="absolute inset-1 rounded-full border border-xv-gold opacity-50" />
             <div className="flex flex-col items-center animate-beat pointer-events-none">
-              <span className="font-cormorant italic text-xv-pearl text-[17px] leading-none mt-1">{t('open')}</span>
+              <span className="font-cormorant italic font-bold text-xv-pearl text-[21px] lg:text-[26px] leading-none mt-1 tracking-wide">{t('open')}</span>
             </div>
           </div>
         </div>
