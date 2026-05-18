@@ -11,13 +11,11 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete, onStartFadeOut }) => 
   const { t } = useTranslation();
   const [fadeOut, setFadeOut] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [isDay, setIsDay] = useState(false);
-
-  useEffect(() => {
+  const [isDay] = useState(() => {
     const hour = new Date().getHours();
     // Day is defined as 7:00 AM (7) to 6:00 PM (18)
-    setIsDay(hour >= 7 && hour < 18);
-  }, []);
+    return hour >= 7 && hour < 18;
+  });
 
   useEffect(() => {
     const keyImages = [

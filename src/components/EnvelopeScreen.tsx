@@ -344,48 +344,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           </div>
         </div>
 
-        {/* Left Horse stretching from left-0 to seal border - Styled to look blind-embossed inside the paper */}
-        <div 
-          className="absolute left-0 right-1/2 mr-[54px] lg:mr-[71px] top-[55%] h-[205px] lg:h-[295px] pointer-events-none z-20 transition-all duration-[800ms] left-horse"
-          style={{ 
-            opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
-            transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
-            transitionTimingFunction: isWaxSealVisible && !isOpen ? 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' : 'ease-in-out',
-            transformOrigin: 'left center'
-          }}
-        >
-          <img 
-            src="/Fotos/Sobre/Sobre.png" 
-            alt="Caballo Izquierdo" 
-            className="w-full h-full object-contain opacity-[0.95]" 
-            style={{ 
-              objectPosition: 'right center',
-              filter: 'drop-shadow(1px 1px 1.5px rgba(0,0,0,0.15)) sepia(0.2) saturate(1.2)'
-            }}
-          />
-        </div>
 
-        {/* Right Horse stretching from seal border to right-0 - Styled to look blind-embossed inside the paper */}
-        <div 
-          className="absolute left-1/2 ml-[54px] lg:ml-[71px] right-0 top-[55%] h-[205px] lg:h-[295px] pointer-events-none z-20 transition-all duration-[800ms] right-horse"
-          style={{ 
-            opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
-            transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
-            transitionTimingFunction: isWaxSealVisible && !isOpen ? 'cubic-bezier(0.175, 0.885, 0.32, 1.275)' : 'ease-in-out',
-            transformOrigin: 'right center'
-          }}
-        >
-          <img 
-            src="/Fotos/Sobre/Sobre.png" 
-            alt="Caballo Derecho" 
-            className="w-full h-full object-contain opacity-[0.95]" 
-            style={{ 
-              objectPosition: 'right center', 
-              transform: 'scaleX(-1)',
-              filter: 'drop-shadow(-1px 1px 1.5px rgba(0,0,0,0.15)) sepia(0.2) saturate(1.2)'
-            }}
-          />
-        </div>
 
         {/* Wax seal - Part 5: Pops in with an elastic spring scale */}
         <div 
