@@ -450,6 +450,11 @@ html, body {
   animation: floatOrganicB 7s ease-in-out infinite;
 }
 
+/* Convert crown color to rich wax seal crimson red */
+.filter-seal-red {
+  filter: sepia(1) saturate(650%) hue-rotate(332deg) brightness(0.52) contrast(1.35) drop-shadow(0 4px 10px rgba(110, 20, 35, 0.35)) !important;
+}
+
 /* By default, hide the crown inside the envelope's top flap */
 .flap-crown {
   display: none !important;
