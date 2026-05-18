@@ -326,7 +326,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
         {/* Left Horse stretching from left-0 to seal border */}
         <div 
-          className="absolute left-0 right-1/2 mr-[64px] lg:mr-[83px] top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-0 right-1/2 mr-[54px] lg:mr-[71px] top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -344,7 +344,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
         {/* Right Horse stretching from seal border to right-0 */}
         <div 
-          className="absolute left-1/2 ml-[64px] lg:ml-[83px] right-0 top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
+          className="absolute left-1/2 ml-[54px] lg:ml-[71px] right-0 top-[55%] h-[155px] lg:h-[225px] pointer-events-none z-20 transition-all duration-[800ms]"
           style={{ 
             opacity: isOpen ? 0 : (isWaxSealVisible ? 1 : 0),
             transform: `translateY(-50%) ${isOpen ? 'scale(0.8)' : (isWaxSealVisible ? 'scale(1)' : 'scale(0)')}`,
@@ -375,7 +375,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           }}
         >
           {/* Sello Rojo Button */}
-          <div className="w-[135px] h-[135px] lg:w-[175px] lg:h-[175px] rounded-full flex items-center justify-center relative hover:scale-105 transition-transform z-30 filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.55)]">
+          <div className="w-[115px] h-[115px] lg:w-[150px] lg:h-[150px] rounded-full flex items-center justify-center relative hover:scale-105 transition-transform z-30 filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.55)]">
             <img 
               src="/Fotos/Sobre/sello.png" 
               alt="Sello de Cera" 
@@ -383,10 +383,10 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             />
             <div className="absolute inset-0 flex items-center justify-center animate-beat pointer-events-none z-10 w-full h-full">
               <svg viewBox="0 0 100 100" className="w-full h-full">
-                {/* Repositioned curve path to fit PERFECTLY inside the gold horseshoe shape as a smile curve */}
+                {/* Repositioned curve path to fit PERFECTLY inside the gold horseshoe shape as a smile curve raised slightly */}
                 <path 
                   id="textCurve" 
-                  d="M 30,52 A 20,20 0 0,0 70,52" 
+                  d="M 30,48 A 22,22 0 0,0 70,48" 
                   fill="none" 
                 />
                 <text className="font-cormorant italic font-bold fill-xv-pearl" style={{ fontSize: '12.5px', letterSpacing: '0.04em' }}>
