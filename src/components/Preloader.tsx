@@ -94,23 +94,23 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete, onStartFadeOut }) => 
 
   return (
     <div 
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0A0304] bg-[radial-gradient(circle_at_center,_rgba(110,20,35,0.12)_0%,_#0A0304_100%)] transition-opacity duration-1000 ease-in-out select-none ${
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#020202] bg-[radial-gradient(circle_at_center,_#0b0b0b_0%,_#020202_100%)] transition-opacity duration-1000 ease-in-out select-none ${
         fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
       <div className="flex flex-col items-center max-w-xs text-center px-4">
-        {/* Pulsing GUGU Logo with gold gradient border */}
+        {/* Pulsing GUGU Logo in a White Rounded Card (identical to expanded footer style) */}
         <div className="relative mb-8 flex items-center justify-center">
-          {/* Inner Pulsing Glow Rings */}
-          <div className="absolute w-28 h-28 rounded-full bg-[#D4AF37]/15 animate-ping opacity-75" />
-          <div className="absolute w-24 h-24 rounded-full bg-[#6E1423]/20 animate-pulse" />
+          {/* Inner Pulsing Gold & White Glow Rings */}
+          <div className="absolute -inset-4 rounded-full bg-[#D4AF37]/8 animate-ping opacity-60 pointer-events-none" />
+          <div className="absolute -inset-2 rounded-[24px] bg-white/5 animate-pulse pointer-events-none" />
           
-          {/* Core Logo Image with gold border */}
-          <div className="relative w-20 h-20 rounded-full p-[2px] bg-gradient-to-r from-[#8A5A19] via-[#D4AF37] to-[#8A5A19] z-10 filter drop-shadow-[0_0_15px_rgba(212,175,55,0.45)]">
+          {/* Core White Rounded Card */}
+          <div className="relative w-32 h-32 bg-white rounded-2xl p-4 shadow-[0_15px_40px_rgba(0,0,0,0.8)] border border-white/5 z-10 animate-pulse">
             <img 
               src="/logo-gugu.jpg" 
               alt="GUGU Logo" 
-              className="w-full h-full object-cover rounded-full" 
+              className="w-full h-full object-contain" 
             />
           </div>
         </div>
