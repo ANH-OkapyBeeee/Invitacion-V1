@@ -417,10 +417,10 @@ html, body {
     transform: translate(0, 0);
   }
   33% {
-    transform: translate(5px, -6px);
+    transform: translate(11px, -12px);
   }
   66% {
-    transform: translate(-5px, -3px);
+    transform: translate(-10px, -6px);
   }
   100% {
     transform: translate(0, 0);
@@ -432,10 +432,10 @@ html, body {
     transform: translate(0, 0);
   }
   33% {
-    transform: translate(-5px, -3px);
+    transform: translate(-10px, -6px);
   }
   66% {
-    transform: translate(5px, -6px);
+    transform: translate(11px, -12px);
   }
   100% {
     transform: translate(0, 0);
@@ -443,12 +443,13 @@ html, body {
 }
 
 .animate-float-organic-a {
-  animation: floatOrganicA 8s ease-in-out infinite;
+  animation: floatOrganicA 6s ease-in-out infinite;
 }
 
 .animate-float-organic-b {
-  animation: floatOrganicB 9s ease-in-out infinite;
+  animation: floatOrganicB 7s ease-in-out infinite;
 }
+
 
 
 
