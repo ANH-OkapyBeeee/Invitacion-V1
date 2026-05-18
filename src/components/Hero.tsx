@@ -142,7 +142,7 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative min-h-[100svh] flex flex-col items-center justify-center bg-[radial-gradient(circle,_#2D0808_0%,_#0D0305_100%)] overflow-hidden py-20 px-4 text-center">
+    <section className="relative min-h-[100svh] flex flex-col items-center justify-start bg-[radial-gradient(circle,_#2D0808_0%,_#0D0305_100%)] overflow-hidden pt-36 sm:pt-40 md:pt-44 pb-20 px-4 text-center bg-pearl-toggle transition-all duration-1000 ease-in-out">
       
       {/* Decorative rings removed as requested */}
 
@@ -150,7 +150,7 @@ const Hero = () => {
 
       {/* Premium Carousel Section with viewport-clipped edges */}
       <div 
-        className="z-10 mb-10 w-screen max-w-full overflow-hidden py-4 flex justify-center touch-pan-y"
+        className="z-10 mb-10 md:mb-6 w-screen max-w-full overflow-y-visible overflow-x-clip pt-2 pb-4 flex justify-center touch-pan-y"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -182,6 +182,16 @@ const Hero = () => {
 
           {/* Center Rectangle (Active Photo with Gold Glow Border & Puzzle Effect) */}
           <div className="relative flex-shrink-0 transition-all duration-700 transform scale-100 z-10">
+            
+            {/* Crown crowning the central image */}
+            <div className="absolute top-[-115px] sm:top-[-130px] md:top-[-165px] left-1/2 -translate-x-1/2 w-[230px] sm:w-[260px] md:w-[330px] h-[115px] sm:h-[130px] md:h-[165px] z-20 pointer-events-none transition-all duration-1000 ease-in-out">
+              <img 
+                src="/Fotos/Corona/corona.png" 
+                alt="Crown Logo" 
+                className="w-full h-full object-contain crown-image"
+              />
+            </div>
+
             <div className="p-[2px] bg-gradient-to-r from-xv-gold via-[#F5D76E] to-xv-gold rounded-2xl shadow-[0_0_35px_rgba(212,175,55,0.45)] animate-glow">
               <div className="w-[190px] h-[270px] sm:w-[210px] sm:h-[300px] md:w-[260px] md:h-[370px] bg-[#1a0f0f] rounded-[14px] overflow-hidden relative">
                 
@@ -244,38 +254,38 @@ const Hero = () => {
       </div>
 
       {/* Main Title */}
-      <div className="z-10 animate-shimmer text-xv-gold font-josefin text-2xl md:text-3xl font-bold tracking-[0.25em] mb-2">
+      <div className="z-10 animate-shimmer text-xv-gold font-josefin text-2xl md:text-3xl font-bold tracking-[0.25em] mb-2 md:mb-1">
         ✦ {t('heroTitle')} ✦
       </div>
       
-      <h1 className="z-10 font-playfair italic text-[#F5D76E] leading-tight mb-4" style={{ fontSize: 'clamp(2.6rem, 9vw, 4.2rem)' }}>
+      <h1 className="z-10 font-playfair italic text-[#F5D76E] leading-tight mb-4 md:mb-2" style={{ fontSize: 'clamp(2.6rem, 9vw, 4.2rem)' }}>
         {CONFIG.quinceañeraName}
       </h1>
 
-      <div className="z-10 font-josefin uppercase text-xv-gold opacity-75 text-[15px] md:text-[18px] font-semibold tracking-[0.25em] mb-12">
+      <div className="z-10 font-josefin uppercase text-xv-gold opacity-75 text-[15px] md:text-[18px] font-semibold tracking-[0.25em] mb-12 md:mb-6">
         {new Date(CONFIG.eventDate).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}
       </div>
 
       {/* Faltan Text / Event Day Title */}
       {countdownTitle && (
-        <div className="z-10 font-josefin uppercase text-xv-gold tracking-[0.4em] mb-4 text-sm animate-pulse">
+        <div className="z-10 font-josefin uppercase text-xv-gold tracking-[0.4em] mb-4 md:mb-2 text-sm animate-pulse">
           {countdownTitle}
         </div>
       )}
 
       {/* Countdown or Status Message */}
       {showCountdown ? (
-        <div className="z-10 flex gap-3 md:gap-6 mb-16">
+        <div className="z-10 flex gap-3 md:gap-6 mb-16 md:mb-8">
           {timeBlocks.map((block, idx) => (
-            <div key={idx} className="flex flex-col items-center justify-center w-[78px] h-[90px] md:w-[105px] md:h-[115px] bg-xv-gold/[0.08] border border-xv-gold/30 rounded-xl animate-border-pulse backdrop-blur-sm shadow-[0_4px_25px_rgba(212,175,55,0.15)] transition-all duration-300">
-              <span className="font-playfair text-4xl md:text-5xl text-xv-pearl mb-1 font-bold">{block.value}</span>
+            <div key={idx} className="flex flex-col items-center justify-center w-[78px] h-[90px] md:w-[105px] md:h-[115px] bg-xv-gold/[0.08] border border-xv-gold/30 rounded-xl animate-border-pulse backdrop-blur-sm shadow-[0_4px_25px_rgba(212,175,55,0.15)] card-pearl-toggle transition-all duration-1000 ease-in-out">
+              <span className="font-playfair text-4xl md:text-5xl text-xv-pearl mb-1 font-bold name-pearl-toggle transition-all duration-1000 ease-in-out">{block.value}</span>
               <span className="font-josefin uppercase text-[11px] md:text-[13px] text-xv-gold tracking-widest opacity-80">{block.label}</span>
             </div>
           ))}
         </div>
       ) : (
-        <div className="z-10 mb-16 max-w-[400px] mx-auto px-4">
-          <p className="font-playfair italic text-2xl text-white leading-relaxed animate-fade-in">
+        <div className="z-10 mb-16 md:mb-8 max-w-[400px] mx-auto px-4">
+          <p className="font-playfair italic text-2xl text-white leading-relaxed animate-fade-in name-pearl-toggle transition-all duration-1000 ease-in-out">
             {statusMessage}
           </p>
         </div>

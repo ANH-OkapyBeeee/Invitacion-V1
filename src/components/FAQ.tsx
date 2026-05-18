@@ -59,7 +59,7 @@ const FAQ = () => {
           {faqs.map((faq, idx) => (
             <div 
               key={idx}
-              ref={el => cardRefs.current[idx] = el}
+              ref={el => { cardRefs.current[idx] = el; }}
               data-index={idx}
               className={`flex-shrink-0 w-[260px] h-[340px] perspective-1000 snap-center transition-all duration-500 
                 ${flippedIndex !== idx ? 'animate-vibrate' : ''} 

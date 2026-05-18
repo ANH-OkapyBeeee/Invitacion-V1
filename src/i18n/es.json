@@ -111,7 +111,10 @@
       "developedBy": "Desarrollado por",
       "dev": "Desarrollador",
       "legal": "Política de Privacidad · Términos y Condiciones · Política de Cookies",
-      "rights": "All Rights Reserved."
+      "rights": "All Rights Reserved.",
+      "preloader": {
+        "loadingText": "Cargando contenido..."
+      }
     }
   }
 }

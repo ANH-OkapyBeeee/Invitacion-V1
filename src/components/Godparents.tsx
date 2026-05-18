@@ -6,32 +6,32 @@ const Godparents = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-xv-dark-red to-xv-red text-center">
+    <section className="py-20 px-4 bg-gradient-to-b from-xv-dark-red to-xv-red text-center bg-pearl-toggle transition-all duration-1000 ease-in-out">
       <div className="max-w-[480px] mx-auto">
         <h2 className="font-playfair italic text-4xl text-xv-gold mb-4 animate-shimmer">{t('godparents.title')}</h2>
-        <p className="font-cormorant italic text-white/80 text-lg mb-12 px-2">
+        <p className="font-cormorant italic text-white/80 text-lg mb-12 px-2 text-pearl-toggle-desc transition-all duration-1000 ease-in-out">
           {t('godparents.desc')}
         </p>
 
         <div className="grid grid-cols-2 gap-4">
           {/* Godfather */}
-          <div className="bg-white/10 backdrop-blur-md border border-xv-gold rounded-xl p-6 flex flex-col items-center">
+          <div className="bg-white/10 backdrop-blur-md border border-xv-gold rounded-xl p-6 flex flex-col items-center card-pearl-toggle transition-all duration-1000 ease-in-out">
             <div className="text-5xl mb-4">🤠</div>
             <div className="font-josefin text-xv-gold uppercase text-xs tracking-widest font-bold mb-2">
               {t('godparents.godfather')}
             </div>
-            <div className="font-playfair text-xl text-white">
+            <div className="font-playfair text-xl text-white name-pearl-toggle transition-all duration-1000 ease-in-out">
               {CONFIG.godparents.godfatherName}
             </div>
           </div>
 
           {/* Godmother */}
-          <div className="bg-white/10 backdrop-blur-md border border-xv-gold rounded-xl p-6 flex flex-col items-center">
+          <div className="bg-white/10 backdrop-blur-md border border-xv-gold rounded-xl p-6 flex flex-col items-center card-pearl-toggle transition-all duration-1000 ease-in-out">
             <div className="text-5xl mb-4">👩</div>
             <div className="font-josefin text-xv-gold uppercase text-xs tracking-widest font-bold mb-2">
               {t('godparents.godmother')}
             </div>
-            <div className="font-playfair text-xl text-white">
+            <div className="font-playfair text-xl text-white name-pearl-toggle transition-all duration-1000 ease-in-out">
               {CONFIG.godparents.godmotherName}
             </div>
           </div>

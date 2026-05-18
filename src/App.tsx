@@ -14,10 +14,13 @@ import FAQ from './components/FAQ';
 import PhotoUpload from './components/PhotoUpload';
 import Footer from './components/Footer';
 import ShakeCelebration from './components/ShakeCelebration';
+import Preloader from './components/Preloader';
 
 function App() {
   const { t, i18n } = useTranslation();
+  const [isLoading, setIsLoading] = useState(true);
   const [isOpened, setIsOpened] = useState(false);
+  const [startEnvelopeMagic, setStartEnvelopeMagic] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true); // Default playing state active from the envelope screen
   const playerRef = useRef<any>(null);
 
@@ -25,10 +28,11 @@ function App() {
   const [isCollapsed, setIsCollapsed] = useState(false); // Start expanded on load
   const [isTenue, setIsTenue] = useState(false);
   const [isFABVisible, setIsFABVisible] = useState(false); // Magical organic delay timed with stars
+  const [isPearlTheme, setIsPearlTheme] = useState(false);
   
-  const collapseTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const tenueTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const longPressTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const collapseTimerRef = useRef<any>(null);
+  const tenueTimerRef = useRef<any>(null);
+  const longPressTimerRef = useRef<any>(null);
   const isLongPressActive = useRef(false);
 
   const resetIdleTimers = () => {
@@ -63,26 +67,18 @@ function App() {
 
   const [activeTip, setActiveTip] = useState<number | null>(null);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
-  const [showMusicPrompt, setShowMusicPrompt] = useState(false);
-  const [hasPromptedMusic, setHasPromptedMusic] = useState(false);
 
-  useEffect(() => {
-    if (isOpened && !hasPromptedMusic) {
-      const timer = setTimeout(() => {
-        // If music is playing after 15s, ask if they want to keep it
-        if (isPlaying) {
-          setShowMusicPrompt(true);
-          setHasPromptedMusic(true);
-        }
-      }, 15000);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpened, isPlaying, hasPromptedMusic]);
 
   const toggleLanguage = () => {
     resetIdleTimers();
     const nextLang = i18n.language === 'es' ? 'en' : 'es';
     i18n.changeLanguage(nextLang);
+  };
+
+  const togglePearlTheme = () => {
+    resetIdleTimers();
+    setIsPearlTheme(prev => !prev);
+    navigator.vibrate?.(50);
   };
 
   const toggleAudio = () => {
@@ -218,7 +214,14 @@ function App() {
   };
 
   return (
-    <div className="relative w-full max-w-[100vw] overflow-x-hidden font-josefin text-xv-pearl bg-xv-black-bg min-h-[100svh]">
+    <div className={`relative w-full max-w-[100vw] overflow-x-hidden font-josefin text-xv-pearl bg-xv-black-bg min-h-[100svh] ${isPearlTheme ? 'theme-pearl' : ''}`}>
+      
+      {isLoading && (
+        <Preloader 
+          onStartFadeOut={() => setStartEnvelopeMagic(true)} 
+          onComplete={() => setIsLoading(false)} 
+        />
+      )}
       
       {/* Hidden YouTube Player for Background Music */}
       <div className="fixed top-[-1000px] left-[-1000px] opacity-0 w-[10px] h-[10px] pointer-events-none overflow-hidden -z-50">
@@ -279,6 +282,19 @@ function App() {
           title="Idioma"
         >
           {i18n.language === 'es' ? 'EN' : 'ES'}
+        </button>
+
+        {/* Elegant Pearl Theme Toggle Button */}
+        <button 
+          onClick={togglePearlTheme}
+          className={`w-12 h-12 md:w-14 md:h-14 rounded-full bg-white text-gray-800 flex items-center justify-center text-xl md:text-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer border border-gray-100 select-none ${
+            isCollapsed 
+              ? 'opacity-0 scale-50 pointer-events-none w-0 h-0 border-none shadow-none gap-0 overflow-hidden' 
+              : 'opacity-100 scale-100'
+          }`}
+          title="Tema"
+        >
+          {isPearlTheme ? '🔴' : '⚪'}
         </button>
 
         {/* Admin/Config Button */}
@@ -369,7 +385,7 @@ function App() {
 
       {/* Envelope Screen */}
       {!isOpened && (
-        <EnvelopeScreen onOpen={() => setIsOpened(true)} />
+        <EnvelopeScreen active={startEnvelopeMagic} onOpen={() => setIsOpened(true)} />
       )}
 
           {/* Focus Modal Overlay (Outside of main to avoid transform issues) */}
@@ -438,66 +454,7 @@ function App() {
               </div>
             </div>
           )}
-      {/* Delayed Music Confirmation Prompt */}
-      {showMusicPrompt && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-[#1a0f0f] border border-xv-gold/30 rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl animate-scale-up relative">
-            {/* Close button for convenience */}
-            <button 
-              onClick={() => {
-                navigator.vibrate?.(40);
-                setShowMusicPrompt(false);
-              }}
-              className="absolute top-4 right-4 text-xv-gold/50 hover:text-xv-gold transition-colors"
-            >
-              ✕
-            </button>
 
-            <div className="text-4xl mb-4 animate-float">🎵</div>
-            
-            <h3 className="font-playfair text-xl text-xv-gold mb-10 leading-relaxed">
-              {i18n.language === 'es' 
-                ? '¿Deseas silenciar el audio?' 
-                : 'Would you like to mute the audio?'}
-            </h3>
-            
-            <div className="flex justify-center gap-10">
-              {/* Continue Button */}
-              <div className="flex flex-col items-center gap-3 group">
-                <button 
-                  onClick={() => {
-                    navigator.vibrate?.(40);
-                    setShowMusicPrompt(false);
-                  }}
-                  className="w-16 h-16 rounded-full bg-xv-gold text-xv-black-bg flex items-center justify-center text-2xl shadow-[0_0_25px_rgba(212,175,55,0.5)] animate-pulse hover:scale-110 transition-transform active:scale-95"
-                >
-                  {i18n.language === 'es' ? '▶️' : '▶️'}
-                </button>
-                <span className="font-josefin text-[10px] uppercase tracking-[0.2em] text-xv-gold font-bold">
-                  {i18n.language === 'es' ? 'Continuar' : 'Continue'}
-                </span>
-              </div>
-              
-              {/* Mute Button */}
-              <div className="flex flex-col items-center gap-3 group">
-                <button 
-                  onClick={() => {
-                    navigator.vibrate?.(40);
-                    toggleAudio();
-                    setShowMusicPrompt(false);
-                  }}
-                  className="w-16 h-16 rounded-full bg-white/5 border border-white/20 text-white flex items-center justify-center text-2xl hover:bg-white/10 transition-all hover:scale-110 active:scale-95"
-                >
-                  {i18n.language === 'es' ? '🔇' : '🔇'}
-                </button>
-                <span className="font-josefin text-[10px] uppercase tracking-[0.2em] text-white/40 font-bold group-hover:text-white transition-colors">
-                  {i18n.language === 'es' ? 'Silenciar' : 'Mute'}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

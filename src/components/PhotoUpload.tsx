@@ -14,11 +14,11 @@ const PhotoUpload = () => {
   };
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-xv-red to-xv-dark-red text-center text-white">
+    <section className="py-20 px-4 bg-gradient-to-b from-xv-red to-xv-dark-red text-center text-white bg-pearl-toggle transition-all duration-1000 ease-in-out">
       <div className="max-w-[480px] mx-auto">
         <h2 className="font-playfair italic text-4xl text-xv-gold mb-6 animate-shimmer">{t('photoUpload.title')}</h2>
         
-        <p className="font-cormorant text-lg text-white/80 mb-10 px-4 leading-relaxed">
+        <p className="font-cormorant text-lg text-white/80 mb-10 px-4 leading-relaxed text-pearl-toggle-desc transition-all duration-1000 ease-in-out">
           {t('photoUpload.desc')}
         </p>
 
@@ -35,7 +35,7 @@ const PhotoUpload = () => {
 
         <button 
           onClick={handleUploadClick}
-          className="w-full py-4 px-6 rounded-full bg-white text-xv-red font-josefin uppercase font-bold text-sm tracking-wider animate-beat shadow-lg"
+          className="w-full py-4 px-6 rounded-full bg-white text-xv-red font-josefin uppercase font-bold text-sm tracking-wider animate-beat shadow-lg btn-pearl-toggle transition-all duration-1000 ease-in-out"
         >
           📷 {t('photoUpload.btnText')}
         </button>

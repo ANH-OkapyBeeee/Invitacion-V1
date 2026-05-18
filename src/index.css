@@ -334,3 +334,81 @@ html, body {
 .animate-star-fall {
   animation: starFall var(--fall-duration, 2.2s) var(--fall-delay, 0s) cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Elegant Pearl White Theme Styles */
+.theme-pearl .bg-pearl-toggle {
+  background: linear-gradient(to bottom, #FDFBF7 0%, #F5F1E9 100%) !important;
+  background-image: linear-gradient(to bottom, #FDFBF7 0%, #F5F1E9 100%) !important;
+}
+
+/* Map all gold colors and selectors to the refined dark burgundy with 80% opacity when in Pearl theme */
+.theme-pearl .text-xv-gold,
+.theme-pearl .text-xv-gold-light,
+.theme-pearl .text-gold-toggle,
+.theme-pearl .text-\[\#F5D76E\],
+.theme-pearl .text-\[\#F5EEB0\],
+.theme-pearl .text-pearl-toggle-desc {
+  color: rgba(64, 11, 20, 0.8) !important;
+  transition: color 1000ms ease-in-out !important;
+}
+
+.theme-pearl .card-pearl-toggle {
+  background: #ffffff !important;
+  border-color: rgba(212, 175, 55, 0.6) !important;
+  box-shadow: 0 20px 40px rgba(110, 20, 35, 0.04), 0 1px 3px rgba(110, 20, 35, 0.02) !important;
+}
+
+.theme-pearl .name-pearl-toggle {
+  color: #400B14 !important;
+}
+
+/* Styled map and calendar buttons in pearl theme to show the gorgeous dark red/wine bg with pearl white text */
+.theme-pearl .btn-pearl-toggle {
+  background-color: #6E1423 !important;
+  background-image: none !important;
+  color: #FDFBF7 !important;
+  border-color: rgba(110, 20, 35, 0.2) !important;
+  box-shadow: 0 10px 25px rgba(110, 20, 35, 0.25) !important;
+  transition: all 1000ms ease-in-out !important;
+}
+
+/* Keep the footer exactly like the original dark theme, ignoring all pearl modifications */
+.theme-pearl footer .text-xv-gold {
+  color: var(--gold) !important;
+}
+
+.theme-pearl footer .text-xv-gold-light {
+  color: var(--gold-light) !important;
+}
+
+.theme-pearl footer .text-gray-400 {
+  color: #9ca3af !important;
+}
+
+.theme-pearl footer .text-gray-500 {
+  color: #6b7280 !important;
+}
+
+@keyframes loadingBar {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-loading-bar {
+  animation: loadingBar 2s infinite ease-in-out;
+}
+
+/* Crown image premium blending & theme styles */
+.crown-image {
+  mix-blend-mode: screen;
+  transition: all 1000ms ease-in-out;
+  filter: drop-shadow(0 4px 10px rgba(212, 175, 55, 0.45));
+}
+
+.theme-pearl .crown-image {
+  /* Universally keys out black backgrounds by inverting them to white and applies refined burgundy hue-rotation */
+  filter: invert(1) sepia(100%) saturate(400%) hue-rotate(310deg) brightness(28%) contrast(1.1) drop-shadow(0 4px 12px rgba(64, 11, 20, 0.25));
+  mix-blend-mode: multiply;
+}
+

@@ -7,9 +7,10 @@ import confetti from 'canvas-confetti';
 
 interface Props {
   onOpen: () => void;
+  active?: boolean;
 }
 
-const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
+const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -45,6 +46,8 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
 
   // Trigger majestic golden star explosion automatically when opening the link / reloading
   useEffect(() => {
+    if (!active) return;
+
     // Detect if current screen is desktop (width >= 1024px)
     const isDesktop = window.innerWidth >= 1024;
     
@@ -146,7 +149,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen }) => {
       clearTimeout(tTop);
       clearTimeout(tSeal);
     };
-  }, []);
+  }, [active]);
 
   const handleOpen = async () => {
     if (isOpen) return;
