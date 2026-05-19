@@ -85,7 +85,7 @@
     },
     "photoUpload": {
       "title": "Captura los Momentos",
-      "desc": "Ayúdanos a inmortalizar este día. Escanea el código QR o haz clic en el botón para compartir las fotos y videos que tomes durante el evento.",
+      "desc": "Ayúdanos a inmortalizar este día...Por favor escanea el código QR situado en la parte trasera del menu de bebidas y haz clic en el botón para compartir las fotos y videos que tomes durante el evento.",
       "btnText": "Compartir mis Fotos"
     },
     "footer": {
