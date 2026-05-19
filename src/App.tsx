@@ -276,7 +276,7 @@ function App() {
         onTouchStart={resetIdleTimers}
       >
         {/* Right column: Music + WhatsApp stack */}
-        <div className={`flex flex-col-reverse items-center transition-all duration-500 ${isCollapsed ? 'gap-0' : 'gap-3'}`}>
+        <div className="flex flex-col-reverse items-center gap-3 transition-all duration-500">
           {/* Primary Music Button */}
           <button 
             onClick={handleMusicClick}
@@ -297,11 +297,7 @@ function App() {
           {/* WhatsApp Share Button */}
           <button 
             onClick={handleShareWhatsApp}
-            className={`w-14 h-14 md:w-16 md:h-16 rounded-full bg-white flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.15)] transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer border border-gray-100 relative select-none ${
-              isCollapsed 
-                ? 'opacity-0 scale-50 pointer-events-none w-0 h-0 border-none shadow-none gap-0 overflow-hidden' 
-                : 'opacity-100 scale-100'
-            }`}
+            className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.15)] transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer border border-gray-100 relative select-none"
             title="Compartir por WhatsApp"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="w-7 h-7 md:w-8 md:h-8 fill-[#25D366]">
