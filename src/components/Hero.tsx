@@ -84,15 +84,15 @@ const Hero = () => {
   }
 
   const photos = [
-    '/Fotos/Fotos Carrusel del Index/1.JPG',
-    '/Fotos/Fotos Carrusel del Index/2.JPG',
-    '/Fotos/Fotos Carrusel del Index/3.JPG',
-    '/Fotos/Fotos Carrusel del Index/4.JPG',
-    '/Fotos/Fotos Carrusel del Index/4.2.jpeg',
-    '/Fotos/Fotos Carrusel del Index/5.JPG',
-    '/Fotos/Fotos Carrusel del Index/7.jpg',
-    '/Fotos/Fotos Carrusel del Index/9.JPG',
-    '/Fotos/Fotos Carrusel del Index/10.jpg'
+    '/Fotos/Fotos%20Carrusel%20del%20Index/1.JPG',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/2.JPG',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/3.JPG',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/4.JPG',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/4.2.jpeg',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/5.JPG',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/7.jpg',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/9.JPG',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/10.jpg'
   ];
 
   const prevPhoto = (currentPhoto - 1 + photos.length) % photos.length;
