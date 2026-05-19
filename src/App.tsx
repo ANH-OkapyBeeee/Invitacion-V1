@@ -521,7 +521,7 @@ function App() {
                       </div>
                       
                       <p className="text-xv-red font-semibold not-italic">
-                        ¡Atrévete a darle ese toque especial a la fiesta! 🎉
+                        ¡En sí tu imaginación es el límite, el chiste es atreverse a darle ese toque especial a la fiesta!
                       </p>
                     </div>
                   </div>
