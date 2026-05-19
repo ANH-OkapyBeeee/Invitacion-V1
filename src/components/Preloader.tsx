@@ -21,15 +21,15 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete, onStartFadeOut }) => 
     const keyImages = [
       '/logo-gugu.jpg',
       '/sobre-bg.jpg', // Closed envelope backplate
-      '/Fotos/1.JPG',
-      '/Fotos/2.JPG',
-      '/Fotos/3.JPG',
-      '/Fotos/4.JPG',
-      '/Fotos/4.2.jpeg',
-      '/Fotos/5.JPG',
-      '/Fotos/7.jpg',
-      '/Fotos/9.JPG',
-      '/Fotos/10.jpg'
+      '/Fotos/Fotos Carrusel del Index/1.JPG',
+      '/Fotos/Fotos Carrusel del Index/2.JPG',
+      '/Fotos/Fotos Carrusel del Index/3.JPG',
+      '/Fotos/Fotos Carrusel del Index/4.JPG',
+      '/Fotos/Fotos Carrusel del Index/4.2.jpeg',
+      '/Fotos/Fotos Carrusel del Index/5.JPG',
+      '/Fotos/Fotos Carrusel del Index/7.jpg',
+      '/Fotos/Fotos Carrusel del Index/9.JPG',
+      '/Fotos/Fotos Carrusel del Index/10.jpg'
     ];
 
     let loadedCount = 0;
