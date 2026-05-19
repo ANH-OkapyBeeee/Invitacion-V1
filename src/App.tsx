@@ -479,7 +479,7 @@ function App() {
                     
                     <div className="font-cormorant text-xl text-xv-black-bg mb-8 italic leading-relaxed font-medium space-y-6">
                       <p>
-                        Te invitamos a portar con toda confianza alguna prenda o accesorio tradicional charro como:
+                        Te invitamos a portar con toda confianza alguna prenda o accesorio tradicional charro como, por ejemplo:
                       </p>
                       
                       <div className="grid grid-cols-2 gap-x-4 gap-y-3 max-w-[360px] mx-auto text-left not-italic font-josefin font-semibold text-xv-black-bg text-[13px] sm:text-sm border-y border-xv-gold/15 py-4 my-4 bg-xv-pearl/30 rounded-xl px-3 sm:px-4">
@@ -521,7 +521,7 @@ function App() {
                       </div>
                       
                       <p className="text-xv-red font-semibold not-italic">
-                        ¡En sí tu imaginación es el límite, el chiste es atreverse a darle ese toque especial a la fiesta!
+                        ¡Recuerda que lo más importante es tu comodidad! En sí, tu imaginación es el límite y el chiste es atreverse a darle ese toque especial a la fiesta.
                       </p>
                     </div>
                   </div>
