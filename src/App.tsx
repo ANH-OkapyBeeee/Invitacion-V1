@@ -519,10 +519,7 @@ function App() {
                           <span className="leading-tight">Trenzas con listones</span>
                         </div>
                       </div>
-                      
-                      <p className="text-xv-red font-semibold not-italic">
-                        ¡Recuerda que lo más importante es tu comodidad! En sí, tu imaginación es el límite y el chiste es atreverse a darle ese toque especial a la fiesta.
-                      </p>
+
                     </div>
                   </div>
                 )}
