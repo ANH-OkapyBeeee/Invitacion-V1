@@ -451,7 +451,14 @@ function App() {
                           <div className="w-12 h-12 rounded-full bg-xv-pearl relative border border-gray-200 shadow-sm transition-transform hover:scale-105">
                             <div className="absolute top-1/2 left-0 w-full h-[2px] bg-[#0D0305]/40 -rotate-45" />
                           </div>
-                          <span className="font-josefin text-[10px] uppercase tracking-widest text-gray-500 font-bold not-italic">{t('dresscode.noPearl')}</span>
+                          <span className="font-josefin text-[10px] uppercase tracking-widest text-gray-500 font-bold not-italic text-center block leading-tight">
+                            {t('dresscode.noPearl').split(' ').map((word, i, arr) => (
+                              <React.Fragment key={i}>
+                                {word}
+                                {i < arr.length - 1 && <br />}
+                              </React.Fragment>
+                            ))}
+                          </span>
                         </div>
                       </div>
                       
