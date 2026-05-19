@@ -118,7 +118,7 @@ Y Sus padres: Manuel Balderas Ibarra y Ma. de la Luz Vega Feregrino`;
         </h3>
 
         {/* Visual Calendar */}
-        <div className="bg-white/5 border border-xv-gold/30 rounded-2xl p-6 mb-8 backdrop-blur-sm card-pearl-toggle transition-all duration-1000 ease-in-out">
+        <div className="bg-white/5 border border-xv-gold/30 rounded-2xl p-6 mb-10 backdrop-blur-sm card-pearl-toggle transition-all duration-1000 ease-in-out">
           <div className="font-playfair text-2xl text-xv-gold-light mb-6 uppercase">
             {t('saveTheDate.calendar.month')} {new Date(CONFIG.eventDate).getFullYear()}
           </div>
@@ -189,9 +189,6 @@ Y Sus padres: Manuel Balderas Ibarra y Ma. de la Luz Vega Feregrino`;
           </div>
         </div>
 
-        <p className="font-cormorant italic text-lg text-white/65 mb-10 text-pearl-toggle-desc transition-all duration-1000 ease-in-out">
-          {t('saveTheDate.desc')}
-        </p>
 
         <button 
           onClick={handleCalendar}
