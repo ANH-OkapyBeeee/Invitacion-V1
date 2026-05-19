@@ -68,6 +68,18 @@ function App() {
   const [activeTip, setActiveTip] = useState<number | null>(null);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
 
+  // Prevent background scrolling when any detail modal or admin panel is active
+  useEffect(() => {
+    if (activeTip !== null || isAdminOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [activeTip, isAdminOpen]);
+
 
   const toggleLanguage = () => {
     resetIdleTimers();
