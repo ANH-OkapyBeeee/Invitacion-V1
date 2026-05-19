@@ -436,7 +436,7 @@ function App() {
                       </p>
                       
                       <p className="text-xv-red font-semibold not-italic mt-6 pt-2 border-t border-xv-gold/10">
-                        ¡Agradecemos profundamente su amable comprensión 🙏 para hacer este momento aún más especial! ❤️
+                        ¡Agradecemos profundamente su amable comprensión 🙏! ❤️
                       </p>
                     </div>
                     
