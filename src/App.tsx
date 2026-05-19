@@ -410,7 +410,7 @@ function App() {
               onClick={() => setActiveTip(null)}
             >
               <div 
-                className="relative bg-xv-pearl w-full max-w-[440px] my-auto rounded-3xl shadow-2xl overflow-hidden border border-xv-gold/30 animate-scale-up"
+                className="relative bg-xv-pearl w-full max-w-[440px] my-auto rounded-3xl shadow-2xl overflow-hidden border border-xv-gold/30 animate-scale-up flex flex-col max-h-[85vh] touch-auto"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Close Button */}
@@ -425,7 +425,7 @@ function App() {
                 </button>
 
                 {activeTip === 1 ? (
-                  <div className="p-8 md:p-10 text-center">
+                  <div className="p-8 md:p-10 text-center overflow-y-auto flex-1 touch-auto scrollbar-thin">
                     <div className="text-6xl mb-6">👗</div>
                     <h3 className="font-playfair italic text-3xl text-xv-red mb-4">Tip de Vestimenta</h3>
                     <div className="w-16 h-0.5 bg-xv-gold/40 mx-auto mb-6" />
@@ -472,7 +472,7 @@ function App() {
                     </div>
                   </div>
                 ) : (
-                  <div className="p-8 md:p-10 text-center">
+                  <div className="p-8 md:p-10 text-center overflow-y-auto flex-1 touch-auto scrollbar-thin">
                     <div className="text-6xl mb-6">📝</div>
                     <h3 className="font-playfair italic text-3xl text-xv-red mb-4">
                       {t('dresscode.charroTitle')}
