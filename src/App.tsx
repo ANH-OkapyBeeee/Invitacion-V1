@@ -473,14 +473,57 @@ function App() {
                   </div>
                 ) : (
                   <div className="p-8 md:p-10 text-center overflow-y-auto flex-1 touch-auto scrollbar-thin">
-                    <div className="text-6xl mb-6">📝</div>
-                    <h3 className="font-playfair italic text-3xl text-xv-red mb-4">
-                      {t('dresscode.charroTitle')}
-                    </h3>
+                    <div className="text-6xl mb-6">🤠</div>
+                    <h3 className="font-playfair italic text-3xl text-xv-red mb-4">¡Fiesta con Temática Charra!</h3>
                     <div className="w-16 h-0.5 bg-xv-gold/40 mx-auto mb-6" />
-                    <p className="font-cormorant text-xl text-xv-black-bg mb-8 italic leading-relaxed font-medium">
-                      {t('dresscode.charroDesc')}
-                    </p>
+                    
+                    <div className="font-cormorant text-xl text-xv-black-bg mb-8 italic leading-relaxed font-medium space-y-6">
+                      <p>
+                        Te invitamos a portar con toda confianza alguna prenda o accesorio tradicional charro como:
+                      </p>
+                      
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-3 max-w-[360px] mx-auto text-left not-italic font-josefin font-semibold text-xv-black-bg text-[13px] sm:text-sm border-y border-xv-gold/15 py-4 my-4 bg-xv-pearl/30 rounded-xl px-3 sm:px-4">
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">👢</span>
+                          <span>Botas</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">🧣</span>
+                          <span>Rebozo</span>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">🤠</span>
+                          <span>Sombrero</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">👗</span>
+                          <span className="leading-tight">Vestido de escaramuza</span>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">✨</span>
+                          <span className="leading-tight">Cinturones piteados</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">👨🏻</span>
+                          <span>El bigotazo</span>
+                        </div>
+                        
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">👔</span>
+                          <span className="leading-tight">Moños charros</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-lg">👧🏻</span>
+                          <span className="leading-tight">Trenzas con listones</span>
+                        </div>
+                      </div>
+                      
+                      <p className="text-xv-red font-semibold not-italic">
+                        ¡Atrévete a darle ese toque especial a la fiesta! 🎉
+                      </p>
+                    </div>
                   </div>
                 )}
               </div>
