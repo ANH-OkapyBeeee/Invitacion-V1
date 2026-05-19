@@ -463,11 +463,11 @@ function App() {
                       </div>
                       
                       <p>
-                        ya que estos colores son exclusivos para el vestido de la Quinceañera y sus damas 👗.
+                        ya que estos colores son exclusivos para el vestido de la Quinceañera y sus damas.
                       </p>
                       
                       <p className="text-xv-red font-semibold not-italic mt-6 pt-2 border-t border-xv-gold/10">
-                        ¡Agradecemos profundamente su amable comprensión 🙏! ❤️
+                        ¡Agradecemos profundamente su amable comprensión 🙏!
                       </p>
                     </div>
                   </div>
