@@ -72,11 +72,14 @@ function App() {
   useEffect(() => {
     if (activeTip !== null || isAdminOpen) {
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     }
     return () => {
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
     };
   }, [activeTip, isAdminOpen]);
 
@@ -403,7 +406,7 @@ function App() {
           {/* Focus Modal Overlay (Outside of main to avoid transform issues) */}
           {activeTip !== null && (
             <div 
-              className="fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-y-auto bg-black/70 backdrop-blur-lg"
+              className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/70 backdrop-blur-lg touch-none"
               onClick={() => setActiveTip(null)}
             >
               <div 
