@@ -434,17 +434,26 @@ function App() {
                         Con mucho cariño, pedimos a nuestras invitadas evitar 🚫 los vestidos en:
                       </p>
                       
-                      <ul className="inline-block text-left space-y-2 my-4 bg-xv-pearl/50 border border-xv-gold/20 p-4 rounded-xl shadow-inner min-w-[200px]">
-                        <li className="flex items-center gap-3 text-lg not-italic font-josefin font-semibold text-xv-black-bg">
-                          <span>🔴 Rojo</span>
-                        </li>
-                        <li className="flex items-center gap-3 text-lg not-italic font-josefin font-semibold text-xv-black-bg">
-                          <span>👑 Dorado</span>
-                        </li>
-                        <li className="flex items-center gap-3 text-lg not-italic font-josefin font-semibold text-xv-black-bg">
-                          <span>⚪ Blanco Perla</span>
-                        </li>
-                      </ul>
+                      <div className="flex justify-center gap-6 my-6">
+                        <div className="flex flex-col items-center gap-3">
+                          <div className="w-12 h-12 rounded-full bg-[#6E1423] relative border border-gray-200 shadow-sm transition-transform hover:scale-105">
+                            <div className="absolute top-1/2 left-0 w-full h-[2px] bg-white/40 -rotate-45" />
+                          </div>
+                          <span className="font-josefin text-[10px] uppercase tracking-widest text-gray-500 font-bold not-italic">{t('dresscode.noRed')}</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-3">
+                          <div className="w-12 h-12 rounded-full bg-xv-gold relative border border-gray-200 shadow-sm transition-transform hover:scale-105">
+                            <div className="absolute top-1/2 left-0 w-full h-[2px] bg-[#0D0305]/40 -rotate-45" />
+                          </div>
+                          <span className="font-josefin text-[10px] uppercase tracking-widest text-gray-500 font-bold not-italic">{t('dresscode.noGold')}</span>
+                        </div>
+                        <div className="flex flex-col items-center gap-3">
+                          <div className="w-12 h-12 rounded-full bg-xv-pearl relative border border-gray-200 shadow-sm transition-transform hover:scale-105">
+                            <div className="absolute top-1/2 left-0 w-full h-[2px] bg-[#0D0305]/40 -rotate-45" />
+                          </div>
+                          <span className="font-josefin text-[10px] uppercase tracking-widest text-gray-500 font-bold not-italic">{t('dresscode.noPearl')}</span>
+                        </div>
+                      </div>
                       
                       <p>
                         ya que estos colores son exclusivos para el vestido de la Quinceañera y sus damas 👗.
@@ -453,27 +462,6 @@ function App() {
                       <p className="text-xv-red font-semibold not-italic mt-6 pt-2 border-t border-xv-gold/10">
                         ¡Agradecemos profundamente su amable comprensión 🙏! ❤️
                       </p>
-                    </div>
-                    
-                    <div className="flex justify-center gap-6">
-                      <div className="flex flex-col items-center gap-3">
-                        <div className="w-12 h-12 rounded-full bg-[#6E1423] relative border border-gray-200 shadow-sm">
-                          <div className="absolute top-1/2 left-0 w-full h-[2px] bg-white/40 -rotate-45" />
-                        </div>
-                        <span className="font-josefin text-[10px] uppercase tracking-widest text-gray-500 font-bold">{t('dresscode.noRed')}</span>
-                      </div>
-                      <div className="flex flex-col items-center gap-3">
-                        <div className="w-12 h-12 rounded-full bg-xv-gold relative border border-gray-200 shadow-sm">
-                          <div className="absolute top-1/2 left-0 w-full h-[2px] bg-[#0D0305]/40 -rotate-45" />
-                        </div>
-                        <span className="font-josefin text-[10px] uppercase tracking-widest text-gray-500 font-bold">{t('dresscode.noGold')}</span>
-                      </div>
-                      <div className="flex flex-col items-center gap-3">
-                        <div className="w-12 h-12 rounded-full bg-xv-pearl relative border border-gray-200 shadow-sm">
-                          <div className="absolute top-1/2 left-0 w-full h-[2px] bg-[#0D0305]/40 -rotate-45" />
-                        </div>
-                        <span className="font-josefin text-[10px] uppercase tracking-widest text-gray-500 font-bold">{t('dresscode.noPearl')}</span>
-                      </div>
                     </div>
                   </div>
                 ) : (
