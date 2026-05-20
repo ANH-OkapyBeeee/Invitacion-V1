@@ -377,7 +377,7 @@ function App() {
   };
 
   return (
-    <div className={`relative w-full max-w-[100vw] overflow-x-hidden font-josefin text-xv-pearl bg-xv-black-bg min-h-[100svh] ${isPearlTheme ? 'theme-pearl' : ''}`}>
+    <div className={`relative w-full max-w-[100vw] overflow-x-clip font-josefin text-xv-pearl bg-xv-black-bg min-h-[100svh] ${isPearlTheme ? 'theme-pearl' : ''}`}>
       
       {isLoading && (
         <Preloader 
