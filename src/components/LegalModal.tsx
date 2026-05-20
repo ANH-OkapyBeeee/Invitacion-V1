@@ -44,10 +44,10 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, defaultTab }) 
       />
 
       {/* Modal Container */}
-      <div className="relative w-full max-w-2xl bg-[#080108] border-2 border-xv-gold/40 rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8),_0_0_30px_rgba(212,175,55,0.1)] flex flex-col max-h-[85vh] md:max-h-[80vh] transition-all duration-300 scale-100 animate-scale-up z-10">
+      <div className="relative w-full max-w-2xl bg-black border-2 border-xv-gold/40 rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.9),_0_0_30px_rgba(212,175,55,0.15)] flex flex-col max-h-[85vh] md:max-h-[80vh] transition-all duration-300 scale-100 animate-scale-up z-10">
         
         {/* Modal Header */}
-        <div className="px-6 pt-6 pb-4 border-b border-white/10 flex justify-between items-center bg-[#0d030d]">
+        <div className="px-6 pt-6 pb-4 border-b border-white/10 flex justify-between items-center bg-white/5 backdrop-blur-md">
           <h3 className="font-playfair text-xl md:text-2xl text-xv-gold uppercase tracking-wider font-bold">
             {isEn ? 'Legal Information' : 'Información Legal'}
           </h3>
@@ -61,33 +61,33 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, defaultTab }) 
         </div>
 
         {/* Tab Selection */}
-        <div className="flex border-b border-white/5 bg-[#0f040f] overflow-x-auto scrollbar-none font-josefin text-xs uppercase tracking-widest font-bold">
+        <div className="flex border-b border-white/10 bg-white/5 backdrop-blur-md overflow-x-auto scrollbar-none font-josefin text-xs uppercase tracking-widest font-bold">
           <button 
             onClick={() => handleTabChange('privacy')}
-            className={`flex-1 py-4.5 px-4 text-center cursor-pointer transition-all duration-300 border-b-2 outline-none min-w-[120px] ${
+            className={`flex-1 py-4 px-4 text-center cursor-pointer transition-all duration-300 border-b-2 outline-none min-w-[120px] leading-normal ${
               activeTab === 'privacy' 
-                ? 'text-xv-gold border-xv-gold bg-white/5' 
-                : 'text-gray-400 border-transparent hover:text-gray-200 hover:bg-white/2'
+                ? 'text-xv-gold border-xv-gold bg-white/10' 
+                : 'text-gray-400 border-transparent hover:text-gray-200 hover:bg-white/5'
             }`}
           >
             {isEn ? 'Privacy' : 'Privacidad'}
           </button>
           <button 
             onClick={() => handleTabChange('terms')}
-            className={`flex-1 py-4.5 px-4 text-center cursor-pointer transition-all duration-300 border-b-2 outline-none min-w-[120px] ${
+            className={`flex-1 py-4 px-4 text-center cursor-pointer transition-all duration-300 border-b-2 outline-none min-w-[120px] leading-normal ${
               activeTab === 'terms' 
-                ? 'text-xv-gold border-xv-gold bg-white/5' 
-                : 'text-gray-400 border-transparent hover:text-gray-200 hover:bg-white/2'
+                ? 'text-xv-gold border-xv-gold bg-white/10' 
+                : 'text-gray-400 border-transparent hover:text-gray-200 hover:bg-white/5'
             }`}
           >
             {isEn ? 'Terms & Conditions' : 'Términos'}
           </button>
           <button 
             onClick={() => handleTabChange('cookies')}
-            className={`flex-1 py-4.5 px-4 text-center cursor-pointer transition-all duration-300 border-b-2 outline-none min-w-[120px] ${
+            className={`flex-1 py-4 px-4 text-center cursor-pointer transition-all duration-300 border-b-2 outline-none min-w-[120px] leading-normal ${
               activeTab === 'cookies' 
-                ? 'text-xv-gold border-xv-gold bg-white/5' 
-                : 'text-gray-400 border-transparent hover:text-gray-200 hover:bg-white/2'
+                ? 'text-xv-gold border-xv-gold bg-white/10' 
+                : 'text-gray-400 border-transparent hover:text-gray-200 hover:bg-white/5'
             }`}
           >
             {isEn ? 'Cookies' : 'Cookies'}
@@ -310,7 +310,7 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, defaultTab }) 
         </div>
 
         {/* Modal Footer */}
-        <div className="px-6 py-4 border-t border-white/10 flex justify-end bg-[#0d030d]">
+        <div className="px-6 py-4 border-t border-white/10 flex justify-end bg-white/5 backdrop-blur-md">
           <button 
             onClick={handleClose}
             className="px-6 py-2.5 rounded-full bg-gradient-to-r from-xv-gold to-[#8A5A19] text-white font-josefin text-xs uppercase tracking-widest font-bold shadow-[0_4px_12px_rgba(212,175,55,0.3)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer focus:outline-none"
