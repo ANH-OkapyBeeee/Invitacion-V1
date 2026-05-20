@@ -50,7 +50,7 @@ const Itinerary = () => {
                   <div>
                     <h3 className="font-playfair font-bold text-xl text-xv-red mb-1">{event.title}</h3>
                     <div className="font-josefin text-sm text-xv-gold tracking-wider mb-2 font-semibold">{event.time}</div>
-                    <p className="font-cormorant italic text-gray-500 text-lg leading-snug">{event.desc}</p>
+                    <p className="font-cormorant italic text-gray-500 text-lg leading-snug whitespace-pre-line">{event.desc}</p>
                   </div>
                 </div>
               </div>
