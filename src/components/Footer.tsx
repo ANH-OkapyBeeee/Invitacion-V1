@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CONFIG } from '../config';
 import { QRCodeSVG } from 'qrcode.react';
+import LegalModal from './LegalModal';
 
 const serviceMetadata = [
   { emoji: "🖥️", shortEs: "Web & Tiendas", shortEn: "Web & Shops", large: true },
@@ -28,6 +29,8 @@ const Footer = () => {
   const [activeHighlight, setActiveHighlight] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [activeServiceIndex, setActiveServiceIndex] = useState<number | null>(null);
+  const [legalModalOpen, setLegalModalOpen] = useState(false);
+  const [activeLegalTab, setActiveLegalTab] = useState<'privacy' | 'terms' | 'cookies'>('privacy');
   const footerRef = useRef<HTMLElement>(null);
   const developerRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<number[]>([]);
@@ -477,7 +480,9 @@ const Footer = () => {
                   <button 
                     onClick={() => {
                       navigator.vibrate?.(30);
-                      alert(term);
+                      const tabs: ('privacy' | 'terms' | 'cookies')[] = ['privacy', 'terms', 'cookies'];
+                      setActiveLegalTab(tabs[i]);
+                      setLegalModalOpen(true);
                     }}
                     className="hover:text-xv-gold hover:opacity-100 transition-all duration-300 cursor-pointer focus:outline-none font-semibold"
                   >
@@ -526,6 +531,12 @@ const Footer = () => {
             </button>
           </div>
         )}
+
+        <LegalModal 
+          isOpen={legalModalOpen} 
+          onClose={() => setLegalModalOpen(false)} 
+          defaultTab={activeLegalTab} 
+        />
 
       </div>
     </footer>
