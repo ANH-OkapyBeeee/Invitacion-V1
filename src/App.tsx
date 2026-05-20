@@ -16,6 +16,7 @@ import RecentGallery from './components/RecentGallery';
 import Footer from './components/Footer';
 import ShakeCelebration from './components/ShakeCelebration';
 import Preloader from './components/Preloader';
+import LegalModal from './components/LegalModal';
 import { db } from './firebase';
 import { collection, query, where, getDocs, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
@@ -88,6 +89,8 @@ function App() {
 
   const [activeTip, setActiveTip] = useState<number | null>(null);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [legalModalOpen, setLegalModalOpen] = useState(false);
+  const [activeLegalTab, setActiveLegalTab] = useState<'privacy' | 'terms' | 'cookies'>('privacy');
   const [adminSubView, setAdminSubView] = useState<'menu' | 'moderation' | 'published'>('menu');
   const [pendingPhotos, setPendingPhotos] = useState<any[]>([]);
   const [approvedPhotos, setApprovedPhotos] = useState<any[]>([]);
@@ -206,7 +209,7 @@ function App() {
 
   // Prevent background scrolling when any detail modal or admin panel is active
   useEffect(() => {
-    if (activeTip !== null || isAdminOpen) {
+    if (activeTip !== null || isAdminOpen || legalModalOpen) {
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
     } else {
@@ -217,7 +220,7 @@ function App() {
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';
     };
-  }, [activeTip, isAdminOpen]);
+  }, [activeTip, isAdminOpen, legalModalOpen]);
 
 
   const toggleLanguage = () => {
@@ -752,7 +755,12 @@ function App() {
           <FAQ />
           <PhotoUpload />
           <RecentGallery />
-          <Footer />
+          <Footer 
+            onOpenLegal={(tab) => {
+              setActiveLegalTab(tab);
+              setLegalModalOpen(true);
+            }}
+          />
         </main>
       </div>
 
@@ -884,6 +892,12 @@ function App() {
               </div>
             </div>
           )}
+
+      <LegalModal 
+        isOpen={legalModalOpen} 
+        onClose={() => setLegalModalOpen(false)} 
+        defaultTab={activeLegalTab} 
+      />
 
     </div>
   );

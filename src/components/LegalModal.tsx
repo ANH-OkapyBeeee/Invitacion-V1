@@ -14,14 +14,7 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, defaultTab }) 
   useEffect(() => {
     if (isOpen) {
       setActiveTab(defaultTab);
-      // Prevent body scroll when open
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
   }, [isOpen, defaultTab]);
 
   if (!isOpen) return null;
@@ -40,7 +33,7 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, defaultTab }) 
 
   return (
     <div 
-      className="fixed inset-0 z-[150] flex items-center justify-center px-4 py-6 md:p-12 select-none"
+      className="fixed inset-0 z-[9999] flex items-center justify-center px-4 py-6 md:p-12 select-none transform translate-z-0"
       role="dialog"
       aria-modal="true"
     >

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CONFIG } from '../config';
 import { QRCodeSVG } from 'qrcode.react';
-import LegalModal from './LegalModal';
 
 const serviceMetadata = [
   { emoji: "🖥️", shortEs: "Web & Tiendas", shortEn: "Web & Shops", large: true },
@@ -20,7 +19,11 @@ const serviceMetadata = [
 ];
 
 
-const Footer = () => {
+interface FooterProps {
+  onOpenLegal: (tab: 'privacy' | 'terms' | 'cookies') => void;
+}
+
+const Footer = ({ onOpenLegal }: FooterProps) => {
   const { t } = useTranslation();
   const [expanded, setExpanded] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
@@ -29,8 +32,6 @@ const Footer = () => {
   const [activeHighlight, setActiveHighlight] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [activeServiceIndex, setActiveServiceIndex] = useState<number | null>(null);
-  const [legalModalOpen, setLegalModalOpen] = useState(false);
-  const [activeLegalTab, setActiveLegalTab] = useState<'privacy' | 'terms' | 'cookies'>('privacy');
   const footerRef = useRef<HTMLElement>(null);
   const developerRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<number[]>([]);
@@ -213,7 +214,7 @@ const Footer = () => {
             <>
               <div className="flex justify-center mb-4">
                 <div className="relative">
-                  <div className={`bg-white rounded-xl p-2 shadow-lg border border-white/10 w-20 h-20 flex items-center justify-center overflow-hidden transition-all duration-300 ${isShaking ? 'animate-earthquake' : ''}`}>
+                  <div className={`bg-white rounded-xl p-2 shadow-lg border border-white/10 w-20 h-20 flex items-center justify-center transition-all duration-300 ${isShaking ? 'animate-earthquake' : ''}`}>
                     <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="w-full h-full object-contain" />
                   </div>
                   {/* Floating WhatsApp Button */}
@@ -250,15 +251,17 @@ const Footer = () => {
         <div className={`overflow-hidden transition-all duration-500 ease-in-out ${expanded ? 'max-h-[2500px] opacity-100 mt-8' : 'max-h-0 opacity-0'}`}>
           
           <div className="flex justify-center mb-8">
-            <div 
-              onClick={() => {
-                navigator.vibrate?.([30, 20, 30]);
-                developerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }}
-              className={`relative bg-white rounded-xl p-2 shadow-[0_15px_40px_rgba(0,0,0,0.6),_0_0_20px_rgba(212,175,55,0.15)] border-2 border-xv-gold w-20 h-20 flex items-center justify-center overflow-hidden transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 hover:shadow-[0_15px_40px_rgba(0,0,0,0.6),_0_0_30px_rgba(212,175,55,0.35)] ${isShaking ? 'animate-earthquake' : ''}`}
-              title="Ver datos del desarrollador"
-            >
-              <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="w-full h-full object-contain" />
+            <div className="relative">
+              <div 
+                onClick={() => {
+                  navigator.vibrate?.([30, 20, 30]);
+                  developerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }}
+                className={`bg-white rounded-xl p-2 shadow-[0_15px_40px_rgba(0,0,0,0.6),_0_0_20px_rgba(212,175,55,0.15)] border-2 border-xv-gold w-20 h-20 flex items-center justify-center transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 hover:shadow-[0_15px_40px_rgba(0,0,0,0.6),_0_0_30px_rgba(212,175,55,0.35)] ${isShaking ? 'animate-earthquake' : ''}`}
+                title="Ver datos del desarrollador"
+              >
+                <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="w-full h-full object-contain" />
+              </div>
               {/* Floating WhatsApp Button for Expanded Logo */}
               <a 
                 href={`https://wa.me/${CONFIG.contact.whatsapp}?text=${defaultMsg}`}
@@ -481,8 +484,7 @@ const Footer = () => {
                     onClick={() => {
                       navigator.vibrate?.(30);
                       const tabs: ('privacy' | 'terms' | 'cookies')[] = ['privacy', 'terms', 'cookies'];
-                      setActiveLegalTab(tabs[i]);
-                      setLegalModalOpen(true);
+                      onOpenLegal(tabs[i]);
                     }}
                     className="hover:text-xv-gold hover:opacity-100 transition-all duration-300 cursor-pointer focus:outline-none font-semibold"
                   >
@@ -531,12 +533,6 @@ const Footer = () => {
             </button>
           </div>
         )}
-
-        <LegalModal 
-          isOpen={legalModalOpen} 
-          onClose={() => setLegalModalOpen(false)} 
-          defaultTab={activeLegalTab} 
-        />
 
       </div>
     </footer>
