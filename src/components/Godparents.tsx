@@ -9,7 +9,7 @@ const Godparents = () => {
     <section className="py-20 px-4 bg-gradient-to-b from-xv-dark-red to-xv-red text-center bg-pearl-toggle transition-all duration-1000 ease-in-out">
       <div className="max-w-[480px] mx-auto">
         <h2 className="font-playfair italic text-4xl text-xv-gold mb-4 animate-shimmer">{t('godparents.title')}</h2>
-        <p className="font-cormorant italic text-white/80 text-lg mb-12 px-2 text-pearl-toggle-desc transition-all duration-1000 ease-in-out">
+        <p className="font-cormorant italic text-white/80 text-xl leading-relaxed mb-12 px-2 text-pearl-toggle-desc transition-all duration-1000 ease-in-out">
           {t('godparents.desc')}
         </p>
 
