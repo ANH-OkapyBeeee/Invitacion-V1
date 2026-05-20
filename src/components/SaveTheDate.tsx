@@ -169,7 +169,7 @@ Y Sus padres: Manuel Balderas Ibarra y Ma. de la Luz Vega Feregrino`;
                           return (
                             <div 
                               key={idx}
-                              className="absolute left-1/2 top-1/2 w-6 h-6 text-xv-gold-light animate-star-burst pointer-events-none"
+                              className="absolute left-1/2 top-1/2 flex items-center justify-center text-2xl md:text-4xl text-xv-gold-light animate-star-burst pointer-events-none"
                               style={{
                                 '--x': `${x}px`,
                                 '--y': `${y}px`,
