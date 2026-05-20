@@ -81,10 +81,10 @@
       "q7": "¿Cuál es el código de vestimenta?",
       "a7": "El estilo es libre (formal o casual), solo te pedimos recordar la temática charra y evitar los colores reservados para la festejada.",
       "q8": "¿Puedo tomar fotos y videos?",
-      "a8": "¡Por supuesto! Nos encantará que captures cada momento. No olvides compartirlos en nuestra sección de 'Captura los Momentos'."
+      "a8": "¡Por supuesto! Nos encantará que captures cada momento. No olvides compartirlos en nuestra sección de 'Captura el Momento'."
     },
     "photoUpload": {
-      "title": "Captura los Momentos",
+      "title": "Captura el Momento",
       "desc": "Ayúdanos a inmortalizar este día...Por favor escanea el código QR situado en la parte trasera del menu de bebidas y haz clic en el botón para compartir las fotos y videos que tomes durante el evento.",
       "btnText": "Compartir mis Fotos"
     },
