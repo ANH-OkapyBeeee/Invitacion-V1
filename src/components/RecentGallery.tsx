@@ -397,7 +397,7 @@ const RecentGallery = () => {
           {photos.length === 0 ? (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-3xl border-2 border-dashed border-xv-gold/40 bg-white/50">
               <span className="text-5xl">📷</span>
-              <p className="font-cormorant text-sm italic text-xv-gold leading-relaxed">
+              <p className="font-cormorant text-xl md:text-2xl italic text-xv-red font-medium leading-relaxed">
                 Aquí aparecerán las fotos que tomen los invitados
               </p>
             </div>
