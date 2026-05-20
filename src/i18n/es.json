@@ -92,6 +92,11 @@
       },
       "btnText": "Compartir mis Fotos"
     },
+    "gallery": {
+      "title": "Galería de la Fiesta",
+      "subtitle": "MOMENTOS COMPARTIDOS",
+      "desc": "Las fotos más recientes aprobadas por los administradores. ¡Sigue compartiendo tus momentos!"
+    },
     "footer": {
       "gugu": "GuGu | Laboratorio Creativo®",
       "tapMore": "Toca para más información",

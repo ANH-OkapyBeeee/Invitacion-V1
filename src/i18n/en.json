@@ -81,6 +81,11 @@
       },
       "btnText": "Upload my Photos"
     },
+    "gallery": {
+      "title": "Party Gallery",
+      "subtitle": "SHARED MOMENTS",
+      "desc": "The most recent photos approved by the administrators. Keep sharing your moments!"
+    },
     "footer": {
       "gugu": "GuGu | Laboratorio Creativo®",
       "tapMore": "Tap for more information",

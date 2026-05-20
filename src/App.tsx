@@ -12,9 +12,14 @@ import DressCode from './components/DressCode';
 import SaveTheDate from './components/SaveTheDate';
 import FAQ from './components/FAQ';
 import PhotoUpload from './components/PhotoUpload';
+import RecentGallery from './components/RecentGallery';
 import Footer from './components/Footer';
 import ShakeCelebration from './components/ShakeCelebration';
 import Preloader from './components/Preloader';
+import { db, storage } from './firebase';
+import { collection, query, where, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { ref as storageRef, deleteObject } from 'firebase/storage';
+
 
 function App() {
   const { t, i18n } = useTranslation();
@@ -84,6 +89,56 @@ function App() {
 
   const [activeTip, setActiveTip] = useState<number | null>(null);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [adminSubView, setAdminSubView] = useState<'menu' | 'moderation'>('menu');
+  const [pendingPhotos, setPendingPhotos] = useState<any[]>([]);
+
+  // Real-time subscription to pending photos when moderation panel is open
+  useEffect(() => {
+    if (!isAdminOpen || adminSubView !== 'moderation') return;
+
+    const q = query(
+      collection(db, 'photos'),
+      where('status', '==', 'pending')
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const photos = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      // Sort newer first based on createdAt timestamp
+      photos.sort((a: any, b: any) => {
+        const timeA = a.createdAt?.seconds || 0;
+        const timeB = b.createdAt?.seconds || 0;
+        return timeB - timeA;
+      });
+      setPendingPhotos(photos);
+    });
+
+    return () => unsubscribe();
+  }, [isAdminOpen, adminSubView]);
+
+  const handleApprovePhoto = async (photoId: string) => {
+    navigator.vibrate?.(40);
+    try {
+      await updateDoc(doc(db, 'photos', photoId), {
+        status: 'approved'
+      });
+    } catch (err) {
+      console.error("Error approving photo:", err);
+    }
+  };
+
+  const handleRejectPhoto = async (photoId: string, fileName: string) => {
+    navigator.vibrate?.(60);
+    try {
+      const fileRef = storageRef(storage, `photos/${fileName}`);
+      await deleteObject(fileRef).catch(e => console.warn("Storage file not found or already deleted:", e));
+      await deleteDoc(doc(db, 'photos', photoId));
+    } catch (err) {
+      console.error("Error rejecting photo:", err);
+    }
+  };
 
   // Prevent background scrolling when any detail modal or admin panel is active
   useEffect(() => {
@@ -377,43 +432,137 @@ function App() {
 
       {/* Panel de administrador */}
       {isAdminOpen && (
-        <div className="fixed left-4 bottom-6 z-[10000] bg-black/90 backdrop-blur-xl border border-xv-gold/30 rounded-3xl p-5 shadow-2xl w-72 animate-scale-up">
-          <div className="flex justify-between items-center mb-5">
+        <div 
+          className={`fixed z-[10000] bg-black/95 backdrop-blur-xl border border-xv-gold/30 rounded-3xl p-5 shadow-2xl transition-all duration-300 animate-scale-up ${
+            adminSubView === 'moderation' 
+              ? 'left-4 right-4 bottom-6 md:left-auto md:right-6 md:w-[460px] max-h-[85vh] flex flex-col' 
+              : 'left-4 bottom-6 w-72'
+          }`}
+        >
+          {/* Header */}
+          <div className="flex justify-between items-center mb-5 flex-shrink-0">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-xv-gold animate-pulse" />
-              <h3 className="font-josefin text-xv-gold text-[10px] uppercase tracking-widest font-bold">Panel Administrador</h3>
+              <h3 className="font-josefin text-xv-gold text-[10px] uppercase tracking-widest font-bold">
+                {adminSubView === 'moderation' ? 'Moderar Fotos' : 'Panel Administrador'}
+              </h3>
             </div>
-            <button onClick={() => setIsAdminOpen(false)} className="text-white/40 hover:text-white text-xs transition-colors">✕</button>
+            <button 
+              onClick={() => {
+                setIsAdminOpen(false);
+                setAdminSubView('menu');
+              }} 
+              className="text-white/40 hover:text-white text-xs transition-colors"
+            >
+              ✕
+            </button>
           </div>
 
-          <div className="space-y-2">
-            {[
-              { icon: '🕐', label: 'Simulador de Tiempo', available: false },
-              { icon: '👥', label: 'Gestión de Invitados', available: false },
-              { icon: '🎬', label: 'Video Cronológico', available: false },
-              { icon: '📸', label: 'Subir Fotos', available: false },
-              { icon: '🎙️', label: 'Mensajes de Voz', available: false },
-            ].map((item, idx) => (
-              <button
-                key={idx}
-                disabled={!item.available}
-                className="w-full flex items-center gap-3 p-3 rounded-2xl text-left transition-all group disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white/5"
+          {/* SubView: Menu */}
+          {adminSubView === 'menu' && (
+            <div className="space-y-2">
+              {[
+                { icon: '🕐', label: 'Simulador de Tiempo', available: false },
+                { icon: '👥', label: 'Gestión de Invitados', available: false },
+                { icon: '🎬', label: 'Video Cronológico', available: false },
+                { 
+                  icon: '📸', 
+                  label: `Moderar Fotos`, 
+                  badge: pendingPhotos.length > 0 ? pendingPhotos.length : undefined,
+                  available: true, 
+                  onClick: () => setAdminSubView('moderation') 
+                },
+                { icon: '🎙️', label: 'Mensajes de Voz', available: false },
+              ].map((item, idx) => (
+                <button
+                  key={idx}
+                  disabled={!item.available}
+                  onClick={item.onClick}
+                  className="w-full flex items-center gap-3 p-3 rounded-2xl text-left transition-all group disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white/5"
+                >
+                  <span className="text-xl">{item.icon}</span>
+                  <div className="flex-1 flex justify-between items-center">
+                    <span className="font-josefin text-[11px] uppercase tracking-wider text-white/80 group-hover:text-white transition-colors">
+                      {item.label}
+                    </span>
+                    {item.badge !== undefined && (
+                      <span className="bg-xv-gold text-xv-black-bg font-josefin font-bold text-[9px] px-2 py-0.5 rounded-full animate-bounce">
+                        {item.badge}
+                      </span>
+                    )}
+                    {!item.available && (
+                      <p className="text-xv-gold/40 text-[8px] font-josefin uppercase tracking-wider mt-0.5">Próximamente</p>
+                    )}
+                  </div>
+                  <span className="text-white/20 text-xs">›</span>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* SubView: Moderation */}
+          {adminSubView === 'moderation' && (
+            <div className="flex flex-col flex-1 overflow-hidden">
+              <button 
+                onClick={() => setAdminSubView('menu')}
+                className="self-start text-[10px] font-josefin text-xv-gold/60 hover:text-xv-gold uppercase tracking-wider mb-4 flex items-center gap-1"
               >
-                <span className="text-xl">{item.icon}</span>
-                <div className="flex-1">
-                  <span className="font-josefin text-[11px] uppercase tracking-wider text-white/80 group-hover:text-white transition-colors">
-                    {item.label}
-                  </span>
-                  {!item.available && (
-                    <p className="text-xv-gold/40 text-[8px] font-josefin uppercase tracking-wider mt-0.5">Próximamente</p>
-                  )}
-                </div>
-                <span className="text-white/20 text-xs">›</span>
+                ← Volver al menú
               </button>
-            ))}
-          </div>
 
-          <div className="mt-4 pt-3 border-t border-white/10 text-center">
+              <div className="flex-1 overflow-y-auto space-y-4 pr-1 scrollbar-thin max-h-[50vh]">
+                {pendingPhotos.length === 0 ? (
+                  <div className="py-10 text-center">
+                    <p className="text-xl font-playfair italic text-xv-gold mb-2">🎉 ¡Todo al día!</p>
+                    <p className="text-xs font-cormorant text-white/60">No hay fotos pendientes de moderación en este momento.</p>
+                  </div>
+                ) : (
+                  pendingPhotos.map((photo) => (
+                    <div 
+                      key={photo.id} 
+                      className="flex gap-4 p-3 bg-white/5 rounded-2xl border border-white/10 items-center justify-between group hover:bg-white/10 transition-all"
+                    >
+                      <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-black/40">
+                        <img 
+                          src={photo.url} 
+                          alt="Pendiente" 
+                          className="w-full h-full object-cover cursor-pointer hover:scale-110 transition-transform" 
+                          onClick={() => window.open(photo.url, '_blank')}
+                        />
+                      </div>
+                      
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[9px] font-josefin text-white/40 truncate">
+                          {photo.fileName}
+                        </p>
+                        <p className="text-[10px] font-josefin text-white/80 mt-1">
+                          {(photo.size / 1024).toFixed(0)} KB
+                        </p>
+                      </div>
+
+                      <div className="flex gap-2">
+                        <button 
+                          onClick={() => handleApprovePhoto(photo.id)}
+                          className="px-3 py-2 bg-green-600/20 text-green-400 border border-green-500/20 rounded-xl hover:bg-green-600 hover:text-white transition-all text-xs font-josefin font-bold uppercase tracking-wider"
+                        >
+                          Aprobar
+                        </button>
+                        <button 
+                          onClick={() => handleRejectPhoto(photo.id, photo.fileName)}
+                          className="px-3 py-2 bg-red-600/20 text-red-400 border border-red-500/20 rounded-xl hover:bg-red-600 hover:text-white transition-all text-xs font-josefin font-bold uppercase tracking-wider"
+                        >
+                          Rechazar
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Footer info */}
+          <div className="mt-4 pt-3 border-t border-white/10 text-center flex-shrink-0">
             <p className="text-[8px] font-josefin text-xv-gold/40 tracking-wider">
               Bienvenido, Ing. Alexis Nicolás Hurtado.
             </p>
@@ -434,6 +583,7 @@ function App() {
           <SaveTheDate />
           <FAQ />
           <PhotoUpload />
+          <RecentGallery />
           <Footer />
         </main>
       </div>
