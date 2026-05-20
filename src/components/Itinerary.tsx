@@ -37,8 +37,12 @@ const Itinerary = () => {
           {events.map((event, idx) => (
             <div 
               key={idx} 
-              className={`relative pl-16 opacity-0 ${isVisible ? 'animate-fade-in-up' : ''}`}
-              style={{ animationDelay: `${idx * 70}ms` }}
+              className={`sticky pl-16 opacity-0 transition-transform duration-500 ease-out ${isVisible ? 'animate-fade-in-up' : ''}`}
+              style={{ 
+                animationDelay: `${idx * 70}ms`,
+                top: `${80 + (idx * 20)}px`,
+                zIndex: idx + 10
+              }}
             >
               {/* Timeline Dot */}
               <div className="absolute left-[18px] top-6 w-[14px] h-[14px] rounded-full bg-xv-gold border-[3px] border-xv-pearl shadow-sm z-10" />
