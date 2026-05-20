@@ -110,7 +110,7 @@ Y Sus padres: Manuel Balderas Ibarra y Ma. de la Luz Vega Feregrino`;
   };
 
   return (
-    <section className="py-20 px-4 bg-[radial-gradient(ellipse_at_top,_#2D0808_0%,_#0D0305_100%)] text-center text-white bg-pearl-toggle transition-all duration-1000 ease-in-out">
+    <section className="py-20 px-4 bg-gradient-to-b from-xv-red to-xv-dark-red text-center text-white bg-pearl-toggle transition-all duration-1000 ease-in-out">
       <div className="max-w-[480px] mx-auto">
         <h2 className="font-playfair italic text-4xl text-xv-gold mb-2 animate-shimmer">{t('saveTheDate.title')}</h2>
         <h3 className="font-josefin uppercase tracking-widest text-xv-gold opacity-80 mb-10 text-sm">
