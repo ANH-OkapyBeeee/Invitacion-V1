@@ -64,33 +64,33 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, defaultTab }) 
         <div className="flex border-b border-white/10 bg-white/5 backdrop-blur-md overflow-x-auto scrollbar-none font-josefin text-xs uppercase tracking-widest font-bold">
           <button 
             onClick={() => handleTabChange('privacy')}
-            className={`flex-1 py-4 px-4 text-center cursor-pointer transition-all duration-300 border-b-2 outline-none min-w-[120px] leading-normal ${
+            className={`flex-1 px-5 text-center cursor-pointer transition-all duration-300 border-b-2 outline-none min-w-[185px] h-14 flex items-center justify-center leading-none ${
               activeTab === 'privacy' 
                 ? 'text-xv-gold border-xv-gold bg-white/10' 
                 : 'text-gray-400 border-transparent hover:text-gray-200 hover:bg-white/5'
             }`}
           >
-            {isEn ? 'Privacy' : 'Privacidad'}
+            {isEn ? 'Privacy Policy' : 'Política de Privacidad'}
           </button>
           <button 
             onClick={() => handleTabChange('terms')}
-            className={`flex-1 py-4 px-4 text-center cursor-pointer transition-all duration-300 border-b-2 outline-none min-w-[120px] leading-normal ${
+            className={`flex-1 px-5 text-center cursor-pointer transition-all duration-300 border-b-2 outline-none min-w-[210px] h-14 flex items-center justify-center leading-none ${
               activeTab === 'terms' 
                 ? 'text-xv-gold border-xv-gold bg-white/10' 
                 : 'text-gray-400 border-transparent hover:text-gray-200 hover:bg-white/5'
             }`}
           >
-            {isEn ? 'Terms & Conditions' : 'Términos'}
+            {isEn ? 'Terms & Conditions' : 'Términos y Condiciones'}
           </button>
           <button 
             onClick={() => handleTabChange('cookies')}
-            className={`flex-1 py-4 px-4 text-center cursor-pointer transition-all duration-300 border-b-2 outline-none min-w-[120px] leading-normal ${
+            className={`flex-1 px-5 text-center cursor-pointer transition-all duration-300 border-b-2 outline-none min-w-[170px] h-14 flex items-center justify-center leading-none ${
               activeTab === 'cookies' 
                 ? 'text-xv-gold border-xv-gold bg-white/10' 
                 : 'text-gray-400 border-transparent hover:text-gray-200 hover:bg-white/5'
             }`}
           >
-            {isEn ? 'Cookies' : 'Cookies'}
+            {isEn ? 'Cookie Policy' : 'Política de Cookies'}
           </button>
         </div>
 
