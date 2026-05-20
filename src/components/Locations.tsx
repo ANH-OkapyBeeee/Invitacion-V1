@@ -72,11 +72,18 @@ const Locations = () => {
             target="_blank" 
             rel="noopener noreferrer"
             onClick={() => navigator.vibrate?.(50)}
-            className="hover:text-xv-gold transition-colors duration-300 inline-block"
+            className="hover:text-xv-gold transition-colors duration-300 inline-block w-full max-w-[340px]"
           >
-            <p className="font-josefin text-sm text-gray-300 mb-4 hover:underline cursor-pointer flex items-center justify-center gap-1 text-pearl-toggle-desc transition-all duration-1000 ease-in-out">
-              <MapPin size={14} className="inline text-xv-gold" /> {CONFIG.venue.address}
-            </p>
+            <div className="font-josefin text-sm text-gray-300 mb-4 hover:underline cursor-pointer flex flex-col items-center justify-center gap-1 text-pearl-toggle-desc transition-all duration-1000 ease-in-out">
+              <span className="flex items-center justify-center gap-1">
+                <MapPin size={14} className="inline text-xv-gold" /> {CONFIG.venue.address}
+              </span>
+              {CONFIG.venue.references && (
+                <span className="text-xs text-gray-400 mt-1 max-w-[280px] leading-relaxed block text-center">
+                  {CONFIG.venue.references}
+                </span>
+              )}
+            </div>
           </a>
 
           <div className="font-josefin text-xv-gold mb-6 font-semibold flex items-center justify-center gap-2">

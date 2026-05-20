@@ -1,6 +1,6 @@
 export const CONFIG = {
   quinceañeraName: "Betzy Guadalupe Balderas Vega",
-  eventDate: "2026-08-22T15:00:00",
+  eventDate: "2026-08-22T15:00:00-06:00",
   church: {
     name: "Iglesia de Nuestra Señora de Guadalupe",
     address: "Ajuchitlán, Colón, Qro.",
@@ -10,7 +10,8 @@ export const CONFIG = {
   },
   venue: {
     name: "Salón Salitrito",
-    address: "Camino a el CBTA 115, Colonia Salitre, 76286 Colón, Qro.",
+    address: "El Lindero, Colón, Qro.",
+    references: "Referencias: Se encuentra en camino al CBTA 115, antes de llegar al Banco del Bienestar.",
     mapsUrl: "https://maps.app.goo.gl/2mWY63GU3hZG7j816",
     dirUrl: "https://www.google.com/maps/dir/?api=1&destination=20°45'37.0\"N+100°02'25.9\"W&dir_action=navigate",
     time: "4:00 PM"
