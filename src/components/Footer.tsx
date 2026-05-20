@@ -209,8 +209,26 @@ const Footer = () => {
           {!expanded && (
             <>
               <div className="flex justify-center mb-4">
-                <div className={`bg-white rounded-xl p-2 shadow-lg border border-white/10 w-20 h-20 flex items-center justify-center overflow-hidden transition-all duration-300 ${isShaking ? 'animate-earthquake' : ''}`}>
-                  <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="w-full h-full object-contain" />
+                <div className="relative">
+                  <div className={`bg-white rounded-xl p-2 shadow-lg border border-white/10 w-20 h-20 flex items-center justify-center overflow-hidden transition-all duration-300 ${isShaking ? 'animate-earthquake' : ''}`}>
+                    <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="w-full h-full object-contain" />
+                  </div>
+                  {/* Floating WhatsApp Button */}
+                  <a 
+                    href={`https://wa.me/${CONFIG.contact.whatsapp}?text=${defaultMsg}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigator.vibrate?.([40, 30, 40]);
+                    }}
+                    className="absolute -bottom-1.5 -right-1.5 bg-[#25D366] text-white p-1.5 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.3)] hover:scale-110 active:scale-95 transition-all duration-300 border-2 border-[#000000] z-20 flex items-center justify-center animate-pulse cursor-pointer"
+                    title="Contactar por WhatsApp"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="w-4 h-4" viewBox="0 0 16 16">
+                      <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.907h.003c4.37 0 7.928-3.558 7.928-7.926a7.86 7.86 0 0 0-2.33-5.593l.001-.002zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.69-3.146c-.198-.1-.174-.117-.744-.403-.1-.05-.18-.07-.256.05-.076.12-.294.4-.36.477-.066.077-.132.086-.231.035-.1-.05-.42-.155-.802-.497-.299-.267-.5-.596-.558-.696-.059-.1-.006-.154.043-.204.045-.045.1-.117.15-.176.05-.06.067-.101.1-.168.033-.067.017-.125-.008-.175-.025-.05-.224-.54-.307-.738-.082-.199-.164-.172-.224-.175-.058-.003-.124-.003-.19-.003-.066 0-.174.025-.265.123-.09.098-.346.338-.346.825s.357.957.407 1.026c.05.068.702 1.07 1.702 1.503.238.1.423.16.567.206.24.076.458.065.63.039.192-.029.592-.242.674-.476.082-.234.082-.435.058-.477-.024-.041-.09-.066-.188-.117z"/>
+                    </svg>
+                  </a>
                 </div>
               </div>
               <div className="flex justify-center mt-2">
