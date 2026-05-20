@@ -252,10 +252,10 @@ const Footer = () => {
                 navigator.vibrate?.([30, 20, 30]);
                 developerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
               }}
-              className={`relative bg-white rounded-2xl p-4 shadow-[0_15px_40px_rgba(0,0,0,0.6),_0_0_20px_rgba(212,175,55,0.15)] border-2 border-xv-gold transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 hover:shadow-[0_15px_40px_rgba(0,0,0,0.6),_0_0_30px_rgba(212,175,55,0.35)] ${isShaking ? 'animate-earthquake' : ''}`}
+              className={`relative bg-white rounded-xl p-2 shadow-[0_15px_40px_rgba(0,0,0,0.6),_0_0_20px_rgba(212,175,55,0.15)] border-2 border-xv-gold w-20 h-20 flex items-center justify-center overflow-hidden transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 hover:shadow-[0_15px_40px_rgba(0,0,0,0.6),_0_0_30px_rgba(212,175,55,0.35)] ${isShaking ? 'animate-earthquake' : ''}`}
               title="Ver datos del desarrollador"
             >
-              <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="h-28 object-contain" />
+              <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="w-full h-full object-contain" />
               {/* Floating WhatsApp Button for Expanded Logo */}
               <a 
                 href={`https://wa.me/${CONFIG.contact.whatsapp}?text=${defaultMsg}`}
