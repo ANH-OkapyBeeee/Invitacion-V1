@@ -118,12 +118,12 @@ Y Sus padres: Manuel Balderas Ibarra y Ma. de la Luz Vega Feregrino`;
         </h3>
 
         {/* Visual Calendar */}
-        <div className="bg-white/5 border border-xv-gold/30 rounded-2xl p-6 mb-10 backdrop-blur-sm card-pearl-toggle transition-all duration-1000 ease-in-out">
-          <div className="font-playfair text-2xl text-xv-gold-light mb-6 uppercase">
+        <div className="bg-[#FDFBF7] border border-xv-gold/30 rounded-2xl p-6 mb-10 shadow-[0_8px_30px_rgba(0,0,0,0.2)] transition-all duration-1000 ease-in-out">
+          <div className="font-playfair text-2xl text-[#2D0808] mb-6 uppercase font-bold">
             {t('saveTheDate.calendar.month')} {new Date(CONFIG.eventDate).getFullYear()}
           </div>
           
-          <div className="grid grid-cols-7 gap-y-4 gap-x-2 text-sm font-josefin mb-2 text-gray-400 text-pearl-toggle-desc transition-all duration-1000 ease-in-out">
+          <div className="grid grid-cols-7 gap-y-4 gap-x-2 text-sm font-josefin mb-2 text-[#666666] transition-all duration-1000 ease-in-out font-bold">
             <div>{t('saveTheDate.calendar.su')}</div>
             <div>{t('saveTheDate.calendar.mo')}</div>
             <div>{t('saveTheDate.calendar.tu')}</div>
@@ -153,8 +153,8 @@ Y Sus padres: Manuel Balderas Ibarra y Ma. de la Luz Vega Feregrino`;
                     <div 
                       className={`flex items-center justify-center h-8 w-8 mx-auto rounded-full transition-all duration-500 ${
                         isEventDay 
-                          ? `bg-xv-gold text-xv-black-bg font-bold scale-[1.7] shadow-[0_0_30px_rgba(212,175,55,0.6)] relative z-10 ring-1 ring-xv-gold/40` 
-                          : 'text-white name-pearl-toggle transition-all duration-1000 ease-in-out'
+                          ? `bg-gradient-to-br from-xv-gold to-[#B8860B] text-black font-bold scale-[1.7] shadow-[0_0_20px_rgba(212,175,55,0.4)] relative z-10 ring-1 ring-xv-gold/50` 
+                          : 'text-[#2D0808] font-semibold transition-all duration-1000 ease-in-out'
                       }`}
                     >
                       {i}
