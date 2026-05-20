@@ -1,9 +1,46 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { QRCodeSVG } from 'qrcode.react';
-import { db, storage } from '../firebase';
+import { db } from '../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+
+// ImgBB API Key (free, no credit card required)
+const IMGBB_API_KEY = 'dd1c7dfc9a1a5b931163b804b6d4a566';
+
+// Upload a Blob to ImgBB and return the direct image URL
+const uploadToImgBB = async (blob: Blob, fileName: string): Promise<string> => {
+  const base64 = await new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onload = () => {
+      const result = reader.result as string;
+      // Remove the data URL prefix (e.g., "data:image/jpeg;base64,")
+      resolve(result.split(',')[1]);
+    };
+    reader.onerror = reject;
+  });
+
+  const formData = new FormData();
+  formData.append('key', IMGBB_API_KEY);
+  formData.append('image', base64);
+  formData.append('name', fileName);
+
+  const response = await fetch('https://api.imgbb.com/1/upload', {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error(`ImgBB upload failed: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  if (!data.success) {
+    throw new Error('ImgBB returned an error: ' + JSON.stringify(data));
+  }
+
+  return data.data.url as string;
+};
 
 // Native client-side image compression helper
 const compressImage = (file: File, maxW = 1920, maxH = 1920, quality = 0.8): Promise<Blob> => {
@@ -110,18 +147,14 @@ const PhotoUpload = () => {
         // 1. Compress image client-side to keep uploads fast & lightweight
         const compressedBlob = await compressImage(photo.file);
 
-        // 2. Create unique reference in Firebase Storage
+        // 2. Create a unique file name
         const fileExtension = photo.file.name.split('.').pop() || 'jpg';
         const uniqueFileName = `${Date.now()}_${Math.random().toString(36).substring(2, 9)}.${fileExtension}`;
-        const storageRef = ref(storage, `photos/${uniqueFileName}`);
 
-        // 3. Upload to Storage
-        await uploadBytes(storageRef, compressedBlob);
+        // 3. Upload to ImgBB (free, no credit card required)
+        const downloadUrl = await uploadToImgBB(compressedBlob, uniqueFileName);
 
-        // 4. Get Public Download URL
-        const downloadUrl = await getDownloadURL(storageRef);
-
-        // 5. Save metadata in Firestore
+        // 4. Save metadata + ImgBB URL in Firestore
         await addDoc(collection(db, 'photos'), {
           url: downloadUrl,
           status: 'pending',
@@ -231,7 +264,7 @@ const PhotoUpload = () => {
 
         {uploadStatus === 'error' && (
           <div className="mb-8 p-4 bg-red-950/40 border border-red-500/30 rounded-3xl text-sm font-cormorant leading-relaxed text-red-200">
-            ❌ Hubo un error al subir tus fotos. Por favor, inténtalo de nuevo o comprueba tu conexión.
+            ❌ Hubo un error al subir tus fotos. Por favor, inéntalo de nuevo o comprueba tu conexión.
           </div>
         )}
 

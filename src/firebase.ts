@@ -1,17 +1,13 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  projectId: "invitacion-lupis-v1-app",
-  appId: "1:841990351541:web:8d250d0177a5e1ca82ecfc",
-  storageBucket: "invitacion-lupis-v1-app.firebasestorage.app",
-  apiKey: "AIzaSyCK5iJGTORbh_I7u3MMkuXL4Fu2X7ezX5c",
-  authDomain: "invitacion-lupis-v1-app.firebaseapp.com",
-  messagingSenderId: "841990351541",
-  projectNumber: "841990351541"
+  projectId: "invitacion-lupis-v2",
+  appId: "1:143224661454:web:9f3a0867846877a32af79f",
+  apiKey: "AIzaSyCOyx2Uz7nSzt3KZAVHISvqSX8Sn5DOUt4",
+  authDomain: "invitacion-lupis-v2.firebaseapp.com",
+  messagingSenderId: "143224661454",
 };
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-export const storage = getStorage(app);

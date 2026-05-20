@@ -16,9 +16,8 @@ import RecentGallery from './components/RecentGallery';
 import Footer from './components/Footer';
 import ShakeCelebration from './components/ShakeCelebration';
 import Preloader from './components/Preloader';
-import { db, storage } from './firebase';
-import { collection, query, where, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
-import { ref as storageRef, deleteObject } from 'firebase/storage';
+import { db } from './firebase';
+import { collection, query, where, getDocs, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 
 function App() {
@@ -89,8 +88,9 @@ function App() {
 
   const [activeTip, setActiveTip] = useState<number | null>(null);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
-  const [adminSubView, setAdminSubView] = useState<'menu' | 'moderation'>('menu');
+  const [adminSubView, setAdminSubView] = useState<'menu' | 'moderation' | 'published'>('menu');
   const [pendingPhotos, setPendingPhotos] = useState<any[]>([]);
+  const [approvedPhotos, setApprovedPhotos] = useState<any[]>([]);
 
   // Real-time subscription to pending photos when moderation panel is open
   useEffect(() => {
@@ -106,13 +106,37 @@ function App() {
         id: doc.id,
         ...doc.data()
       }));
-      // Sort newer first based on createdAt timestamp
       photos.sort((a: any, b: any) => {
         const timeA = a.createdAt?.seconds || 0;
         const timeB = b.createdAt?.seconds || 0;
         return timeB - timeA;
       });
       setPendingPhotos(photos);
+    });
+
+    return () => unsubscribe();
+  }, [isAdminOpen, adminSubView]);
+
+  // Real-time subscription to approved/published photos
+  useEffect(() => {
+    if (!isAdminOpen || adminSubView !== 'published') return;
+
+    const q = query(
+      collection(db, 'photos'),
+      where('status', '==', 'approved')
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const photos = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      photos.sort((a: any, b: any) => {
+        const timeA = a.createdAt?.seconds || 0;
+        const timeB = b.createdAt?.seconds || 0;
+        return timeB - timeA;
+      });
+      setApprovedPhotos(photos);
     });
 
     return () => unsubscribe();
@@ -129,14 +153,54 @@ function App() {
     }
   };
 
-  const handleRejectPhoto = async (photoId: string, fileName: string) => {
+  const handleRejectPhoto = async (photoId: string, _fileName: string) => {
     navigator.vibrate?.(60);
     try {
-      const fileRef = storageRef(storage, `photos/${fileName}`);
-      await deleteObject(fileRef).catch(e => console.warn("Storage file not found or already deleted:", e));
+      // Photos are stored on ImgBB (external service) - we only remove the Firestore record
       await deleteDoc(doc(db, 'photos', photoId));
     } catch (err) {
       console.error("Error rejecting photo:", err);
+    }
+  };
+
+  const handleUnpublishPhoto = async (photoId: string) => {
+    navigator.vibrate?.(50);
+    try {
+      // Move back to pending so it disappears from the public gallery
+      await updateDoc(doc(db, 'photos', photoId), { status: 'pending' });
+    } catch (err) {
+      console.error('Error unpublishing photo:', err);
+    }
+  };
+
+  const handleDownloadAllPhotos = async () => {
+    navigator.vibrate?.(50);
+    try {
+      const q = query(collection(db, 'photos'), where('status', '==', 'approved'));
+      const snapshot = await getDocs(q);
+      const photos = snapshot.docs.map(d => d.data() as { url: string; fileName: string });
+
+      if (photos.length === 0) {
+        alert('No hay fotos aprobadas para descargar todavía.');
+        return;
+      }
+
+      // Download each photo sequentially using a temporary anchor element
+      for (let i = 0; i < photos.length; i++) {
+        const photo = photos[i];
+        const link = document.createElement('a');
+        link.href = photo.url;
+        link.download = photo.fileName || `foto_${i + 1}.jpg`;
+        link.target = '_blank';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        // Small delay between downloads so the browser doesn't block them
+        await new Promise(res => setTimeout(res, 600));
+      }
+    } catch (err) {
+      console.error('Error downloading photos:', err);
+      alert('Hubo un error al descargar las fotos. Intenta de nuevo.');
     }
   };
 
@@ -434,7 +498,7 @@ function App() {
       {isAdminOpen && (
         <div 
           className={`fixed z-[10000] bg-black/95 backdrop-blur-xl border border-xv-gold/30 rounded-3xl p-5 shadow-2xl transition-all duration-300 animate-scale-up ${
-            adminSubView === 'moderation' 
+            (adminSubView === 'moderation' || adminSubView === 'published')
               ? 'left-4 right-4 bottom-6 md:left-auto md:right-6 md:w-[460px] max-h-[85vh] flex flex-col' 
               : 'left-4 bottom-6 w-72'
           }`}
@@ -444,7 +508,7 @@ function App() {
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-xv-gold animate-pulse" />
               <h3 className="font-josefin text-xv-gold text-[10px] uppercase tracking-widest font-bold">
-                {adminSubView === 'moderation' ? 'Moderar Fotos' : 'Panel Administrador'}
+                {adminSubView === 'moderation' ? 'Fotos Pendientes' : adminSubView === 'published' ? 'Fotos Publicadas' : 'Panel Administrador'}
               </h3>
             </div>
             <button 
@@ -497,18 +561,52 @@ function App() {
                   <span className="text-white/20 text-xs">›</span>
                 </button>
               ))}
+
+              {/* Download All Photos Button */}
+              <div className="pt-2 mt-2 border-t border-white/10">
+                <button
+                  onClick={handleDownloadAllPhotos}
+                  className="w-full flex items-center gap-3 p-3 rounded-2xl text-left transition-all group hover:bg-xv-gold/10 border border-xv-gold/20"
+                >
+                  <span className="text-xl">📥</span>
+                  <div className="flex-1">
+                    <span className="font-josefin text-[11px] uppercase tracking-wider text-xv-gold group-hover:text-xv-gold transition-colors">
+                      Descargar Todas las Fotos
+                    </span>
+                    <p className="text-xv-gold/40 text-[8px] font-josefin mt-0.5">Solo fotos aprobadas</p>
+                  </div>
+                  <span className="text-xv-gold/40 text-xs">↓</span>
+                </button>
+              </div>
             </div>
           )}
 
-          {/* SubView: Moderation */}
+          {/* SubView: Moderation (Pending Photos) */}
           {adminSubView === 'moderation' && (
             <div className="flex flex-col flex-1 overflow-hidden">
-              <button 
-                onClick={() => setAdminSubView('menu')}
-                className="self-start text-[10px] font-josefin text-xv-gold/60 hover:text-xv-gold uppercase tracking-wider mb-4 flex items-center gap-1"
-              >
-                ← Volver al menú
-              </button>
+              {/* Back + Tabs */}
+              <div className="flex items-center gap-3 mb-4">
+                <button 
+                  onClick={() => setAdminSubView('menu')}
+                  className="text-[10px] font-josefin text-xv-gold/60 hover:text-xv-gold uppercase tracking-wider flex items-center gap-1 flex-shrink-0"
+                >
+                  ← Menú
+                </button>
+                <div className="flex flex-1 gap-1 bg-white/5 rounded-xl p-1">
+                  <button
+                    onClick={() => setAdminSubView('moderation')}
+                    className="flex-1 py-1.5 rounded-lg text-[10px] font-josefin uppercase tracking-wider bg-xv-gold text-xv-black-bg font-bold"
+                  >
+                    Pendientes {pendingPhotos.length > 0 && `(${pendingPhotos.length})`}
+                  </button>
+                  <button
+                    onClick={() => setAdminSubView('published')}
+                    className="flex-1 py-1.5 rounded-lg text-[10px] font-josefin uppercase tracking-wider text-white/50 hover:text-white transition-colors"
+                  >
+                    Publicadas
+                  </button>
+                </div>
+              </div>
 
               <div className="flex-1 overflow-y-auto space-y-4 pr-1 scrollbar-thin max-h-[50vh]">
                 {pendingPhotos.length === 0 ? (
@@ -554,6 +652,76 @@ function App() {
                           Rechazar
                         </button>
                       </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* SubView: Published Photos */}
+          {adminSubView === 'published' && (
+            <div className="flex flex-col flex-1 overflow-hidden">
+              {/* Back + Tabs */}
+              <div className="flex items-center gap-3 mb-4">
+                <button 
+                  onClick={() => setAdminSubView('menu')}
+                  className="text-[10px] font-josefin text-xv-gold/60 hover:text-xv-gold uppercase tracking-wider flex items-center gap-1 flex-shrink-0"
+                >
+                  ← Menú
+                </button>
+                <div className="flex flex-1 gap-1 bg-white/5 rounded-xl p-1">
+                  <button
+                    onClick={() => setAdminSubView('moderation')}
+                    className="flex-1 py-1.5 rounded-lg text-[10px] font-josefin uppercase tracking-wider text-white/50 hover:text-white transition-colors"
+                  >
+                    Pendientes
+                  </button>
+                  <button
+                    onClick={() => setAdminSubView('published')}
+                    className="flex-1 py-1.5 rounded-lg text-[10px] font-josefin uppercase tracking-wider bg-xv-gold text-xv-black-bg font-bold"
+                  >
+                    Publicadas {approvedPhotos.length > 0 && `(${approvedPhotos.length})`}
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex-1 overflow-y-auto space-y-4 pr-1 scrollbar-thin max-h-[50vh]">
+                {approvedPhotos.length === 0 ? (
+                  <div className="py-10 text-center">
+                    <p className="text-xl font-playfair italic text-xv-gold mb-2">📷 Sin fotos</p>
+                    <p className="text-xs font-cormorant text-white/60">Aún no hay fotos aprobadas en la galería.</p>
+                  </div>
+                ) : (
+                  approvedPhotos.map((photo) => (
+                    <div 
+                      key={photo.id} 
+                      className="flex gap-4 p-3 bg-white/5 rounded-2xl border border-white/10 items-center justify-between group hover:bg-white/10 transition-all"
+                    >
+                      <div className="relative w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-black/40">
+                        <img 
+                          src={photo.url} 
+                          alt="Publicada" 
+                          className="w-full h-full object-cover cursor-pointer hover:scale-110 transition-transform" 
+                          onClick={() => window.open(photo.url, '_blank')}
+                        />
+                      </div>
+                      
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[9px] font-josefin text-white/40 truncate">
+                          {photo.fileName}
+                        </p>
+                        <p className="text-[10px] font-josefin text-green-400 mt-1">
+                          ✓ En galería pública
+                        </p>
+                      </div>
+
+                      <button 
+                        onClick={() => handleUnpublishPhoto(photo.id)}
+                        className="px-3 py-2 bg-orange-600/20 text-orange-400 border border-orange-500/20 rounded-xl hover:bg-orange-600 hover:text-white transition-all text-xs font-josefin font-bold uppercase tracking-wider flex-shrink-0"
+                      >
+                        Quitar
+                      </button>
                     </div>
                   ))
                 )}

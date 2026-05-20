@@ -170,10 +170,10 @@ const Hero = () => {
               backgroundPosition: 'center',
             }}
           >
-            {/* Left Chevron Overlay (Desktop only, high-contrast gray/black design) */}
-            <div className="hidden md:flex absolute inset-0 bg-black/5 items-center justify-center transition-all duration-700 group-hover:bg-black/20 z-20">
-              <div className="p-2.5 rounded-full bg-white/80 border border-black/10 backdrop-blur-sm text-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.15)] group-hover:scale-110 group-hover:bg-white group-hover:text-black transition-all duration-500 animate-bounce-left">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
+            {/* Left Chevron Overlay (Positioned on the inner right edge closest to the center card) */}
+            <div className="absolute inset-y-0 right-1.5 md:right-3 flex items-center justify-end z-20 pointer-events-none">
+              <div className="p-2 md:p-2.5 rounded-full bg-white/80 border border-black/10 backdrop-blur-sm text-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.15)] group-hover:scale-110 group-hover:bg-white group-hover:text-black transition-all duration-500 animate-bounce-left pointer-events-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4 md:w-5 md:h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                 </svg>
               </div>
@@ -223,6 +223,11 @@ const Hero = () => {
 
                 {/* Overlay gradient for premium feel */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-[10]" />
+
+                {/* Photo counter badge — bottom right */}
+                <div className="absolute bottom-3 right-3 z-20 bg-black/55 text-white font-josefin text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider">
+                  {currentPhoto + 1}/{photos.length}
+                </div>
               </div>
             </div>
           </div>
@@ -240,10 +245,10 @@ const Hero = () => {
               backgroundPosition: 'center',
             }}
           >
-            {/* Right Chevron Overlay (Desktop only, high-contrast gray/black design) */}
-            <div className="hidden md:flex absolute inset-0 bg-black/5 items-center justify-center transition-all duration-700 group-hover:bg-black/20 z-20">
-              <div className="p-2.5 rounded-full bg-white/80 border border-black/10 backdrop-blur-sm text-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.15)] group-hover:scale-110 group-hover:bg-white group-hover:text-black transition-all duration-500 animate-bounce-right">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
+            {/* Right Chevron Overlay (Positioned on the inner left edge closest to the center card) */}
+            <div className="absolute inset-y-0 left-1.5 md:left-3 flex items-center justify-start z-20 pointer-events-none">
+              <div className="p-2 md:p-2.5 rounded-full bg-white/80 border border-black/10 backdrop-blur-sm text-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.15)] group-hover:scale-110 group-hover:bg-white group-hover:text-black transition-all duration-500 animate-bounce-right pointer-events-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4 md:w-5 md:h-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                 </svg>
               </div>
