@@ -5,8 +5,8 @@ import { QRCodeSVG } from 'qrcode.react';
 const PhotoUpload = () => {
   const { t } = useTranslation();
   
-  // Default URL to the same site if not provided
-  const uploadUrl = window.location.href; 
+  // URL to the same site with the hash anchor so it scrolls to this section when scanned
+  const uploadUrl = `${window.location.origin}${window.location.pathname}#photo-upload`; 
 
   const handleUploadClick = () => {
     navigator.vibrate?.(50);
@@ -14,7 +14,7 @@ const PhotoUpload = () => {
   };
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-xv-red to-xv-dark-red text-center text-white bg-pearl-toggle transition-all duration-1000 ease-in-out">
+    <section id="photo-upload" className="py-20 px-4 bg-gradient-to-b from-xv-red to-xv-dark-red text-center text-white bg-pearl-toggle transition-all duration-1000 ease-in-out">
       <div className="max-w-[480px] mx-auto">
         <h2 className="font-playfair italic text-4xl text-xv-gold mb-6 animate-shimmer">{t('photoUpload.title')}</h2>
         

@@ -65,6 +65,23 @@ function App() {
     };
   }, []);
 
+  // Bypass envelope and preloader and scroll directly if any hash is present on load
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      setIsOpened(true);
+      setIsLoading(false);
+      const timer = setTimeout(() => {
+        const targetId = hash.replace('#', '');
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   const [activeTip, setActiveTip] = useState<number | null>(null);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
 
