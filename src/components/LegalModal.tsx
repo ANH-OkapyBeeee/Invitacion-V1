@@ -21,6 +21,12 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, defaultTab }) 
 
   const isEn = i18n.language === 'en';
 
+  const getTabTitle = () => {
+    if (activeTab === 'privacy') return isEn ? 'Privacy Policy' : 'Política de Privacidad';
+    if (activeTab === 'terms') return isEn ? 'Terms & Conditions' : 'Términos y Condiciones';
+    return isEn ? 'Cookie Policy' : 'Política de Cookies';
+  };
+
   const handleTabChange = (tab: 'privacy' | 'terms' | 'cookies') => {
     navigator.vibrate?.(15);
     setActiveTab(tab);
@@ -48,12 +54,13 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, defaultTab }) 
         
         {/* Modal Header */}
         <div className="px-6 pt-6 pb-4 border-b border-white/10 flex justify-between items-center bg-white/5 backdrop-blur-md flex-shrink-0">
-          <h3 className="font-playfair text-xl md:text-2xl text-xv-gold uppercase tracking-wider font-bold">
-            {isEn ? 'Legal Information' : 'Información Legal'}
+          <h3 className="font-playfair text-xl sm:text-2xl md:text-2xl text-xv-gold uppercase tracking-wider font-bold leading-tight pr-4">
+            <span className="md:hidden">{getTabTitle()}</span>
+            <span className="hidden md:inline">{isEn ? 'Legal Information' : 'Información Legal'}</span>
           </h3>
           <button 
             onClick={handleClose}
-            className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-xv-gold hover:bg-white/10 hover:border-xv-gold/30 transition-all duration-300 cursor-pointer focus:outline-none text-xl"
+            className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-xv-gold hover:bg-white/10 hover:border-xv-gold/30 transition-all duration-300 cursor-pointer focus:outline-none text-xl flex-shrink-0"
             title={isEn ? 'Close' : 'Cerrar'}
           >
             &times;
@@ -61,7 +68,7 @@ const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, defaultTab }) 
         </div>
 
         {/* Tab Selection */}
-        <div className="flex flex-col md:flex-row border-b border-white/10 bg-white/5 backdrop-blur-md flex-shrink-0 font-josefin text-xs uppercase tracking-widest font-bold">
+        <div className="hidden md:flex md:flex-row border-b border-white/10 bg-white/5 backdrop-blur-md flex-shrink-0 font-josefin text-xs uppercase tracking-widest font-bold">
           <button 
             onClick={() => handleTabChange('privacy')}
             className={`flex-1 px-5 text-center cursor-pointer transition-all duration-300 border-b-2 outline-none h-12 md:h-14 flex items-center justify-center leading-none ${
