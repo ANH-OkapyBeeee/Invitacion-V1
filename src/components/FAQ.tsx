@@ -76,9 +76,9 @@ const FAQ = () => {
         {activeIndex > 0 && (
           <button 
             onClick={handlePrev}
-            className="absolute left-6 top-[45%] -translate-y-1/2 z-20 p-2.5 rounded-full bg-white/80 border border-black/10 backdrop-blur-sm text-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer focus:outline-none flex items-center justify-center"
+            className="absolute left-6 top-[45%] -translate-y-1/2 z-20 p-3.5 md:p-2.5 rounded-full bg-white/80 border border-black/10 backdrop-blur-sm text-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer focus:outline-none flex items-center justify-center"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4 text-xv-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-6 h-6 md:w-4 md:h-4 text-xv-red">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
             </svg>
           </button>
@@ -88,9 +88,9 @@ const FAQ = () => {
         {activeIndex < faqs.length - 1 && (
           <button 
             onClick={handleNext}
-            className="absolute right-6 top-[45%] -translate-y-1/2 z-20 p-2.5 rounded-full bg-white/80 border border-black/10 backdrop-blur-sm text-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer focus:outline-none flex items-center justify-center"
+            className="absolute right-6 top-[45%] -translate-y-1/2 z-20 p-3.5 md:p-2.5 rounded-full bg-white/80 border border-black/10 backdrop-blur-sm text-gray-800 shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer focus:outline-none flex items-center justify-center"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4 text-xv-red">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-6 h-6 md:w-4 md:h-4 text-xv-red">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
           </button>
