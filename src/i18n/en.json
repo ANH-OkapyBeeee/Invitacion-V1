@@ -74,7 +74,11 @@
     },
     "photoUpload": {
       "title": "Share your Photos",
-      "desc": "Scan the QR code or click the button to upload the photos and videos you take at the event.",
+      "instructions": {
+        "step1": "Please scan the QR code (located on the back of the drinks menu).",
+        "step2": "Click the \"Upload my Photos\" button.",
+        "step3": "Upload all the photos and videos you take during the event to keep them as memories."
+      },
       "btnText": "Upload my Photos"
     },
     "footer": {
