@@ -33,7 +33,7 @@ const Itinerary = () => {
         {/* Vertical Timeline */}
         <div className="absolute left-[24px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-xv-gold via-xv-red to-xv-gold opacity-30" />
 
-        <div className="flex flex-col gap-8 pb-10">
+        <div className="flex flex-col gap-8 pb-[70vh]">
           {events.map((event, idx) => {
             return (
               <div 
