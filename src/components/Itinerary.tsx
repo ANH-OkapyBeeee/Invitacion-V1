@@ -15,6 +15,8 @@ const Itinerary = () => {
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
+  }, []);
+
   const events = t('itinerary.events', { returnObjects: true }) as any[];
 
   return (
