@@ -2,19 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 
 // Photos ordered from HIGHEST number to LOWEST (most recent → baby)
 const TIMELINE_PHOTOS = [
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/14.png',  era: 'Hoy', years: '2026' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/13.png',  era: 'Casi allá', years: '2025' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/12.png',  era: 'Creciendo', years: '2024' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/10.jpg',  era: 'La niñez', years: '~2020' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/9.JPG',   era: 'La niñez', years: '~2018' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/7.jpg',   era: 'Los primeros pasos', years: '~2015' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/6.png',   era: 'Los primeros pasos', years: '~2014' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/5.JPG',   era: 'La infancia', years: '~2013' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/4.4.jpg', era: 'La infancia', years: '~2012' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/4.JPG',   era: 'Los primeros años', years: '~2011' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/3.JPG',   era: 'Los primeros años', years: '~2013' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/2.JPG',   era: 'Bebé', years: '~2012' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/1.JPG',   era: 'Bebé', years: '2011' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/14.png',  era: 'Hoy' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/13.png',  era: 'Casi allá' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/12.png',  era: 'Creciendo' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/10.jpg',  era: 'La niñez' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/9.JPG',   era: 'La niñez' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/7.jpg',   era: 'Los primeros pasos' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/6.png',   era: 'Los primeros pasos' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/5.JPG',   era: 'La infancia' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/4.4.jpg', era: 'La infancia' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/4.JPG',   era: 'Los primeros años' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/3.JPG',   era: 'Los primeros años' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/2.JPG',   era: 'Bebé' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/1.JPG',   era: 'Bebé' },
 ];
 
 const GRID_ROWS = 6;
@@ -138,7 +138,7 @@ const TimelineGallery = () => {
       <div className={`transition-all duration-500 mb-6 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
         <span className="inline-flex items-center gap-2 font-josefin text-xs uppercase tracking-[0.25em] text-xv-gold bg-xv-gold/10 border border-xv-gold/30 px-4 py-1.5 rounded-full">
           <span className="w-1.5 h-1.5 rounded-full bg-xv-gold animate-pulse" />
-          {photo.era} · {photo.years}
+          {photo.era}
         </span>
       </div>
 
