@@ -2,9 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 
 // Photos ordered from HIGHEST number to LOWEST (most recent → baby)
 const TIMELINE_PHOTOS = [
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/15.mp4',  era: 'Hoy', isVideo: true },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/14.png',  era: 'Hoy' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/13.png',  era: 'Casi allá' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/12.png',  era: 'Creciendo' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/11.png',  era: 'Creciendo' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/10.jpg',  era: 'La niñez' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/9.JPG',   era: 'La niñez' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/7.jpg',   era: 'Los primeros pasos' },
@@ -156,9 +158,10 @@ const TimelineGallery = () => {
             onClick={() => { navigator.vibrate?.([40, 20, 40]); handlePrev(); }}
             className="group w-[120px] h-[170px] sm:w-[135px] sm:h-[190px] md:w-[195px] md:h-[275px] rounded-xl overflow-hidden border border-white/20 filter grayscale opacity-35 transition-all duration-700 hover:opacity-80 hover:scale-105 active:scale-95 shadow-md flex-shrink-0 cursor-pointer focus:outline-none -translate-x-3 sm:-translate-x-4 md:-translate-x-0 relative"
             style={{
-              backgroundImage: `url(${TIMELINE_PHOTOS[prev].src})`,
+              backgroundImage: TIMELINE_PHOTOS[prev].isVideo ? 'none' : `url(${TIMELINE_PHOTOS[prev].src})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
+              backgroundColor: TIMELINE_PHOTOS[prev].isVideo ? '#1a0f0f' : undefined,
             }}
           >
             <div className="absolute inset-y-0 right-1.5 md:right-3 flex items-center justify-end z-20 pointer-events-none">
@@ -170,34 +173,48 @@ const TimelineGallery = () => {
             </div>
           </button>
 
-          {/* Center card (active, puzzle effect) */}
+          {/* Center card (active, puzzle effect or video) */}
           <div className="relative flex-shrink-0 z-10">
-            {/* Glowing gold border + puzzle reveal */}
+            {/* Glowing gold border */}
             <div className="p-[2px] bg-gradient-to-r from-xv-gold via-[#F5D76E] to-xv-gold rounded-2xl shadow-[0_0_35px_rgba(212,175,55,0.45)] animate-glow">
               <div className="w-[190px] h-[270px] sm:w-[210px] sm:h-[300px] md:w-[260px] md:h-[370px] bg-[#1a0f0f] rounded-[14px] overflow-hidden relative">
 
-                {Array.from({ length: GRID_ROWS * GRID_COLS }).map((_, i) => {
-                  const row = Math.floor(i / GRID_COLS);
-                  const col = i % GRID_COLS;
-                  const visible = visiblePieces.includes(i);
-                  return (
-                    <div
-                      key={i}
-                      className="absolute transition-all duration-1000 ease-out"
-                      style={{
-                        width: `${100 / GRID_COLS + 0.4}%`,
-                        height: `${100 / GRID_ROWS + 0.4}%`,
-                        left: `${col * (100 / GRID_COLS)}%`,
-                        top: `${row * (100 / GRID_ROWS)}%`,
-                        backgroundImage: `url(${photo.src})`,
-                        backgroundSize: `${GRID_COLS * 100}% ${GRID_ROWS * 100}%`,
-                        backgroundPosition: `${(col / (GRID_COLS - 1)) * 100}% ${(row / (GRID_ROWS - 1)) * 100}%`,
-                        opacity: visible ? 1 : 0,
-                        transform: visible ? 'scale(1) rotate(0deg)' : `scale(0.2) rotate(${(Math.random() - 0.5) * 90}deg)`,
-                      }}
-                    />
-                  );
-                })}
+                {photo.isVideo ? (
+                  /* Video player */
+                  <video
+                    key={photo.src}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    src={photo.src}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                  />
+                ) : (
+                  /* Puzzle grid for images */
+                  Array.from({ length: GRID_ROWS * GRID_COLS }).map((_, i) => {
+                    const row = Math.floor(i / GRID_COLS);
+                    const col = i % GRID_COLS;
+                    const visible = visiblePieces.includes(i);
+                    return (
+                      <div
+                        key={i}
+                        className="absolute transition-all duration-1000 ease-out"
+                        style={{
+                          width: `${100 / GRID_COLS + 0.4}%`,
+                          height: `${100 / GRID_ROWS + 0.4}%`,
+                          left: `${col * (100 / GRID_COLS)}%`,
+                          top: `${row * (100 / GRID_ROWS)}%`,
+                          backgroundImage: `url(${photo.src})`,
+                          backgroundSize: `${GRID_COLS * 100}% ${GRID_ROWS * 100}%`,
+                          backgroundPosition: `${(col / (GRID_COLS - 1)) * 100}% ${(row / (GRID_ROWS - 1)) * 100}%`,
+                          opacity: visible ? 1 : 0,
+                          transform: visible ? 'scale(1) rotate(0deg)' : `scale(0.2) rotate(${(Math.random() - 0.5) * 90}deg)`,
+                        }}
+                      />
+                    );
+                  })
+                )}
 
                 {/* Gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-10" />
@@ -216,9 +233,10 @@ const TimelineGallery = () => {
             onClick={() => { navigator.vibrate?.([40, 20, 40]); handleNext(); }}
             className="group w-[120px] h-[170px] sm:w-[135px] sm:h-[190px] md:w-[195px] md:h-[275px] rounded-xl overflow-hidden border border-white/20 filter grayscale opacity-35 transition-all duration-700 hover:opacity-80 hover:scale-105 active:scale-95 shadow-md flex-shrink-0 cursor-pointer focus:outline-none translate-x-3 sm:translate-x-4 md:translate-x-0 relative"
             style={{
-              backgroundImage: `url(${TIMELINE_PHOTOS[next].src})`,
+              backgroundImage: TIMELINE_PHOTOS[next].isVideo ? 'none' : `url(${TIMELINE_PHOTOS[next].src})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
+              backgroundColor: TIMELINE_PHOTOS[next].isVideo ? '#1a0f0f' : undefined,
             }}
           >
             <div className="absolute inset-y-0 left-1.5 md:left-3 flex items-center justify-start z-20 pointer-events-none">
