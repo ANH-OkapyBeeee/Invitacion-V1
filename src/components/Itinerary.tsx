@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const CARD_PEEK = 72; // px visible per stacked card (emoji + title + time)
+const CARD_PEEK = 90; // px visible per stacked card (emoji + title + time)
 
 const Itinerary = () => {
   const { t } = useTranslation();
@@ -64,8 +64,8 @@ const Itinerary = () => {
           <div
             className="relative"
             style={{
-              // Height = last card's top offset + full last card height (~160px)
-              height: `${CARD_PEEK * (numEvents - 1) + 160}px`,
+              // Height = last card's top offset + full last card height (~220px)
+              height: `${CARD_PEEK * (numEvents - 1) + 220}px`,
             }}
           >
             {events.map((event, idx) => {
@@ -100,8 +100,8 @@ const Itinerary = () => {
                       </div>
                     </div>
 
-                    {/* Only the last card shows description */}
-                    {isLast && (
+                    {/* Description shown on all cards */}
+                    {event.desc && (
                       <div className="px-5 pb-4 -mt-1">
                         <p className="font-cormorant italic text-gray-500 text-lg leading-snug whitespace-pre-line">
                           {event.desc}
