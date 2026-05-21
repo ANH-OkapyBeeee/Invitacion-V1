@@ -7,7 +7,7 @@ const Locations = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-xv-dark-red to-xv-red text-xv-pearl bg-pearl-toggle transition-all duration-1000 ease-in-out relative z-30 shadow-[0_-15px_30px_rgba(0,0,0,0.3)]">
+    <section className="py-20 px-4 bg-gradient-to-b from-xv-dark-red to-xv-red text-xv-pearl bg-pearl-toggle transition-all duration-1000 ease-in-out">
       <div className="max-w-[480px] mx-auto flex flex-col gap-8">
         
         {/* Ceremony */}
