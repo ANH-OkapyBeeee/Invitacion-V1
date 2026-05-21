@@ -24,7 +24,6 @@ const GRID_COLS = 5;
 
 const TimelineGallery = () => {
   const [current, setCurrent] = useState(0);
-  const [visiblePieces, setVisiblePieces] = useState<number[]>([]);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -62,25 +61,14 @@ const TimelineGallery = () => {
     }
   }, [current]);
 
-  // Auto-advance every 7.5s
+  // Auto-advance
   useEffect(() => {
-    const t = setTimeout(handleNext, 7500);
-    return () => clearTimeout(t);
-  }, [current]);
+    // Si es video, no usamos setTimeout. El evento onEnded del video avanzará.
+    if (photo.isVideo) return;
 
-  // Puzzle piece reveal
-  useEffect(() => {
-    setVisiblePieces([]);
-    const totalPieces = GRID_ROWS * GRID_COLS;
-    const indices = Array.from({ length: totalPieces }, (_, i) => i);
-    for (let i = indices.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [indices[i], indices[j]] = [indices[j], indices[i]];
-    }
-    indices.forEach((pieceIdx, i) => {
-      setTimeout(() => setVisiblePieces(prev => [...prev, pieceIdx]), i * 90);
-    });
-  }, [current]);
+    const t = setTimeout(handleNext, 6000);
+    return () => clearTimeout(t);
+  }, [current, photo.isVideo]);
 
   // Section entrance animation
   useEffect(() => {
@@ -193,38 +181,22 @@ const TimelineGallery = () => {
                   <video
                     ref={videoRef}
                     key={photo.src}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover animate-fade-in"
                     src={photo.src}
                     autoPlay
                     muted
-                    loop
                     playsInline
                     controls
+                    onEnded={handleNext}
                   />
                 ) : (
-                  /* Puzzle grid for images */
-                  Array.from({ length: GRID_ROWS * GRID_COLS }).map((_, i) => {
-                    const row = Math.floor(i / GRID_COLS);
-                    const col = i % GRID_COLS;
-                    const visible = visiblePieces.includes(i);
-                    return (
-                      <div
-                        key={i}
-                        className="absolute transition-all duration-1000 ease-out"
-                        style={{
-                          width: `${100 / GRID_COLS + 0.4}%`,
-                          height: `${100 / GRID_ROWS + 0.4}%`,
-                          left: `${col * (100 / GRID_COLS)}%`,
-                          top: `${row * (100 / GRID_ROWS)}%`,
-                          backgroundImage: `url(${photo.src})`,
-                          backgroundSize: `${GRID_COLS * 100}% ${GRID_ROWS * 100}%`,
-                          backgroundPosition: `${(col / (GRID_COLS - 1)) * 100}% ${(row / (GRID_ROWS - 1)) * 100}%`,
-                          opacity: visible ? 1 : 0,
-                          transform: visible ? 'scale(1) rotate(0deg)' : `scale(0.2) rotate(${(Math.random() - 0.5) * 90}deg)`,
-                        }}
-                      />
-                    );
-                  })
+                  /* Simple fade transition for images */
+                  <img
+                    key={photo.src}
+                    src={photo.src}
+                    alt={photo.era}
+                    className="absolute inset-0 w-full h-full object-cover animate-fade-in"
+                  />
                 )}
 
                 {/* Gradient overlay */}
