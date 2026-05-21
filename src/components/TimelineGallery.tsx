@@ -105,8 +105,13 @@ const TimelineGallery = () => {
 
       {/* Section Title */}
       <div className={`mb-2 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-        <h2 className="font-playfair italic text-4xl md:text-5xl text-[#F5D76E] animate-shimmer mb-2">
-          ✦ Un viaje en el tiempo ✦
+        <h2 className="font-playfair italic text-4xl md:text-5xl text-[#F5D76E] animate-shimmer mb-2 leading-tight">
+          <span className="block md:hidden">
+            Un viaje en el<br />tiempo
+          </span>
+          <span className="hidden md:inline">
+            ✦ Un viaje en el tiempo ✦
+          </span>
         </h2>
         <p className="font-cormorant italic text-white/60 text-lg max-w-[400px] mx-auto leading-relaxed">
           Cada foto guarda un instante irrepetible en el camino de convertirse en quinceañera

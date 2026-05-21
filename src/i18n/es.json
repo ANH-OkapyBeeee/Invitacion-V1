@@ -87,7 +87,7 @@
       "instructions": {
         "step1": "Por favor escanea el código QR (está situado en la parte trasera del menú de bebidas).",
         "step2": "Haz clic en el botón \"Compartir mis Fotos\".",
-        "step3": "Sube todas las fotos y videos que tomes durante el evento para guardarlos de recuerdo."
+        "step3": "Sube todas las fotos que tomes durante el evento para guardarlas de recuerdo."
       },
       "btnText": "Compartir mis Fotos"
     },

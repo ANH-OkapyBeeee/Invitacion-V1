@@ -26,7 +26,7 @@ const ShakeCelebration: React.FC = () => {
   const SHAKE_THRESHOLD = 15; // Sensitivity
   const COOLDOWN = 1500; // ms between shakes
 
-  const triggerStars = useCallback(() => {
+  const triggerConfetti = useCallback(() => {
     const now = Date.now();
     if (now - lastShakeTime.current < COOLDOWN) return;
     
@@ -35,23 +35,25 @@ const ShakeCelebration: React.FC = () => {
     const duration = 3 * 1000;
     const end = Date.now() + duration;
 
-    // Star shower effect
+    // Elegant Confetti shower effect
     const frame = () => {
       confetti({
-        particleCount: 2,
+        particleCount: 3,
         angle: 60,
         spread: 55,
         origin: { x: 0, y: 0.7 },
-        colors: ['#D4AF37', '#FDFBF7', '#FFF3CD'],
-        shapes: ['star']
+        colors: ['#D4AF37', '#FDFBF7', '#F5D76E', '#C0C0C0'],
+        shapes: ['circle', 'square'],
+        scalar: 1.2
       });
       confetti({
-        particleCount: 2,
+        particleCount: 3,
         angle: 120,
         spread: 55,
         origin: { x: 1, y: 0.7 },
-        colors: ['#D4AF37', '#FDFBF7', '#FFF3CD'],
-        shapes: ['star']
+        colors: ['#D4AF37', '#FDFBF7', '#F5D76E', '#C0C0C0'],
+        shapes: ['circle', 'square'],
+        scalar: 1.2
       });
 
       if (Date.now() < end) {
@@ -63,11 +65,12 @@ const ShakeCelebration: React.FC = () => {
 
     // Center burst
     confetti({
-      particleCount: 100,
-      spread: 70,
+      particleCount: 120,
+      spread: 80,
       origin: { y: 0.6 },
-      colors: ['#D4AF37', '#FDFBF7', '#FFF3CD', '#6E1423'],
-      shapes: ['star', 'circle']
+      colors: ['#D4AF37', '#FDFBF7', '#F5D76E', '#C0C0C0', '#6E1423'],
+      shapes: ['circle', 'square'],
+      scalar: 1.2
     });
 
     // Haptic feedback if available
@@ -86,7 +89,7 @@ const ShakeCelebration: React.FC = () => {
 
       // Simple shake detection
       if (acceleration > SHAKE_THRESHOLD) {
-        triggerStars();
+        triggerConfetti();
       }
     };
 
