@@ -67,7 +67,6 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
     const tSeal = setTimeout(() => setIsWaxSealVisible(true), 2700); // Glowing wax seal bounces into the center!
 
     return () => {
-      cancelAnimationFrame(animId);
       clearTimeout(t1);
       clearTimeout(tStars);
       clearTimeout(t2);
