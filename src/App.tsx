@@ -305,16 +305,18 @@ function App() {
           angle: 60,
           spread: 55,
           origin: { x: 0, y: 0.6 },
-          colors: ['#D4AF37', '#FDFBF7', '#FFF3CD'],
-          shapes: ['star']
+          colors: ['#D4AF37', '#FDFBF7', '#F5D76E', '#C0C0C0'],
+          shapes: ['circle', 'square'],
+          scalar: 1.2
         });
         confetti({
           particleCount: 3,
           angle: 120,
           spread: 55,
           origin: { x: 1, y: 0.6 },
-          colors: ['#D4AF37', '#FDFBF7', '#FFF3CD'],
-          shapes: ['star']
+          colors: ['#D4AF37', '#FDFBF7', '#F5D76E', '#C0C0C0'],
+          shapes: ['circle', 'square'],
+          scalar: 1.2
         });
 
         if (Date.now() < end) {
@@ -322,6 +324,16 @@ function App() {
         }
       };
       frame();
+
+      // Center burst
+      confetti({
+        particleCount: 120,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#D4AF37', '#FDFBF7', '#F5D76E', '#C0C0C0'],
+        shapes: ['circle', 'square'],
+        scalar: 1.2
+      });
 
       if (playerRef.current) {
         try {
@@ -744,10 +756,12 @@ function App() {
 
       {/* Main Content (Pre-rendered but hidden) */}
       <div className={!isOpened ? 'fixed inset-0 opacity-0 pointer-events-none -z-10' : 'block relative'}>
-        <ShakeCelebration />
+        {isOpened && <ShakeCelebration />}
         <main className="animate-fade-in-up">
-          <Hero />
-          <TimelineGallery />
+          <div className="bg-[radial-gradient(ellipse_at_top,_#2D0808_0%,_#0D0305_100%)]">
+            <Hero />
+            <TimelineGallery />
+          </div>
           <Itinerary />
           <Locations />
           <Family />

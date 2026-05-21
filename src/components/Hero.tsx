@@ -142,7 +142,7 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative min-h-[100svh] flex flex-col items-center justify-start bg-[radial-gradient(ellipse_at_top,_#2D0808_0%,_#0D0305_100%)] overflow-hidden pt-36 sm:pt-40 md:pt-44 pb-20 px-4 text-center transition-all duration-1000 ease-in-out">
+    <section className="relative min-h-[100svh] flex flex-col items-center justify-start overflow-hidden pt-36 sm:pt-40 md:pt-44 pb-20 px-4 text-center transition-all duration-1000 ease-in-out">
       
       {/* Decorative rings removed as requested */}
 
