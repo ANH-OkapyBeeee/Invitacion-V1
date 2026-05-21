@@ -68,7 +68,7 @@ const ShakeCelebration: React.FC = () => {
       particleCount: 120,
       spread: 80,
       origin: { y: 0.6 },
-      colors: ['#D4AF37', '#FDFBF7', '#F5D76E', '#C0C0C0', '#6E1423'],
+      colors: ['#D4AF37', '#FDFBF7', '#F5D76E', '#C0C0C0'],
       shapes: ['circle', 'square'],
       scalar: 1.2
     });

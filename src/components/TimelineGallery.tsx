@@ -85,7 +85,7 @@ const TimelineGallery = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-20 px-4 bg-[radial-gradient(ellipse_at_top,_#2D0808_0%,_#0D0305_100%)] text-center text-white overflow-hidden"
+      className="relative py-20 px-4 bg-[#0D0305] text-center text-white overflow-hidden"
     >
       {/* Subtle golden particles */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
