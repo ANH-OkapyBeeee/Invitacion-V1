@@ -21,7 +21,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete, onStartFadeOut }) => 
     const keyImages = [
       '/logo-gugu.webp',
       '/sobre-bg.webp', // Closed envelope backplate
-      '/Fotos/Fotos%20Carrusel%20del%20Index/1.webp',
+      '/Fotos/Fotos%20Carrusel%20del%20Index/1_rotated.webp',
       '/Fotos/Fotos%20Carrusel%20del%20Index/2.webp',
       '/Fotos/Fotos%20Carrusel%20del%20Index/3.webp',
       '/Fotos/Fotos%20Carrusel%20del%20Index/4.webp',

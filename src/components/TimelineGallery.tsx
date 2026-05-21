@@ -16,7 +16,7 @@ const TIMELINE_PHOTOS = [
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/4.webp',   era: 'Los primeros años' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/3.webp',   era: 'Los primeros años' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/2.webp',   era: 'Bebé' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/1.webp',   era: 'Bebé' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/1_rotated.webp',   era: 'Bebé' },
 ];
 
 const GRID_ROWS = 6;
