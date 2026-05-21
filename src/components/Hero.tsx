@@ -164,8 +164,8 @@ const Hero = () => {
       {/* Crown above the title */}
       <div className="z-10 flex justify-center mb-2">
         <img
-          src="/Fotos/Corona/corona.png"
-          alt="Crown Logo"
+          src="/Fotos/Sombrero/Sombrero.png"
+          alt="Sombrero Logo"
           className="w-[200px] sm:w-[230px] md:w-[280px] object-contain crown-image"
         />
       </div>

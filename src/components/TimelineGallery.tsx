@@ -122,9 +122,7 @@ const TimelineGallery = () => {
             className={`transition-all duration-500 rounded-full ${
               idx === current
                 ? 'w-8 h-2 bg-xv-gold shadow-[0_0_8px_rgba(212,175,55,0.7)]'
-                : idx < current
-                ? 'w-2 h-2 bg-xv-gold/50'
-                : 'w-2 h-2 bg-white/20'
+                : 'w-2 h-2 bg-white/40'
             }`}
           />
         ))}
