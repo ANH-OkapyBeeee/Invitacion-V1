@@ -41,10 +41,9 @@ const Locations = () => {
           >
             <iframe
               src={`https://maps.google.com/maps?q=${encodeURIComponent(CONFIG.church.name + ", " + CONFIG.church.address)}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
-              className="w-full h-full opacity-80 mix-blend-luminosity group-hover:opacity-100 group-hover:mix-blend-normal transition-all duration-500 pointer-events-none"
-              style={{ border: 0, filter: 'contrast(1.2) sepia(0.3) hue-rotate(-10deg)' }}
+              className="w-full h-full opacity-60 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500 pointer-events-none"
+              style={{ border: 0 }}
               allowFullScreen={false}
-              loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
             <div className="absolute inset-0 bg-transparent ring-1 ring-inset ring-xv-gold/20 rounded-xl"></div>
@@ -99,10 +98,9 @@ const Locations = () => {
           >
             <iframe
               src={`https://maps.google.com/maps?q=${encodeURIComponent("20°45'37.0\"N 100°02'25.9\"W")}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
-              className="w-full h-full opacity-80 mix-blend-luminosity group-hover:opacity-100 group-hover:mix-blend-normal transition-all duration-500 pointer-events-none"
-              style={{ border: 0, filter: 'contrast(1.2) sepia(0.3) hue-rotate(-10deg)' }}
+              className="w-full h-full opacity-60 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500 pointer-events-none"
+              style={{ border: 0 }}
               allowFullScreen={false}
-              loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
             <div className="absolute inset-0 bg-transparent ring-1 ring-inset ring-xv-gold/20 rounded-xl"></div>

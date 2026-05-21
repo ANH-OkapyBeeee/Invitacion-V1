@@ -105,11 +105,8 @@ const TimelineGallery = () => {
 
       {/* Section Title */}
       <div className={`mb-2 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-        <div className="font-josefin uppercase text-xv-gold tracking-[0.3em] text-xs mb-3 opacity-70">
-          ✦ Un viaje en el tiempo ✦
-        </div>
         <h2 className="font-playfair italic text-4xl md:text-5xl text-[#F5D76E] animate-shimmer mb-2">
-          De entonces a hoy
+          ✦ Un viaje en el tiempo ✦
         </h2>
         <p className="font-cormorant italic text-white/60 text-lg max-w-[400px] mx-auto leading-relaxed">
           Cada foto guarda un instante irrepetible en el camino de convertirse en quinceañera
@@ -133,13 +130,7 @@ const TimelineGallery = () => {
         ))}
       </div>
 
-      {/* Era badge */}
-      <div className={`transition-all duration-500 mb-6 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-        <span className="inline-flex items-center gap-2 font-josefin text-xs uppercase tracking-[0.25em] text-xv-gold bg-xv-gold/10 border border-xv-gold/30 px-4 py-1.5 rounded-full">
-          <span className="w-1.5 h-1.5 rounded-full bg-xv-gold animate-pulse" />
-          {photo.era}
-        </span>
-      </div>
+
 
       {/* Carousel */}
       <div
