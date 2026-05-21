@@ -180,7 +180,6 @@ const TimelineGallery = () => {
                     autoPlay
                     muted
                     playsInline
-                    controls
                     onEnded={handleNext}
                   />
                 ) : (
