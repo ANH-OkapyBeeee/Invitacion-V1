@@ -41,7 +41,7 @@ const Locations = () => {
           >
             <iframe
               src={`https://maps.google.com/maps?q=${encodeURIComponent(CONFIG.church.name + ", " + CONFIG.church.address)}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
-              className="w-full h-full opacity-60 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500 pointer-events-none"
+              className="w-full h-full transition-all duration-500 pointer-events-none"
               style={{ border: 0 }}
               allowFullScreen={false}
               referrerPolicy="no-referrer-when-downgrade"
@@ -98,7 +98,7 @@ const Locations = () => {
           >
             <iframe
               src={`https://maps.google.com/maps?q=${encodeURIComponent("20°45'37.0\"N 100°02'25.9\"W")}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
-              className="w-full h-full opacity-60 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500 pointer-events-none"
+              className="w-full h-full transition-all duration-500 pointer-events-none"
               style={{ border: 0 }}
               allowFullScreen={false}
               referrerPolicy="no-referrer-when-downgrade"

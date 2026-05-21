@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 // Photos ordered from HIGHEST number to LOWEST (most recent → baby)
 const TIMELINE_PHOTOS = [
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/15.mp4',  era: 'Hoy', isVideo: true },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/15.mp4?v=2',  era: 'Hoy', isVideo: true },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/14.png',  era: 'Hoy' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/13.png',  era: 'Casi allá' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/12.png',  era: 'Creciendo' },
@@ -190,8 +190,7 @@ const TimelineGallery = () => {
                   />
                 )}
 
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-10" />
+
 
                 {/* Counter badge */}
                 <div className="absolute bottom-3 right-3 z-20 bg-black/55 text-white font-josefin text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider">
