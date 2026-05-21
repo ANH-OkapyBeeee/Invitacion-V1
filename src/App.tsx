@@ -431,12 +431,7 @@ function App() {
         <div className="flex flex-col-reverse items-center gap-3 transition-all duration-500">
           {/* Primary Music Button */}
           <button 
-            onClick={handleMusicClick}
-            onTouchStart={handleStartPress}
-            onTouchEnd={handleEndPress}
-            onMouseDown={handleStartPress}
-            onMouseUp={handleEndPress}
-            onMouseLeave={handleEndPress}
+            onClick={toggleAudio}
             className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white text-gray-800 flex items-center justify-center text-2xl md:text-3xl shadow-[0_8px_30px_rgba(0,0,0,0.15)] transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer border border-gray-100 relative group select-none"
             title={isPlaying ? 'Silenciar' : 'Reproducir'}
           >
@@ -458,34 +453,7 @@ function App() {
           </button>
         </div>
 
-        {/* Language Button */}
-        <button 
-          onClick={() => {
-            navigator.vibrate?.(40);
-            toggleLanguage();
-          }}
-          className={`w-12 h-12 md:w-14 md:h-14 rounded-full bg-white text-gray-800 flex items-center justify-center text-sm md:text-base font-bold shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer border border-gray-100 select-none mb-1 ${
-            isCollapsed 
-              ? 'opacity-0 scale-50 pointer-events-none w-0 h-0 border-none shadow-none gap-0 overflow-hidden mb-0' 
-              : 'opacity-100 scale-100'
-          }`}
-          title="Idioma"
-        >
-          {i18n.language === 'es' ? 'EN' : 'ES'}
-        </button>
 
-        {/* Elegant Pearl Theme Toggle Button */}
-        <button 
-          onClick={togglePearlTheme}
-          className={`w-12 h-12 md:w-14 md:h-14 rounded-full bg-white text-gray-800 flex items-center justify-center text-xl md:text-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer border border-gray-100 select-none mb-1 ${
-            isCollapsed 
-              ? 'opacity-0 scale-50 pointer-events-none w-0 h-0 border-none shadow-none gap-0 overflow-hidden mb-0' 
-              : 'opacity-100 scale-100'
-          }`}
-          title="Tema"
-        >
-          {isPearlTheme ? '🔴' : '⚪'}
-        </button>
 
         {/* Admin/Config Button */}
         <button 
@@ -542,6 +510,18 @@ function App() {
           {adminSubView === 'menu' && (
             <div className="space-y-2">
               {[
+                { 
+                  icon: '🎨', 
+                  label: 'Cambiar Tema (Rojo / Perla)', 
+                  available: true, 
+                  onClick: togglePearlTheme 
+                },
+                { 
+                  icon: '🌐', 
+                  label: `Cambiar Idioma (${i18n.language === 'es' ? 'ES -> EN' : 'EN -> ES'})`, 
+                  available: true, 
+                  onClick: toggleLanguage 
+                },
                 { icon: '🕐', label: 'Simulador de Tiempo', available: false },
                 { icon: '👥', label: 'Gestión de Invitados', available: false },
                 { icon: '🎬', label: 'Video Cronológico', available: false },
