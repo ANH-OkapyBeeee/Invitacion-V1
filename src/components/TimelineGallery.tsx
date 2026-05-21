@@ -28,6 +28,7 @@ const TimelineGallery = () => {
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   const total = TIMELINE_PHOTOS.length;
@@ -52,6 +53,14 @@ const TimelineGallery = () => {
     touchStartX.current = null;
     touchEndX.current = null;
   };
+
+  // Force video play when a video item is active
+  useEffect(() => {
+    if (photo.isVideo && videoRef.current) {
+      videoRef.current.load();
+      videoRef.current.play().catch(() => {});
+    }
+  }, [current]);
 
   // Auto-advance every 7.5s
   useEffect(() => {
@@ -182,6 +191,7 @@ const TimelineGallery = () => {
                 {photo.isVideo ? (
                   /* Video player */
                   <video
+                    ref={videoRef}
                     key={photo.src}
                     className="absolute inset-0 w-full h-full object-cover"
                     src={photo.src}
@@ -189,6 +199,7 @@ const TimelineGallery = () => {
                     muted
                     loop
                     playsInline
+                    controls
                   />
                 ) : (
                   /* Puzzle grid for images */
