@@ -160,47 +160,14 @@ const Hero = () => {
       </div>
       */}
 
-      {/* Crown + single center photo (carousel disabled) */}
-      <div className="z-10 mb-10 md:mb-6 flex justify-center pt-2 pb-4">
-        <div className="relative flex-shrink-0">
-          {/* Crown */}
-          <div className="absolute top-[-115px] sm:top-[-130px] md:top-[-165px] left-1/2 -translate-x-1/2 w-[230px] sm:w-[260px] md:w-[330px] h-[115px] sm:h-[130px] md:h-[165px] z-20 pointer-events-none transition-all duration-1000 ease-in-out">
-            <img 
-              src="/Fotos/Corona/corona.png" 
-              alt="Crown Logo" 
-              className="w-full h-full object-contain crown-image"
-            />
-          </div>
-          {/* Center photo with gold glow border + puzzle effect */}
-          <div className="p-[2px] bg-gradient-to-r from-xv-gold via-[#F5D76E] to-xv-gold rounded-2xl shadow-[0_0_35px_rgba(212,175,55,0.45)] animate-glow">
-            <div className="w-[190px] h-[270px] sm:w-[210px] sm:h-[300px] md:w-[260px] md:h-[370px] bg-[#1a0f0f] rounded-[14px] overflow-hidden relative">
-              {Array.from({ length: GRID_ROWS * GRID_COLS }).map((_, i) => {
-                const row = Math.floor(i / GRID_COLS);
-                const col = i % GRID_COLS;
-                const isVisible = visiblePieces.includes(i);
-                return (
-                  <div 
-                    key={i}
-                    className="absolute transition-all duration-1000 ease-out"
-                    style={{
-                      width: `${100 / GRID_COLS + 0.4}%`,
-                      height: `${100 / GRID_ROWS + 0.4}%`,
-                      left: `${col * (100 / GRID_COLS)}%`,
-                      top: `${row * (100 / GRID_ROWS)}%`,
-                      backgroundImage: `url(${photos[currentPhoto]})`,
-                      backgroundSize: `${GRID_COLS * 100}% ${GRID_ROWS * 100}%`,
-                      backgroundPosition: `${(col / (GRID_COLS - 1)) * 100}% ${(row / (GRID_ROWS - 1)) * 100}%`,
-                      opacity: isVisible ? 1 : 0,
-                      transform: isVisible ? 'scale(1) rotate(0deg)' : `scale(0.2) rotate(${(Math.random() - 0.5) * 90}deg)`,
-                      zIndex: isVisible ? 1 : 0
-                    }}
-                  />
-                );
-              })}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-[10]" />
-            </div>
-          </div>
-        </div>
+
+      {/* Crown above the title */}
+      <div className="z-10 flex justify-center mb-2">
+        <img
+          src="/Fotos/Corona/corona.png"
+          alt="Crown Logo"
+          className="w-[200px] sm:w-[230px] md:w-[280px] object-contain crown-image"
+        />
       </div>
 
       {/* Main Title */}
