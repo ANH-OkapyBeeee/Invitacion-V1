@@ -66,25 +66,29 @@ const Itinerary = () => {
             return (
               <div 
                 key={idx} 
-                ref={el => cardRefs.current[idx] = el}
-                className={`sticky pl-16 opacity-0 transition-transform duration-500 ease-out ${isVisible ? 'animate-fade-in-up' : ''}`}
+                className="sticky"
                 style={{ 
-                  animationDelay: `${idx * 70}ms`,
                   top: `${80 + (idx * 20)}px`,
                   zIndex: idx + 10
                 }}
               >
-                {/* Timeline Dot */}
-                <div className={`absolute left-[18px] top-6 w-[14px] h-[14px] rounded-full border-[3px] border-xv-pearl shadow-sm z-10 transition-colors duration-500 ${isPassed ? 'bg-gray-300' : 'bg-xv-gold'}`} />
-                
-                {/* Event Card */}
-                <div className={`bg-white p-5 rounded-xl shadow-sm border border-xv-gold/10 relative overflow-hidden group hover:shadow-md transition-all duration-700 ${isPassed ? 'blur-[1.5px] opacity-40 scale-[0.98]' : 'opacity-100 scale-100'}`}>
-                  <div className="flex items-start gap-4">
-                    <div className="text-3xl mt-1">{event.emoji}</div>
-                    <div>
-                      <h3 className="font-playfair font-bold text-xl text-xv-red mb-1">{event.title}</h3>
-                      <div className="font-josefin text-sm text-xv-gold tracking-wider mb-2 font-semibold">{event.time}</div>
-                      <p className="font-cormorant italic text-gray-500 text-lg leading-snug whitespace-pre-line">{event.desc}</p>
+                <div
+                  ref={el => { cardRefs.current[idx] = el; }}
+                  className={`relative pl-16 opacity-0 transition-transform duration-500 ease-out ${isVisible ? 'animate-fade-in-up' : ''}`}
+                  style={{ animationDelay: `${idx * 70}ms` }}
+                >
+                  {/* Timeline Dot */}
+                  <div className={`absolute left-[18px] top-6 w-[14px] h-[14px] rounded-full border-[3px] border-xv-pearl shadow-sm z-10 transition-colors duration-500 ${isPassed ? 'bg-gray-300' : 'bg-xv-gold'}`} />
+                  
+                  {/* Event Card */}
+                  <div className={`bg-white p-5 rounded-xl shadow-sm border border-xv-gold/10 relative overflow-hidden group hover:shadow-md transition-all duration-700 ${isPassed ? 'blur-[1.5px] opacity-40 scale-[0.98]' : 'opacity-100 scale-100'}`}>
+                    <div className="flex items-start gap-4">
+                      <div className="text-3xl mt-1">{event.emoji}</div>
+                      <div>
+                        <h3 className="font-playfair font-bold text-xl text-xv-red mb-1">{event.title}</h3>
+                        <div className="font-josefin text-sm text-xv-gold tracking-wider mb-2 font-semibold">{event.time}</div>
+                        <p className="font-cormorant italic text-gray-500 text-lg leading-snug whitespace-pre-line">{event.desc}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
