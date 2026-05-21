@@ -53,6 +53,8 @@ const TimelineGallery = () => {
     touchEndX.current = null;
   };
 
+  const photo = TIMELINE_PHOTOS[current];
+
   // Force video play when a video item is active
   useEffect(() => {
     if (photo.isVideo && videoRef.current) {
@@ -79,8 +81,6 @@ const TimelineGallery = () => {
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
-
-  const photo = TIMELINE_PHOTOS[current];
 
   return (
     <section
