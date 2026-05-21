@@ -81,7 +81,7 @@ const Itinerary = () => {
                   <div className={`absolute left-[18px] top-6 w-[14px] h-[14px] rounded-full border-[3px] border-xv-pearl shadow-sm z-10 transition-colors duration-500 ${isPassed ? 'bg-gray-300' : 'bg-xv-gold'}`} />
                   
                   {/* Event Card */}
-                  <div className={`bg-white p-5 rounded-xl shadow-sm border border-xv-gold/10 relative overflow-hidden group hover:shadow-md transition-all duration-700 ${isPassed ? 'blur-[1.5px] opacity-40 scale-[0.98]' : 'opacity-100 scale-100'}`}>
+                  <div className={`p-5 rounded-xl shadow-sm border relative overflow-hidden group hover:shadow-md transition-all duration-700 ${isPassed ? 'bg-xv-gold/20 border-xv-gold/40 blur-[1px] opacity-80 scale-[0.98]' : 'bg-white border-xv-gold/10 opacity-100 scale-100'}`}>
                     <div className="flex items-start gap-4">
                       <div className="text-3xl mt-1">{event.emoji}</div>
                       <div>
