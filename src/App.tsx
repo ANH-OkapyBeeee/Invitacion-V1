@@ -295,36 +295,27 @@ function App() {
       // Wake up the FAB buttons and make them fully opaque so the user can easily see and interact with them immediately!
       resetIdleTimers();
 
-      // Trigger magical star shower
-      const duration = 4 * 1000;
-      const end = Date.now() + duration;
-
-      const frame = () => {
-        confetti({
-          particleCount: 3,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0, y: 0.6 },
-          colors: ['#D4AF37', '#FDFBF7', '#F5D76E', '#C0C0C0'],
-          shapes: ['circle', 'square'],
-          scalar: 1.2
-        });
-        confetti({
-          particleCount: 3,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1, y: 0.6 },
-          colors: ['#D4AF37', '#FDFBF7', '#F5D76E', '#C0C0C0'],
-          shapes: ['circle', 'square'],
-          scalar: 1.2
-        });
-
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
-      };
-      frame();
-
+      // Trigger magical elegant confetti (Optimized for no lag)
+      // Left burst
+      confetti({
+        particleCount: 60,
+        angle: 60,
+        spread: 65,
+        origin: { x: 0, y: 0.6 },
+        colors: ['#D4AF37', '#FDFBF7', '#F5D76E', '#C0C0C0'],
+        shapes: ['circle', 'square'],
+        scalar: 1.2
+      });
+      // Right burst
+      confetti({
+        particleCount: 60,
+        angle: 120,
+        spread: 65,
+        origin: { x: 1, y: 0.6 },
+        colors: ['#D4AF37', '#FDFBF7', '#F5D76E', '#C0C0C0'],
+        shapes: ['circle', 'square'],
+        scalar: 1.2
+      });
       // Center burst
       confetti({
         particleCount: 120,
@@ -431,7 +422,12 @@ function App() {
         <div className="flex flex-col-reverse items-center gap-3 transition-all duration-500">
           {/* Primary Music Button */}
           <button 
-            onClick={toggleAudio}
+            onClick={handleMusicClick}
+            onTouchStart={handleStartPress}
+            onTouchEnd={handleEndPress}
+            onMouseDown={handleStartPress}
+            onMouseUp={handleEndPress}
+            onMouseLeave={handleEndPress}
             className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-white text-gray-800 flex items-center justify-center text-2xl md:text-3xl shadow-[0_8px_30px_rgba(0,0,0,0.15)] transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer border border-gray-100 relative group select-none"
             title={isPlaying ? 'Silenciar' : 'Reproducir'}
           >
