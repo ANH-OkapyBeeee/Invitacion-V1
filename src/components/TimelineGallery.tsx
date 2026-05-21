@@ -209,10 +209,6 @@ const TimelineGallery = () => {
               </div>
             </div>
 
-            {/* Floating era label below center card */}
-            <div className="mt-3 font-josefin text-xv-gold text-xs uppercase tracking-widest opacity-80">
-              ← más reciente
-            </div>
           </div>
 
           {/* Right card (next) */}
