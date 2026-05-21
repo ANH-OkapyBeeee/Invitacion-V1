@@ -5,7 +5,7 @@ import confetti from 'canvas-confetti';
 import EnvelopeScreen from './components/EnvelopeScreen';
 import Hero from './components/Hero';
 import Itinerary from './components/Itinerary';
-import TimelineGallery from './components/TimelineGallery';
+// import TimelineGallery from './components/TimelineGallery'; // disponible para reactivar
 import Locations from './components/Locations';
 import Family from './components/Family';
 import Godparents from './components/Godparents';
@@ -747,7 +747,7 @@ function App() {
         <ShakeCelebration />
         <main className="animate-fade-in-up">
           <Hero />
-          <TimelineGallery />
+          {/* <TimelineGallery /> */} {/* Desactivado temporalmente — reactivar descomentando esta línea */}
           <Itinerary />
           <Locations />
           <Family />
