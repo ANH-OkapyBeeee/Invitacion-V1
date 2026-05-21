@@ -84,15 +84,15 @@ const Hero = () => {
   }
 
   const photos = [
-    '/Fotos/Fotos%20Carrusel%20del%20Index/1.JPG',
-    '/Fotos/Fotos%20Carrusel%20del%20Index/2.JPG',
-    '/Fotos/Fotos%20Carrusel%20del%20Index/3.JPG',
-    '/Fotos/Fotos%20Carrusel%20del%20Index/4.JPG',
-    '/Fotos/Fotos%20Carrusel%20del%20Index/4.2.jpeg',
-    '/Fotos/Fotos%20Carrusel%20del%20Index/5.JPG',
-    '/Fotos/Fotos%20Carrusel%20del%20Index/7.jpg',
-    '/Fotos/Fotos%20Carrusel%20del%20Index/9.JPG',
-    '/Fotos/Fotos%20Carrusel%20del%20Index/10.jpg'
+    '/Fotos/Fotos%20Carrusel%20del%20Index/1.webp',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/2.webp',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/3.webp',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/4.webp',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/4.2.webp',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/5.webp',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/7.webp',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/9.webp',
+    '/Fotos/Fotos%20Carrusel%20del%20Index/10.webp'
   ];
 
   const prevPhoto = (currentPhoto - 1 + photos.length) % photos.length;
@@ -164,7 +164,7 @@ const Hero = () => {
       {/* Crown above the title */}
       <div className="z-10 flex justify-center mb-2">
         <img
-          src="/Fotos/Sombrero/Sombrero.png"
+          src="/Fotos/Sombrero/Sombrero.webp"
           alt="Sombrero Logo"
           className="w-[200px] sm:w-[230px] md:w-[280px] object-contain crown-image"
         />

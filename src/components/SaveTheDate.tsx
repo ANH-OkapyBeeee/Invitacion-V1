@@ -115,7 +115,7 @@ Y Sus padres: Manuel Balderas Ibarra y Ma. de la Luz Vega Feregrino`;
         {/* Crown Logo */}
         <div className="flex justify-center mb-4">
           <img
-            src="/Fotos/Corona/corona.png"
+            src="/Fotos/Corona/corona.webp"
             alt="Crown Logo"
             className="w-[180px] sm:w-[150px] object-contain"
           />

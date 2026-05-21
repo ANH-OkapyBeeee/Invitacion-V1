@@ -1,23 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { useTranslation } from 'react-i18next';
 import YouTube, { type YouTubeEvent, type YouTubeProps } from 'react-youtube';
 import confetti from 'canvas-confetti';
 import EnvelopeScreen from './components/EnvelopeScreen';
 import Hero from './components/Hero';
-import Itinerary from './components/Itinerary';
-import TimelineGallery from './components/TimelineGallery';
-import Locations from './components/Locations';
-import Family from './components/Family';
-import Godparents from './components/Godparents';
-import DressCode from './components/DressCode';
-import SaveTheDate from './components/SaveTheDate';
-import FAQ from './components/FAQ';
-import PhotoUpload from './components/PhotoUpload';
-import RecentGallery from './components/RecentGallery';
-import Footer from './components/Footer';
 import ShakeCelebration from './components/ShakeCelebration';
 import Preloader from './components/Preloader';
-import LegalModal from './components/LegalModal';
+
+// Lazy load below-the-fold components
+const TimelineGallery = lazy(() => import('./components/TimelineGallery'));
+const Itinerary = lazy(() => import('./components/Itinerary'));
+const Locations = lazy(() => import('./components/Locations'));
+const Family = lazy(() => import('./components/Family'));
+const Godparents = lazy(() => import('./components/Godparents'));
+const DressCode = lazy(() => import('./components/DressCode'));
+const SaveTheDate = lazy(() => import('./components/SaveTheDate'));
+const FAQ = lazy(() => import('./components/FAQ'));
+const PhotoUpload = lazy(() => import('./components/PhotoUpload'));
+const RecentGallery = lazy(() => import('./components/RecentGallery'));
+const Footer = lazy(() => import('./components/Footer'));
+const LegalModal = lazy(() => import('./components/LegalModal'));
 import { db } from './firebase';
 import { collection, query, where, getDocs, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
@@ -194,7 +196,7 @@ function App() {
         const photo = photos[i];
         const link = document.createElement('a');
         link.href = photo.url;
-        link.download = photo.fileName || `foto_${i + 1}.jpg`;
+        link.download = photo.fileName || `foto_${i + 1}.webp`;
         link.target = '_blank';
         document.body.appendChild(link);
         link.click();
@@ -734,25 +736,31 @@ function App() {
       <div className={!isOpened ? 'fixed inset-0 opacity-0 pointer-events-none -z-10' : 'block relative'}>
         {isOpened && <ShakeCelebration />}
         <main className="animate-fade-in-up">
-          <div className="bg-[radial-gradient(ellipse_at_top,_#2D0808_0%,_#0D0305_100%)]">
-            <Hero />
-            <TimelineGallery />
+          <div className="bg-[radial-gradient(ellipse_at_top,_#2D0808_0%,_transparent_70%)] relative">
+            <div className="relative z-10">
+              <Hero />
+              <Suspense fallback={<div className="h-40 flex items-center justify-center text-xv-gold font-josefin">Cargando nuestra historia...</div>}>
+                <TimelineGallery />
+              </Suspense>
+            </div>
           </div>
-          <Itinerary />
-          <Locations />
-          <Family />
-          <Godparents />
-          <DressCode onTipSelect={setActiveTip} activeTip={activeTip} />
-          <SaveTheDate />
-          <FAQ />
-          <PhotoUpload />
-          <RecentGallery />
-          <Footer 
-            onOpenLegal={(tab) => {
-              setActiveLegalTab(tab);
-              setLegalModalOpen(true);
-            }}
-          />
+          <Suspense fallback={<div className="h-screen flex items-center justify-center text-xv-gold font-josefin">Cargando detalles...</div>}>
+            <Itinerary />
+            <Locations />
+            <Family />
+            <Godparents />
+            <DressCode onTipSelect={setActiveTip} activeTip={activeTip} />
+            <SaveTheDate />
+            <FAQ />
+            <PhotoUpload />
+            <RecentGallery />
+            <Footer 
+              onOpenLegal={(tab) => {
+                setActiveLegalTab(tab);
+                setLegalModalOpen(true);
+              }}
+            />
+          </Suspense>
         </main>
       </div>
 

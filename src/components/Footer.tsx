@@ -215,7 +215,7 @@ const Footer = ({ onOpenLegal }: FooterProps) => {
               <div className="flex justify-center mb-4">
                 <div className="relative">
                   <div className={`bg-white rounded-xl p-2 shadow-lg border border-white/10 w-20 h-20 flex items-center justify-center transition-all duration-300 ${isShaking ? 'animate-earthquake' : ''}`}>
-                    <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="w-full h-full object-contain" />
+                    <img src="/logo-gugu.webp" alt="GuGu Laboratorio Creativo" className="w-full h-full object-contain" />
                   </div>
                   {/* Floating WhatsApp Button */}
                   <a 
@@ -260,7 +260,7 @@ const Footer = ({ onOpenLegal }: FooterProps) => {
                 className={`bg-white rounded-xl p-2 shadow-[0_15px_40px_rgba(0,0,0,0.6),_0_0_20px_rgba(212,175,55,0.15)] border-2 border-xv-gold w-20 h-20 flex items-center justify-center transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 hover:shadow-[0_15px_40px_rgba(0,0,0,0.6),_0_0_30px_rgba(212,175,55,0.35)] ${isShaking ? 'animate-earthquake' : ''}`}
                 title="Ver datos del desarrollador"
               >
-                <img src="/logo-gugu.jpg" alt="GuGu Laboratorio Creativo" className="w-full h-full object-contain" />
+                <img src="/logo-gugu.webp" alt="GuGu Laboratorio Creativo" className="w-full h-full object-contain" />
               </div>
               {/* Floating WhatsApp Button for Expanded Logo */}
               <a 

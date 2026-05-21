@@ -136,7 +136,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
         }}
       >
         <img 
-          src="/Fotos/Corona/corona.png" 
+          src="/Fotos/Corona/corona.webp" 
           alt="Corona Real" 
           className="w-full h-full object-contain"
         />
@@ -158,7 +158,8 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
         className="relative w-80 h-56 lg:w-[480px] lg:h-[336px] max-w-[85vw] perspective-[1000px] z-10 transition-all duration-[2000ms] ease-out flex-shrink-0 envelope-wrapper"
         style={{
           opacity: isOpen ? 0 : 1,
-          transform: isOpen ? 'scale(1.05)' : 'scale(1)',
+          transform: isOpen ? 'scale(1.05) translateZ(0)' : 'scale(1) translateZ(0)',
+          willChange: 'transform, opacity',
           pointerEvents: isWaxSealVisible && !isOpen ? 'auto' : 'none'
         }}
       >
@@ -168,7 +169,8 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           className="absolute inset-0 bg-gradient-to-br from-[#FAF6E5] via-[#E8DCB8] to-[#C7B787] shadow-[0_20px_50px_rgba(0,0,0,0.55),0_8px_20px_rgba(0,0,0,0.35),inset_0_1px_1px_rgba(255,255,255,0.2)] rounded-sm transition-all duration-[1200ms] ease-out"
           style={{
             opacity: isBackVisible ? 1 : 0,
-            transform: isBackVisible ? 'scale(1) rotate(0deg)' : 'scale(0.85) rotate(-3deg)',
+            transform: isBackVisible ? 'scale(1) rotate(0deg) translateZ(0)' : 'scale(0.85) rotate(-3deg) translateZ(0)',
+            willChange: 'transform, opacity'
           }}
         />
         
@@ -180,10 +182,11 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             style={{ 
               clipPath: 'polygon(0 0, 50% 50%, 0 100%)',
               opacity: isFlapsVisible ? 1 : 0,
-              transform: isFlapsVisible ? 'rotateY(0deg)' : 'rotateY(-90deg)',
+              transform: isFlapsVisible ? 'rotateY(0deg) translateZ(0)' : 'rotateY(-90deg) translateZ(0)',
               transformOrigin: 'left center',
               backfaceVisibility: 'hidden',
-              filter: 'drop-shadow(2px 0 4px rgba(0,0,0,0.15))'
+              filter: 'drop-shadow(2px 0 4px rgba(0,0,0,0.15))',
+              willChange: 'transform, opacity'
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-black/10 pointer-events-none" />
@@ -197,10 +200,11 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             style={{ 
               clipPath: 'polygon(100% 0, 50% 50%, 100% 100%)',
               opacity: isFlapsVisible ? 1 : 0,
-              transform: isFlapsVisible ? 'rotateY(0deg)' : 'rotateY(90deg)',
+              transform: isFlapsVisible ? 'rotateY(0deg) translateZ(0)' : 'rotateY(90deg) translateZ(0)',
               transformOrigin: 'right center',
               backfaceVisibility: 'hidden',
-              filter: 'drop-shadow(-2px 0 4px rgba(0,0,0,0.15))'
+              filter: 'drop-shadow(-2px 0 4px rgba(0,0,0,0.15))',
+              willChange: 'transform, opacity'
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-l from-white/20 via-transparent to-black/10 pointer-events-none" />
@@ -214,10 +218,11 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             style={{ 
               clipPath: 'polygon(0 100%, 50% 50%, 100% 100%)',
               opacity: isBottomFlapVisible ? 1 : 0,
-              transform: isBottomFlapVisible ? 'rotateX(0deg)' : 'rotateX(-90deg)',
+              transform: isBottomFlapVisible ? 'rotateX(0deg) translateZ(0)' : 'rotateX(-90deg) translateZ(0)',
               transformOrigin: 'bottom center',
               backfaceVisibility: 'hidden',
-              filter: 'drop-shadow(0 -5px 8px rgba(0,0,0,0.22))'
+              filter: 'drop-shadow(0 -5px 8px rgba(0,0,0,0.22))',
+              willChange: 'transform, opacity'
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-t from-white/25 via-transparent to-black/15 pointer-events-none" />
@@ -237,11 +242,12 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
         <div 
           className="absolute inset-0 transition-all duration-[1000ms] ease-out z-20"
           style={{ 
-            transform: isOpen ? 'rotateX(-180deg)' : (isTopFlapVisible ? 'rotateX(0deg)' : 'rotateX(90deg)'),
+            transform: isOpen ? 'rotateX(-180deg) translateZ(0)' : (isTopFlapVisible ? 'rotateX(0deg) translateZ(0)' : 'rotateX(90deg) translateZ(0)'),
             opacity: isTopFlapVisible ? 1 : 0,
             transformOrigin: 'top center',
             backfaceVisibility: 'hidden',
-            filter: 'drop-shadow(0 10px 18px rgba(0,0,0,0.4))'
+            filter: 'drop-shadow(0 10px 18px rgba(0,0,0,0.4))',
+            willChange: 'transform, opacity'
           }}
         >
           {/* Clipped Top Flap inner content */}
@@ -259,7 +265,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
             {/* Crown inside the top flap (appears on short viewports or when the top crown is hidden) */}
             <div className="absolute left-1/2 -translate-x-1/2 top-[0.2%] lg:top-[0.4%] w-[110px] h-[76px] lg:w-[155px] lg:h-[108px] pointer-events-none z-10 flap-crown">
               <img 
-                src="/Fotos/Corona/corona.png" 
+                src="/Fotos/Corona/corona.webp" 
                 alt="Corona Solapa" 
                 className="w-full h-full object-contain filter-seal-red opacity-[0.98]" 
               />
@@ -286,7 +292,7 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
           {/* Sello Rojo Button */}
           <div className="w-[115px] h-[115px] lg:w-[150px] lg:h-[150px] rounded-full flex items-center justify-center relative hover:scale-105 transition-transform z-30 filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.55)] wax-seal-btn">
             <img 
-              src="/Fotos/Sobre/sello.png" 
+              src="/Fotos/Sobre/sello.webp" 
               alt="Sello de Cera" 
               className="absolute inset-0 w-full h-full object-contain pointer-events-none animate-glow-soft rounded-full" 
             />

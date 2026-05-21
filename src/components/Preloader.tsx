@@ -19,17 +19,17 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete, onStartFadeOut }) => 
 
   useEffect(() => {
     const keyImages = [
-      '/logo-gugu.jpg',
-      '/sobre-bg.jpg', // Closed envelope backplate
-      '/Fotos/Fotos%20Carrusel%20del%20Index/1.JPG',
-      '/Fotos/Fotos%20Carrusel%20del%20Index/2.JPG',
-      '/Fotos/Fotos%20Carrusel%20del%20Index/3.JPG',
-      '/Fotos/Fotos%20Carrusel%20del%20Index/4.JPG',
-      '/Fotos/Fotos%20Carrusel%20del%20Index/4.2.jpeg',
-      '/Fotos/Fotos%20Carrusel%20del%20Index/5.JPG',
-      '/Fotos/Fotos%20Carrusel%20del%20Index/7.jpg',
-      '/Fotos/Fotos%20Carrusel%20del%20Index/9.JPG',
-      '/Fotos/Fotos%20Carrusel%20del%20Index/10.jpg'
+      '/logo-gugu.webp',
+      '/sobre-bg.webp', // Closed envelope backplate
+      '/Fotos/Fotos%20Carrusel%20del%20Index/1.webp',
+      '/Fotos/Fotos%20Carrusel%20del%20Index/2.webp',
+      '/Fotos/Fotos%20Carrusel%20del%20Index/3.webp',
+      '/Fotos/Fotos%20Carrusel%20del%20Index/4.webp',
+      '/Fotos/Fotos%20Carrusel%20del%20Index/4.2.webp',
+      '/Fotos/Fotos%20Carrusel%20del%20Index/5.webp',
+      '/Fotos/Fotos%20Carrusel%20del%20Index/7.webp',
+      '/Fotos/Fotos%20Carrusel%20del%20Index/9.webp',
+      '/Fotos/Fotos%20Carrusel%20del%20Index/10.webp'
     ];
 
     let loadedCount = 0;
@@ -119,7 +119,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete, onStartFadeOut }) => 
               : 'shadow-[0_15px_40px_rgba(0,0,0,0.8)] border border-white/5'
           }`}>
             <img 
-              src="/logo-gugu.jpg" 
+              src="/logo-gugu.webp" 
               alt="GUGU Logo" 
               className="w-full h-full object-contain" 
             />
