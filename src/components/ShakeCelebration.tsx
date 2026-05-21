@@ -95,7 +95,7 @@ const ShakeCelebration: React.FC = () => {
 
     window.addEventListener('devicemotion', handleMotion);
     return () => window.removeEventListener('devicemotion', handleMotion);
-  }, [triggerStars]);
+  }, [triggerConfetti]);
 
   return null;
 };
