@@ -10,7 +10,7 @@ const TIMELINE_PHOTOS = [
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/10.webp',  era: 'La niñez' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/9.webp',   era: 'La niñez' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/7.webp',   era: 'Los primeros pasos' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/6.webp',   era: 'Los primeros pasos' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/6_new.webp',   era: 'Los primeros pasos' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/5.webp',   era: 'La infancia' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/4.4.webp', era: 'La infancia' },
   { src: '/Fotos/Fotos%20Carrusel%20del%20Index/4.webp',   era: 'Los primeros años' },
