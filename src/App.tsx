@@ -129,6 +129,10 @@ function App() {
 
   const [activeTip, setActiveTip] = useState<number | null>(null);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [loginUser, setLoginUser] = useState('');
+  const [loginPass, setLoginPass] = useState('');
+  const [loginError, setLoginError] = useState('');
   const [legalModalOpen, setLegalModalOpen] = useState(false);
   const [activeLegalTab, setActiveLegalTab] = useState<'privacy' | 'terms' | 'cookies'>('privacy');
   const [adminSubView, setAdminSubView] = useState<'menu' | 'moderation' | 'published' | 'developer'>('menu');
@@ -512,17 +516,18 @@ function App() {
 
 
 
-        {/* Admin/Config Button */}
         <button 
           onClick={() => {
             navigator.vibrate?.(40);
             resetIdleTimers();
-            const user = prompt('Usuario:');
-            if (user === null) return;
-            if (user !== 'ANH') { alert('Usuario incorrecto'); return; }
-            const pass = prompt('Contraseña:');
-            if (pass === 'lupita#15./') setIsAdminOpen(prev => !prev);
-            else if (pass !== null) alert('Contraseña incorrecta');
+            if (isAdminOpen) {
+              setIsAdminOpen(false);
+            } else {
+              setLoginUser('');
+              setLoginPass('');
+              setLoginError('');
+              setShowLoginModal(true);
+            }
           }}
           className={`w-12 h-12 md:w-14 md:h-14 rounded-full bg-white text-gray-800 flex items-center justify-center text-xl md:text-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer border border-gray-100 select-none mb-1 ${
             isCollapsed 
@@ -991,6 +996,79 @@ function App() {
               </div>
             </div>
           )}
+
+      {/* CUSTOM ADMIN LOGIN MODAL */}
+      {showLoginModal && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="bg-xv-pearl w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden border border-xv-gold/30 p-8 animate-scale-up">
+            <div className="text-center mb-6">
+              <h3 className="font-playfair italic text-2xl text-xv-red mb-2">Administrador</h3>
+              <div className="w-12 h-0.5 bg-xv-gold/40 mx-auto" />
+            </div>
+            
+            <p className="font-josefin text-xv-black-bg/80 text-center mb-6 text-sm font-semibold">
+              Por favor Ingrese su usuario y Contraseña
+            </p>
+
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              if (loginUser === 'ANH' && loginPass === 'lupita#15./') {
+                setIsAdminOpen(true);
+                setShowLoginModal(false);
+                setLoginError('');
+              } else {
+                setLoginError('Usuario o contraseña incorrectos');
+                navigator.vibrate?.([40, 20, 40]);
+              }
+            }}>
+              <div className="space-y-4">
+                <div>
+                  <input
+                    type="text"
+                    value={loginUser}
+                    onChange={(e) => setLoginUser(e.target.value)}
+                    placeholder="Usuario"
+                    className="w-full bg-white/50 border border-xv-gold/30 rounded-xl px-4 py-3 font-josefin text-xv-black-bg focus:outline-none focus:border-xv-gold focus:bg-white transition-colors"
+                    autoComplete="username"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="password"
+                    value={loginPass}
+                    onChange={(e) => setLoginPass(e.target.value)}
+                    placeholder="Contraseña"
+                    className="w-full bg-white/50 border border-xv-gold/30 rounded-xl px-4 py-3 font-josefin text-xv-black-bg focus:outline-none focus:border-xv-gold focus:bg-white transition-colors"
+                    autoComplete="current-password"
+                  />
+                </div>
+                
+                {loginError && (
+                  <p className="text-red-500 font-josefin text-xs text-center font-bold animate-pulse">
+                    {loginError}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex gap-3 mt-8">
+                <button
+                  type="button"
+                  onClick={() => setShowLoginModal(false)}
+                  className="flex-1 py-3 px-4 rounded-xl font-josefin uppercase tracking-wider text-xs font-bold bg-white/50 text-gray-500 hover:bg-gray-100 transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 py-3 px-4 rounded-xl font-josefin uppercase tracking-wider text-xs font-bold bg-xv-gold text-xv-black-bg hover:bg-[#D4AF37] transition-colors"
+                >
+                  Entrar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <LegalModal 
         isOpen={legalModalOpen} 
