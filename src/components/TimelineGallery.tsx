@@ -2,22 +2,22 @@ import React, { useState, useEffect, useRef } from 'react';
 
 // Photos ordered from HIGHEST number to LOWEST (most recent → baby)
 const TIMELINE_PHOTOS = [
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/16.mp4?v=3', era: 'Hoy', isVideo: true },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/15.webp', era: 'Hoy' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/14.webp', era: 'Hoy' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/13.webp', era: 'Casi allá' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/12.webp', era: 'Creciendo' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/11.webp', era: 'Creciendo' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/10.webp', era: 'La niñez' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/9.webp', era: 'La niñez' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/8.webp', era: 'Los primeros pasos' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/7.webp', era: 'Los primeros pasos' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/6.webp', era: 'Los primeros pasos' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/5.webp', era: 'La infancia' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/4.webp', era: 'La infancia' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/3.webp', era: 'Los primeros años' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/2.webp', era: 'Los primeros años' },
-  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/1.webp', era: 'Bebé' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/16.mp4?v=4', era: 'Hoy', isVideo: true },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/15.webp?v=4', era: 'Hoy' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/14.webp?v=4', era: 'Hoy' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/13.webp?v=4', era: 'Casi allá' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/12.webp?v=4', era: 'Creciendo' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/11.webp?v=4', era: 'Creciendo' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/10.webp?v=4', era: 'La niñez' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/9.webp?v=4', era: 'La niñez' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/8.webp?v=4', era: 'Los primeros pasos' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/7.webp?v=4', era: 'Los primeros pasos' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/6.webp?v=4', era: 'Los primeros pasos' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/5.webp?v=4', era: 'La infancia' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/4.webp?v=4', era: 'La infancia' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/3.webp?v=4', era: 'Los primeros años' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/2.webp?v=4', era: 'Los primeros años' },
+  { src: '/Fotos/Fotos%20Carrusel%20del%20Index/1.webp?v=4', era: 'Bebé' },
 ];
 
 const GRID_ROWS = 6;
