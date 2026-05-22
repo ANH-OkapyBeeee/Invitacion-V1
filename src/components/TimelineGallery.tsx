@@ -56,22 +56,28 @@ const TimelineGallery = () => {
 
   const photo = TIMELINE_PHOTOS[current];
 
-  // Force video play when a video item is active
+  // Force video play when a video item is active AND visible
   useEffect(() => {
     if (photo.isVideo && videoRef.current) {
-      videoRef.current.load();
-      videoRef.current.play().catch(() => {});
+      if (isVisible) {
+        videoRef.current.play().catch(() => {});
+      } else {
+        videoRef.current.pause();
+      }
     }
-  }, [current]);
+  }, [current, isVisible]);
 
   // Auto-advance
   useEffect(() => {
+    // No avanzar si el usuario no está viendo la sección
+    if (!isVisible) return;
+    
     // Si es video, no usamos setTimeout. El evento onEnded del video avanzará.
     if (photo.isVideo) return;
 
     const t = setTimeout(handleNext, 3000);
     return () => clearTimeout(t);
-  }, [current, photo.isVideo]);
+  }, [current, photo.isVideo, isVisible]);
 
   // Section entrance animation
   useEffect(() => {
