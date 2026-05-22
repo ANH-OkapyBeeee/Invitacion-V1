@@ -334,16 +334,16 @@ const RecentGallery = () => {
         const direction = dragOffset.x > 0 ? 1 : -1;
         
         // Trigger explosion at the point of release using the thrown card's photo url
-        const photoUrl = photos[idx]?.url || '';
+        const photoUrl = displayPhotos[idx]?.url || '';
         triggerExplosion(e.clientX, e.clientY, photoUrl);
 
         setThrownCards((prev) => {
           const next = { ...prev, [photoId]: direction };
-          // If all cards in the deck have been thrown off-screen, wait 1.0s before resetting!
-          if (Object.keys(next).length >= photos.length) {
+          // If all cards in the deck have been thrown off-screen, wait a few seconds before resetting!
+          if (Object.keys(next).length >= displayPhotos.length) {
             setTimeout(() => {
               setThrownCards({});
-            }, 1000);
+            }, 3000); // 3 seconds before resetting the whole deck as requested by user
           }
           return next;
         });
