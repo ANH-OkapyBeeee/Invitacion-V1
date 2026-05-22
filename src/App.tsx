@@ -603,6 +603,12 @@ function App() {
                   available: true, 
                   onClick: () => setAdminSubView('developer') 
                 },
+                {
+                  icon: '🛡️',
+                  label: 'Administradores',
+                  available: true,
+                  onClick: () => setAdminSubView('admins')
+                },
                 { icon: '🎙️', label: 'Mensajes de Voz', available: false },
               ].map((item, idx) => (
                 <button
@@ -995,6 +1001,10 @@ function App() {
 
                     </div>
                   </div>
+                )}
+                
+                {adminSubView === 'admins' && (
+                  <AdminsManager onClose={() => setAdminSubView('menu')} />
                 )}
               </div>
             </div>
