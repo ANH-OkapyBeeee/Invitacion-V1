@@ -25,6 +25,19 @@ html, body {
   width: 100%;
   -webkit-font-smoothing: antialiased;
   min-height: 100svh;
+  /* Anti-Theft / Anti-Download */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  user-select: none; /* Non-prefixed version */
+}
+
+/* Make images completely unclickable to prevent long-press downloads */
+img {
+  pointer-events: none;
+}
+/* But allow interaction on specific clickable images if they had buttons */
+button img, a img {
+  pointer-events: auto;
 }
 
 @keyframes shimmer {

@@ -90,6 +90,43 @@ function App() {
     }
   }, []);
 
+  // GLOBAL ANTI-THEFT / ANTI-DOWNLOAD PROTECTIONS
+  useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+
+    const handleDragStart = (e: DragEvent) => {
+      e.preventDefault();
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Block Ctrl+S / Cmd+S (Save Page)
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+      }
+      // Block Ctrl+P / Cmd+P (Print Page)
+      if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+        e.preventDefault();
+      }
+      // Attempt to block PrintScreen key (Note: limited support across OS)
+      if (e.key === 'PrintScreen') {
+        navigator.clipboard.writeText(''); // Clear clipboard as a deterrent
+        // Note: We cannot intercept the OS-level screenshot itself, but we clear clipboard.
+      }
+    };
+
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('dragstart', handleDragStart);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('dragstart', handleDragStart);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   const [activeTip, setActiveTip] = useState<number | null>(null);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [legalModalOpen, setLegalModalOpen] = useState(false);
