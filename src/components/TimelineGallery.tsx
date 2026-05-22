@@ -82,7 +82,13 @@ const TimelineGallery = () => {
   // Section entrance animation
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      ([entry]) => { 
+        setIsVisible(entry.isIntersecting);
+        // Reiniciar el carrusel al video siempre que la sección vuelva a entrar en pantalla
+        if (entry.isIntersecting) {
+          setCurrent(0);
+        }
+      },
       { threshold: 0.1 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
