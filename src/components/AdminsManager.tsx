@@ -62,19 +62,7 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
 
   return (
     <div className="flex flex-col h-full bg-transparent font-josefin">
-      <div className="flex items-center mb-6 mt-2">
-        <button 
-          onClick={onClose}
-          className="p-2 mr-2 bg-white/10 hover:bg-white/20 rounded-full transition-all text-white"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <h2 className="text-xl font-serif text-white">Administradores</h2>
-      </div>
-
-      <div className="flex-1 overflow-y-auto space-y-6 pr-1 scrollbar-thin">
+      <div className="flex-1 overflow-y-auto space-y-6 pr-1 scrollbar-thin p-6">
         <div className="bg-white/5 rounded-xl p-5 border border-white/10">
           <h3 className="text-sm font-serif text-xv-gold mb-1">Agregar Nuevo</h3>
           <p className="text-[10px] text-white/70 font-josefin leading-tight mb-4">
