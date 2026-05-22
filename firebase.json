@@ -15,11 +15,20 @@
     ],
     "headers": [
       {
+        "source": "/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }
+        ]
+      },
+      {
         "source": "**/*.@(webp|png|svg|jpg|jpeg|woff2|css|js)",
         "headers": [
           {
             "key": "Cache-Control",
-            "value": "max-age=31536000, immutable"
+            "value": "no-cache"
           }
         ]
       }
