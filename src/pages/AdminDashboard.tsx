@@ -32,7 +32,7 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
   const deviceSizes = {
     s23: { name: 'Galaxy S23 Ultra', width: '393px', height: '852px' },
     xiaomi: { name: 'Xiaomi (Media)', width: '360px', height: '800px' },
-    lowend: { name: 'Clase Baja', width: '320px', height: '568px' },
+    lowend: { name: 'Celular Viejito', width: '320px', height: '568px' },
     tablet: { name: 'Tablet', width: '768px', height: '1024px' },
     laptop: { name: 'Laptop', width: '100%', height: '100%' }
   };
@@ -61,15 +61,25 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
   const togglePearlTheme = () => {
     const isPearl = localStorage.getItem('theme') === 'pearl';
     localStorage.setItem('theme', !isPearl ? 'pearl' : 'dark');
+    
+    // Reload iframe if simulator is active
+    const iframe = document.getElementById('simulator-iframe') as HTMLIFrameElement;
+    if (iframe) iframe.contentWindow?.location.reload();
+
     setModalMessage({
       title: 'Tema Actualizado',
-      message: `El tema ha cambiado a ${!isPearl ? 'Perla/Rojo' : 'Oscuro/Dorado'}. Verás el cambio al volver a la invitación.`
+      message: `El tema ha cambiado a ${!isPearl ? 'Perla/Rojo' : 'Oscuro/Dorado'}.`
     });
   };
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'es' ? 'en' : 'es';
     i18n.changeLanguage(newLang);
+    
+    // Reload iframe if simulator is active
+    const iframe = document.getElementById('simulator-iframe') as HTMLIFrameElement;
+    if (iframe) iframe.contentWindow?.location.reload();
+
     setModalMessage({
       title: 'Idioma Actualizado',
       message: `El idioma ha cambiado a ${newLang === 'es' ? 'Español' : 'Inglés'}.`
@@ -350,10 +360,10 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
             {[
               { id: 'theme', icon: '🎨', label: 'Cambiar Tema', action: togglePearlTheme },
               { id: 'lang', icon: '🌐', label: `Idioma: ${i18n.language === 'es' ? 'ES' : 'EN'}`, action: toggleLanguage },
-              { id: 'time', icon: '🕐', label: 'Simulador (Próx.)', disabled: true },
-              { id: 'guests', icon: '👥', label: 'Invitados (Próx.)', disabled: true },
-              { id: 'video', icon: '🎬', label: 'Video (Próx.)', disabled: true },
-              { id: 'voice', icon: '🎙️', label: 'Mensajes (Próx.)', disabled: true },
+              { id: 'time', icon: '🕐', label: 'Simulador de Tiempo (Próx.)', disabled: true },
+              { id: 'guests', icon: '👥', label: 'Gestión de Invitados (Próx.)', disabled: true },
+              { id: 'video', icon: '🎬', label: 'Video Cronológico (Próx.)', disabled: true },
+              { id: 'voice', icon: '🎙️', label: 'Mensajes de Voz (Próx.)', disabled: true },
             ].map((item) => (
               <button
                 key={item.id}
@@ -438,6 +448,7 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
                 </div>
               )}
               <iframe 
+                id="simulator-iframe"
                 src={window.location.origin} 
                 className="w-full h-full border-0"
                 title="Simulator"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, query, onSnapshot, doc, deleteDoc, addDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { db, auth } from '../firebase';
 
 interface AdminsManagerProps {
   onClose: () => void;
@@ -9,8 +10,10 @@ interface AdminsManagerProps {
 const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
   const [admins, setAdmins] = useState<{ id: string; email: string }[]>([]);
   const [newEmail, setNewEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const q = query(collection(db, 'admins'));
@@ -28,10 +31,18 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
     setSuccess('');
     
     const emailToSave = newEmail.trim().toLowerCase();
-    if (!emailToSave) return;
+    if (!emailToSave || !newPassword) {
+      setError('Por favor ingresa correo y contraseña.');
+      return;
+    }
     
     if (!emailToSave.includes('@') || !emailToSave.includes('.')) {
       setError('Por favor ingresa un correo válido.');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setError('La contraseña debe tener al menos 6 caracteres.');
       return;
     }
 
@@ -40,13 +51,31 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
       return;
     }
 
+    setIsLoading(true);
     try {
+      // 1. Create the Auth account
+      await createUserWithEmailAndPassword(auth, emailToSave, newPassword);
+      
+      // 2. Add to admins collection
       await addDoc(collection(db, 'admins'), { email: emailToSave });
-      setSuccess('Administrador agregado con éxito.');
+      
+      setSuccess('Cuenta creada. Cerrando sesión por seguridad...');
       setNewEmail('');
-      setTimeout(() => setSuccess(''), 3000);
-    } catch (err) {
-      setError('Error al guardar en la base de datos.');
+      setNewPassword('');
+      
+      // Force sign out because Firebase signs in the newly created user
+      setTimeout(() => {
+        signOut(auth);
+      }, 2000);
+      
+    } catch (err: any) {
+      if (err.code === 'auth/email-already-in-use') {
+        setError('El correo ya tiene una cuenta en el sistema.');
+      } else {
+        setError('Error al crear la cuenta. Intenta de nuevo.');
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -66,23 +95,32 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
         <div className="bg-white/5 rounded-xl p-5 border border-white/10">
           <h3 className="text-sm font-serif text-xv-gold mb-1">Agregar Nuevo</h3>
           <p className="text-[10px] text-white/70 font-josefin leading-tight mb-4">
-            Escribe el correo de Google de la persona a la que quieres darle acceso al panel.
+            Escribe el correo y crea una contraseña para la persona a la que quieres darle acceso al panel.
           </p>
           
-          <form onSubmit={handleAddAdmin} className="flex gap-3">
+          <form onSubmit={handleAddAdmin} className="flex flex-col gap-3">
             <input
               type="email"
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
-              placeholder="ejemplo@gmail.com"
-              className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-xv-gold transition-colors text-xs"
+              placeholder="correo@ejemplo.com"
+              className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-xv-gold transition-colors text-xs"
+              required
+            />
+            <input
+              type="text"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="Contraseña (mínimo 6 caracteres)"
+              className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-xv-gold transition-colors text-xs"
               required
             />
             <button
               type="submit"
-              className="bg-xv-gold text-xv-black-bg px-4 py-2 rounded-xl font-bold uppercase text-[10px] tracking-wider hover:bg-[#D4AF37] transition-colors"
+              disabled={isLoading}
+              className="bg-xv-gold text-xv-black-bg px-4 py-2 rounded-xl font-bold uppercase text-[10px] tracking-wider hover:bg-[#D4AF37] transition-colors disabled:opacity-50"
             >
-              Añadir
+              {isLoading ? 'Creando...' : 'Crear Cuenta'}
             </button>
           </form>
           {error && <p className="text-red-400 text-[10px] font-bold mt-2 animate-pulse">{error}</p>}
