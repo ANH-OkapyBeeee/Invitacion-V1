@@ -478,14 +478,7 @@ button img, a img {
   font-family: 'Courier Prime', 'Courier New', Courier, monospace !important;
 }
 
-/* By default, hide the crown inside the envelope's top flap */
-.flap-crown {
-  display: none !important;
-}
 
-.flap-date {
-  display: none !important;
-}
 
 /* ==========================================
    Envelope Screen Short Height Adjustments
@@ -496,16 +489,6 @@ button img, a img {
   /* Reduce outer container top padding to allow perfect vertical centering */
   .fixed.inset-0.flex-col {
     padding-top: 0 !important;
-  }
-
-  /* Hide the royal crown at the top to save space */
-  .crown-container {
-    display: none !important;
-  }
-
-  /* Relocate royal crown directly onto the envelope's top flap */
-  .flap-crown {
-    display: block !important;
   }
 
   /* Scale down the title text size and margins cleanly */
@@ -573,32 +556,12 @@ button img, a img {
     font-size: 1.625rem !important; /* text-2xl-ish */
     margin-bottom: 0.25rem !important;
   }
-  .envelope-footer p {
-    display: none !important;
-  }
-  .flap-date {
-    display: block !important;
-  }
-  .flap-date p {
-    color: #6E1423 !important;
-    text-shadow: 0.5px 0.5px 1px rgba(255, 255, 255, 0.45) !important;
-  }
 }
 
 /* Extremely short viewports (vertical space < 600px) */
 @media (max-height: 600px) {
   .fixed.inset-0.flex-col {
     padding-top: 0 !important;
-  }
-
-  /* Hide the top crown */
-  .crown-container {
-    display: none !important;
-  }
-
-  /* Keep the crown visible inside the top flap */
-  .flap-crown {
-    display: block !important;
   }
 
   .envelope-title {
