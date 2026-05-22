@@ -93,13 +93,13 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
 
   return (
     <div 
-      className="fixed inset-0 flex flex-col items-center justify-center bg-[radial-gradient(circle,_#2D0808_0%,_#0D0305_100%)] z-50 overflow-hidden transition-opacity duration-700 ease-in-out"
+      className="fixed inset-0 bg-[radial-gradient(circle,_#2D0808_0%,_#0D0305_100%)] z-50 overflow-y-auto overflow-x-hidden transition-opacity duration-700 ease-in-out"
       style={{ opacity: isOpen ? 0 : 1, pointerEvents: isOpen ? 'none' : 'auto' }}
     >
       
       {/* Falling and Settling Background Stars with Safe Zone Mask */}
       <div 
-        className="absolute inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-[2000ms] ease-out"
+        className="fixed inset-0 z-0 overflow-hidden pointer-events-none transition-opacity duration-[2000ms] ease-out"
         style={{
           maskImage: 'radial-gradient(ellipse at center, transparent 35%, black 75%)',
           WebkitMaskImage: 'radial-gradient(ellipse at center, transparent 35%, black 75%)',
@@ -127,8 +127,12 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
         ))}
       </div>
 
-      {/* Majestic Crown Image above Title */}
-      <div 
+      {/* Scrollable Content Wrapper */}
+      <div className="min-h-full w-full flex flex-col items-center justify-start py-8 md:py-12 relative z-10">
+        <div className="my-auto flex flex-col items-center w-full max-w-7xl px-4">
+          
+          {/* Majestic Crown Image above Title */}
+          <div 
         className="w-[155px] h-[110px] md:w-[195px] md:h-[135px] relative z-10 transition-all duration-[2000ms] ease-out mt-4 -mb-4 crown-container"
         style={{
           opacity: isTitleVisible ? 1 : 0,
@@ -311,6 +315,8 @@ const EnvelopeScreen: React.FC<Props> = ({ onOpen, active = true }) => {
         <p className="font-josefin uppercase text-sm md:text-base text-xv-gold opacity-80 tracking-widest mb-4">
           {new Date(CONFIG.eventDate).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}
         </p>
+      </div>
+        </div>
       </div>
     </div>
   );
