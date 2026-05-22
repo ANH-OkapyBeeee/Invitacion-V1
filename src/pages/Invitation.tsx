@@ -398,7 +398,7 @@ function Invitation() {
           onClick={() => {
             navigator.vibrate?.(40);
             resetIdleTimers();
-            navigate('/admin');
+            navigate('/hub');
           }}
           className={`w-12 h-12 md:w-14 md:h-14 rounded-full bg-white text-gray-800 flex items-center justify-center text-xl md:text-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer border border-gray-100 select-none mb-1 ${
             isCollapsed 

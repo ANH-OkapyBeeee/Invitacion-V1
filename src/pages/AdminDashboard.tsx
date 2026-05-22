@@ -19,10 +19,23 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   
-  const [adminSubView, setAdminSubView] = useState<'moderation' | 'published' | 'developer' | 'admins'>('moderation');
+  const [adminSubView, setAdminSubView] = useState<'moderation' | 'published' | 'developer' | 'admins' | 'simulator'>('moderation');
   const [pendingPhotos, setPendingPhotos] = useState<any[]>([]);
   const [approvedPhotos, setApprovedPhotos] = useState<any[]>([]);
   const [globalSettings, setGlobalSettings] = useState<any>({});
+  
+  // Custom Modal State
+  const [modalMessage, setModalMessage] = useState<{ title: string; message: string } | null>(null);
+
+  // Simulator State
+  const [selectedDevice, setSelectedDevice] = useState<'s23' | 'xiaomi' | 'lowend' | 'tablet' | 'laptop'>('s23');
+  const deviceSizes = {
+    s23: { name: 'Galaxy S23 Ultra', width: '393px', height: '852px' },
+    xiaomi: { name: 'Xiaomi (Media)', width: '360px', height: '800px' },
+    lowend: { name: 'Clase Baja', width: '320px', height: '568px' },
+    tablet: { name: 'Tablet', width: '768px', height: '1024px' },
+    laptop: { name: 'Laptop', width: '100%', height: '100%' }
+  };
 
   // Real-time subscription to global settings
   useEffect(() => {
@@ -48,14 +61,19 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
   const togglePearlTheme = () => {
     const isPearl = localStorage.getItem('theme') === 'pearl';
     localStorage.setItem('theme', !isPearl ? 'pearl' : 'dark');
-    // Force a small visual feedback for the admin 
-    alert(`Tema cambiado a: ${!isPearl ? 'Perla/Rojo' : 'Oscuro/Dorado'}. Verás el cambio al volver a la invitación.`);
+    setModalMessage({
+      title: 'Tema Actualizado',
+      message: `El tema ha cambiado a ${!isPearl ? 'Perla/Rojo' : 'Oscuro/Dorado'}. Verás el cambio al volver a la invitación.`
+    });
   };
 
   const toggleLanguage = () => {
     const newLang = i18n.language === 'es' ? 'en' : 'es';
     i18n.changeLanguage(newLang);
-    alert(`Idioma cambiado a: ${newLang === 'es' ? 'Español' : 'Inglés'}`);
+    setModalMessage({
+      title: 'Idioma Actualizado',
+      message: `El idioma ha cambiado a ${newLang === 'es' ? 'Español' : 'Inglés'}.`
+    });
   };
 
   // Subscribe to photos
@@ -109,7 +127,7 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
   const handleDownloadAllPhotos = async () => {
     try {
       if (approvedPhotos.length === 0) {
-        alert('No hay fotos aprobadas para descargar todavía.');
+        setModalMessage({ title: 'Galería Vacía', message: 'No hay fotos aprobadas para descargar todavía.' });
         return;
       }
       for (let i = 0; i < approvedPhotos.length; i++) {
@@ -123,9 +141,10 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
         document.body.removeChild(link);
         await new Promise(res => setTimeout(res, 600));
       }
+      setModalMessage({ title: 'Descarga Completada', message: 'Las fotos se han descargado correctamente.' });
     } catch (err) {
       console.error('Error downloading photos:', err);
-      alert('Hubo un error al descargar las fotos.');
+      setModalMessage({ title: 'Error', message: 'Hubo un problema al descargar las fotos.' });
     }
   };
 
@@ -188,9 +207,18 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white focus:outline-none p-1"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 focus:outline-none p-1"
                 >
-                  {showPassword ? 'Ocultar' : 'Ver'}
+                  {showPassword ? (
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                  )}
                 </button>
               </div>
               
@@ -244,11 +272,19 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
                   
                   if (snap.empty) {
                     await signOut(auth);
-                    setLoginError('No tienes permisos de administrador con esta cuenta.');
+                    // Open modal for clarity
+                    setModalMessage({
+                      title: 'Acceso Denegado',
+                      message: `La cuenta ${result.user.email} no está autorizada. Por favor, asegúrate de haber seleccionado tu correo de administrador o solicítale acceso al dueño.`
+                    });
+                    setLoginError('No tienes permisos.');
                   }
                 } catch (error: any) {
                   if (error.code !== 'auth/popup-closed-by-user') {
-                    setLoginError('Error con Google. Intenta de nuevo.');
+                    setModalMessage({
+                      title: 'Error de Autenticación',
+                      message: 'Ha ocurrido un error al conectarse con Google. Revisa tu conexión a internet e intenta nuevamente.'
+                    });
                   }
                 } finally {
                   setIsAuthenticating(false);
@@ -344,10 +380,10 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
 
         <div className="p-4 border-t border-white/5 space-y-2">
           <button
-            onClick={() => navigate('/')}
-            className="w-full py-2 px-4 rounded-xl border border-white/10 text-white/60 hover:bg-white/5 hover:text-white transition-colors text-xs uppercase tracking-wider"
+            onClick={() => setAdminSubView('simulator')}
+            className="w-full py-2 px-4 rounded-xl border border-xv-gold text-xv-gold hover:bg-xv-gold/10 transition-colors text-xs uppercase tracking-wider font-bold"
           >
-            Ver Invitación
+            Ver Invitación (Simulador)
           </button>
           <button
             onClick={() => signOut(auth)}
@@ -361,15 +397,54 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
       {/* Main Content Area */}
       <main className="flex-1 overflow-y-auto">
         <header className="bg-[#111111] p-6 border-b border-white/5">
-          <h2 className="text-xl font-playfair italic text-white">
+          <h2 className="text-xl font-playfair italic text-white flex items-center gap-3">
             {adminSubView === 'moderation' && 'Moderar Fotos Pendientes'}
             {adminSubView === 'published' && 'Galería de Fotos Publicadas'}
             {adminSubView === 'developer' && 'Configuración de Desarrollador'}
             {adminSubView === 'admins' && 'Gestión de Administradores'}
+            {adminSubView === 'simulator' && 'Simulador de Dispositivos'}
           </h2>
+          {adminSubView === 'simulator' && (
+            <div className="flex gap-2 mt-4 bg-white/5 p-1.5 rounded-2xl w-fit">
+              {Object.entries(deviceSizes).map(([key, device]) => (
+                <button
+                  key={key}
+                  onClick={() => setSelectedDevice(key as any)}
+                  className={`px-4 py-1.5 rounded-xl text-[10px] uppercase tracking-wider font-bold transition-all ${
+                    selectedDevice === key ? 'bg-xv-gold text-black' : 'text-white/50 hover:text-white'
+                  }`}
+                >
+                  {device.name}
+                </button>
+              ))}
+            </div>
+          )}
         </header>
 
-        <div className="p-6 max-w-5xl mx-auto">
+        <div className={`p-6 mx-auto ${adminSubView === 'simulator' ? 'w-full h-[calc(100vh-140px)] flex justify-center items-center' : 'max-w-5xl'}`}>
+          {adminSubView === 'simulator' && (
+            <div 
+              className="bg-black border border-white/10 rounded-3xl overflow-hidden transition-all duration-500 ease-in-out relative shadow-2xl"
+              style={{
+                width: deviceSizes[selectedDevice].width,
+                height: deviceSizes[selectedDevice].height,
+                maxWidth: '100%',
+                maxHeight: '100%',
+              }}
+            >
+              {selectedDevice !== 'laptop' && (
+                <div className="absolute top-0 inset-x-0 h-6 bg-black z-50 flex justify-center">
+                  <div className="w-32 h-4 bg-neutral-900 rounded-b-xl" />
+                </div>
+              )}
+              <iframe 
+                src={window.location.origin} 
+                className="w-full h-full border-0"
+                title="Simulator"
+              />
+            </div>
+          )}
+
           {adminSubView === 'moderation' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {pendingPhotos.length === 0 ? (
@@ -448,6 +523,22 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
           )}
         </div>
       </main>
+
+      {/* Global Modals for Admin Dashboard */}
+      {modalMessage && (
+        <div className="fixed inset-0 z-[20000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="bg-[#111111] w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden border border-xv-gold/30 p-8 text-center animate-scale-up">
+            <h3 className="font-playfair italic text-2xl text-xv-gold mb-4">{modalMessage.title}</h3>
+            <p className="text-white/80 font-josefin mb-8 text-sm">{modalMessage.message}</p>
+            <button 
+              onClick={() => setModalMessage(null)}
+              className="w-full py-3 px-4 rounded-xl font-josefin uppercase tracking-wider text-xs font-bold bg-white/10 text-white/80 hover:bg-white/20 transition-colors border border-white/10"
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

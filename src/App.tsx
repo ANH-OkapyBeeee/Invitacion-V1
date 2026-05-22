@@ -32,7 +32,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Invitation />} />
         <Route 
-          path="/admin" 
+          path="/hub" 
           element={<AdminDashboard isAdmin={isAdmin} />} 
         />
         <Route path="*" element={<Navigate to="/" replace />} />
