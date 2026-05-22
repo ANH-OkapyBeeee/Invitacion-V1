@@ -11,6 +11,7 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
   const [admins, setAdmins] = useState<{ id: string; email: string }[]>([]);
   const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [isGoogleAccount, setIsGoogleAccount] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -31,8 +32,9 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
     setSuccess('');
     
     const emailToSave = newEmail.trim().toLowerCase();
-    if (!emailToSave || !newPassword) {
-      setError('Por favor ingresa correo y contraseña.');
+    
+    if (!emailToSave || (!isGoogleAccount && !newPassword)) {
+      setError('Por favor llena los campos requeridos.');
       return;
     }
     
@@ -41,7 +43,7 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
       return;
     }
 
-    if (newPassword.length < 6) {
+    if (!isGoogleAccount && newPassword.length < 6) {
       setError('La contraseña debe tener al menos 6 caracteres.');
       return;
     }
@@ -53,20 +55,26 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
 
     setIsLoading(true);
     try {
-      // 1. Create the Auth account
-      await createUserWithEmailAndPassword(auth, emailToSave, newPassword);
+      if (!isGoogleAccount) {
+        // 1. Create the Auth account if not a Google account
+        await createUserWithEmailAndPassword(auth, emailToSave, newPassword);
+      }
       
       // 2. Add to admins collection
       await addDoc(collection(db, 'admins'), { email: emailToSave });
       
-      setSuccess('Cuenta creada. Cerrando sesión por seguridad...');
+      if (!isGoogleAccount) {
+        setSuccess('Cuenta creada. Cerrando sesión por seguridad...');
+        setTimeout(() => {
+          signOut(auth);
+        }, 2000);
+      } else {
+        setSuccess('Cuenta de Google autorizada con éxito.');
+        setTimeout(() => setSuccess(''), 3000);
+      }
+      
       setNewEmail('');
       setNewPassword('');
-      
-      // Force sign out because Firebase signs in the newly created user
-      setTimeout(() => {
-        signOut(auth);
-      }, 2000);
       
     } catch (err: any) {
       if (err.code === 'auth/email-already-in-use') {
@@ -95,32 +103,50 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
         <div className="bg-white/5 rounded-xl p-5 border border-white/10">
           <h3 className="text-sm font-serif text-xv-gold mb-1">Agregar Nuevo</h3>
           <p className="text-[10px] text-white/70 font-josefin leading-tight mb-4">
-            Escribe el correo y crea una contraseña para la persona a la que quieres darle acceso al panel.
+            Crea una cuenta nueva con contraseña, o autoriza una cuenta de Google existente.
           </p>
+          
+          <div className="mb-4 flex items-center gap-2">
+            <input 
+              type="checkbox" 
+              id="googleToggle"
+              checked={isGoogleAccount}
+              onChange={(e) => {
+                setIsGoogleAccount(e.target.checked);
+                setError('');
+              }}
+              className="accent-xv-gold w-3 h-3"
+            />
+            <label htmlFor="googleToggle" className="text-xs text-white/80 cursor-pointer select-none">
+              Es una cuenta de Google
+            </label>
+          </div>
           
           <form onSubmit={handleAddAdmin} className="flex flex-col gap-3">
             <input
               type="email"
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
-              placeholder="correo@ejemplo.com"
+              placeholder={isGoogleAccount ? "correo@gmail.com" : "correo@ejemplo.com"}
               className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-xv-gold transition-colors text-xs"
               required
             />
-            <input
-              type="text"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Contraseña (mínimo 6 caracteres)"
-              className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-xv-gold transition-colors text-xs"
-              required
-            />
+            {!isGoogleAccount && (
+              <input
+                type="text"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Contraseña (mínimo 6 caracteres)"
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-xv-gold transition-colors text-xs"
+                required
+              />
+            )}
             <button
               type="submit"
               disabled={isLoading}
               className="bg-xv-gold text-xv-black-bg px-4 py-2 rounded-xl font-bold uppercase text-[10px] tracking-wider hover:bg-[#D4AF37] transition-colors disabled:opacity-50"
             >
-              {isLoading ? 'Creando...' : 'Crear Cuenta'}
+              {isLoading ? 'Procesando...' : (isGoogleAccount ? 'Autorizar Cuenta' : 'Crear Cuenta')}
             </button>
           </form>
           {error && <p className="text-red-400 text-[10px] font-bold mt-2 animate-pulse">{error}</p>}
