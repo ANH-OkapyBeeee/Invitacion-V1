@@ -11,7 +11,6 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
   const [admins, setAdmins] = useState<{ id: string; email: string }[]>([]);
   const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [isGoogleAccount, setIsGoogleAccount] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -26,6 +25,37 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
     return () => unsub();
   }, []);
 
+  const handleGoogleAuth = async () => {
+    setError('');
+    setSuccess('');
+    setIsLoading(true);
+    try {
+      const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+      const result = await signInWithPopup(auth, provider);
+      
+      const email = result.user.email;
+      if (!email) throw new Error('No se pudo obtener el correo.');
+
+      if (admins.find(a => a.email === email)) {
+        setError('Este correo ya es administrador.');
+        setIsLoading(false);
+        return;
+      }
+
+      await addDoc(collection(db, 'admins'), { email });
+      setSuccess('Cuenta de Google autorizada. Cerrando sesión...');
+      setTimeout(() => signOut(auth), 2000);
+      
+    } catch (err: any) {
+      if (err.code !== 'auth/popup-closed-by-user') {
+        setError('Error al conectar con Google.');
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleAddAdmin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -33,7 +63,7 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
     
     const emailToSave = newEmail.trim().toLowerCase();
     
-    if (!emailToSave || (!isGoogleAccount && !newPassword)) {
+    if (!emailToSave || !newPassword) {
       setError('Por favor llena los campos requeridos.');
       return;
     }
@@ -43,7 +73,7 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
       return;
     }
 
-    if (!isGoogleAccount && newPassword.length < 6) {
+    if (newPassword.length < 6) {
       setError('La contraseña debe tener al menos 6 caracteres.');
       return;
     }
@@ -55,26 +85,19 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
 
     setIsLoading(true);
     try {
-      if (!isGoogleAccount) {
-        // 1. Create the Auth account if not a Google account
-        await createUserWithEmailAndPassword(auth, emailToSave, newPassword);
-      }
+      // 1. Create the Auth account
+      await createUserWithEmailAndPassword(auth, emailToSave, newPassword);
       
       // 2. Add to admins collection
       await addDoc(collection(db, 'admins'), { email: emailToSave });
       
-      if (!isGoogleAccount) {
-        setSuccess('Cuenta creada. Cerrando sesión por seguridad...');
-        setTimeout(() => {
-          signOut(auth);
-        }, 2000);
-      } else {
-        setSuccess('Cuenta de Google autorizada con éxito.');
-        setTimeout(() => setSuccess(''), 3000);
-      }
-      
+      setSuccess('Cuenta creada. Cerrando sesión por seguridad...');
       setNewEmail('');
       setNewPassword('');
+      
+      setTimeout(() => {
+        signOut(auth);
+      }, 2000);
       
     } catch (err: any) {
       if (err.code === 'auth/email-already-in-use') {
@@ -102,36 +125,42 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
       <div className="flex-1 overflow-y-auto space-y-6 pr-1 scrollbar-thin p-6">
         <div className="bg-white/5 rounded-xl p-5 border border-white/10">
           <h3 className="text-sm font-serif text-xv-gold mb-1">Agregar Nuevo</h3>
-          <p className="text-[10px] text-white/70 font-josefin leading-tight mb-4">
-            Crea una cuenta nueva con contraseña, o autoriza una cuenta de Google existente.
+          <p className="text-[10px] text-white/70 font-josefin leading-tight mb-6">
+            Otorga acceso autorizando una cuenta de Google, o creando una cuenta manualmente con correo y contraseña.
           </p>
           
-          <div className="mb-4 flex items-center gap-2">
-            <input 
-              type="checkbox" 
-              id="googleToggle"
-              checked={isGoogleAccount}
-              onChange={(e) => {
-                setIsGoogleAccount(e.target.checked);
-                setError('');
-              }}
-              className="accent-xv-gold w-3 h-3"
-            />
-            <label htmlFor="googleToggle" className="text-xs text-white/80 cursor-pointer select-none">
-              Es una cuenta de Google
-            </label>
-          </div>
-          
-          <form onSubmit={handleAddAdmin} className="flex flex-col gap-3">
-            <input
-              type="email"
-              value={newEmail}
-              onChange={(e) => setNewEmail(e.target.value)}
-              placeholder={isGoogleAccount ? "correo@gmail.com" : "correo@ejemplo.com"}
-              className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-xv-gold transition-colors text-xs"
-              required
-            />
-            {!isGoogleAccount && (
+          <div className="flex flex-col gap-4">
+            <button
+              type="button"
+              disabled={isLoading}
+              onClick={handleGoogleAuth}
+              className="w-full flex items-center justify-center gap-3 py-2 px-4 rounded-xl bg-white text-gray-800 font-semibold hover:bg-gray-100 transition-colors disabled:opacity-50 text-xs"
+            >
+              <svg viewBox="0 0 24 24" className="w-4 h-4">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                <path d="M1 1h22v22H1z" fill="none"/>
+              </svg>
+              Continuar con Google
+            </button>
+
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-white/10"></div>
+              <span className="text-[10px] text-white/40 font-bold uppercase tracking-wider">o bien</span>
+              <div className="flex-1 h-px bg-white/10"></div>
+            </div>
+
+            <form onSubmit={handleAddAdmin} className="flex flex-col gap-3">
+              <input
+                type="email"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                placeholder="correo@ejemplo.com"
+                className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-xv-gold transition-colors text-xs"
+                required
+              />
               <input
                 type="text"
                 value={newPassword}
@@ -140,15 +169,15 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
                 className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-xv-gold transition-colors text-xs"
                 required
               />
-            )}
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="bg-xv-gold text-xv-black-bg px-4 py-2 rounded-xl font-bold uppercase text-[10px] tracking-wider hover:bg-[#D4AF37] transition-colors disabled:opacity-50"
-            >
-              {isLoading ? 'Procesando...' : (isGoogleAccount ? 'Autorizar Cuenta' : 'Crear Cuenta')}
-            </button>
-          </form>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="bg-xv-gold text-xv-black-bg px-4 py-2 rounded-xl font-bold uppercase text-[10px] tracking-wider hover:bg-[#D4AF37] transition-colors disabled:opacity-50 mt-1"
+              >
+                {isLoading ? 'Procesando...' : 'Crear Cuenta Manual'}
+              </button>
+            </form>
+          </div>
           {error && <p className="text-red-400 text-[10px] font-bold mt-2 animate-pulse">{error}</p>}
           {success && <p className="text-green-400 text-[10px] font-bold mt-2">{success}</p>}
         </div>
