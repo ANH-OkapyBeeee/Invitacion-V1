@@ -39,7 +39,7 @@ function Invitation() {
   const [isCollapsed, setIsCollapsed] = useState(false); // Start expanded on load
   const [isTenue, setIsTenue] = useState(false);
   const [isFABVisible, setIsFABVisible] = useState(false); // Magical organic delay timed with stars
-  const [isPearlTheme, setIsPearlTheme] = useState(false);
+  const [isPearlTheme, setIsPearlTheme] = useState(() => localStorage.getItem('theme') === 'pearl');
   
   const collapseTimerRef = useRef<any>(null);
   const tenueTimerRef = useRef<any>(null);
@@ -171,7 +171,11 @@ function Invitation() {
 
   const togglePearlTheme = () => {
     resetIdleTimers();
-    setIsPearlTheme(prev => !prev);
+    setIsPearlTheme(prev => {
+      const next = !prev;
+      localStorage.setItem('theme', next ? 'pearl' : 'dark');
+      return next;
+    });
     navigator.vibrate?.(50);
   };
 

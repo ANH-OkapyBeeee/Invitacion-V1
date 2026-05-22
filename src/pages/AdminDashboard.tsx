@@ -3,6 +3,7 @@ import { db, auth } from '../firebase';
 import { collection, query, where, getDocs, onSnapshot, doc, updateDoc, deleteDoc, setDoc } from 'firebase/firestore';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import AdminsManager from '../components/AdminsManager';
 
 interface AdminDashboardProps {
@@ -11,6 +12,7 @@ interface AdminDashboardProps {
 
 function AdminDashboard({ isAdmin }: AdminDashboardProps) {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const [loginUser, setLoginUser] = useState('');
   const [loginPass, setLoginPass] = useState('');
   const [loginError, setLoginError] = useState('');
@@ -41,6 +43,19 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
         await setDoc(doc(db, 'settings', 'global'), { devMode: newValue });
       }
     }
+  };
+
+  const togglePearlTheme = () => {
+    const isPearl = localStorage.getItem('theme') === 'pearl';
+    localStorage.setItem('theme', !isPearl ? 'pearl' : 'dark');
+    // Force a small visual feedback for the admin 
+    alert(`Tema cambiado a: ${!isPearl ? 'Perla/Rojo' : 'Oscuro/Dorado'}. Verás el cambio al volver a la invitación.`);
+  };
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'es' ? 'en' : 'es';
+    i18n.changeLanguage(newLang);
+    alert(`Idioma cambiado a: ${newLang === 'es' ? 'Español' : 'Inglés'}`);
   };
 
   // Subscribe to photos
@@ -217,6 +232,9 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
                 setLoginError('');
                 try {
                   const provider = new GoogleAuthProvider();
+                  provider.setCustomParameters({
+                    prompt: 'select_account'
+                  });
                   const result = await signInWithPopup(auth, provider);
                   
                   if (result.user.email === 'admin@misxv.com') return;
@@ -226,11 +244,11 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
                   
                   if (snap.empty) {
                     await signOut(auth);
-                    setLoginError('No tienes permisos de administrador.');
+                    setLoginError('No tienes permisos de administrador con esta cuenta.');
                   }
                 } catch (error: any) {
                   if (error.code !== 'auth/popup-closed-by-user') {
-                    setLoginError('Error con Google.');
+                    setLoginError('Error con Google. Intenta de nuevo.');
                   }
                 } finally {
                   setIsAuthenticating(false);
@@ -238,6 +256,13 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
               }}
               className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl bg-white text-gray-800 font-semibold hover:bg-gray-100 transition-colors disabled:opacity-50"
             >
+              <svg viewBox="0 0 24 24" className="w-5 h-5">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                <path d="M1 1h22v22H1z" fill="none"/>
+              </svg>
               Google
             </button>
           </form>
@@ -284,6 +309,27 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
               </div>
             </button>
           ))}
+
+          <div className="pt-4 mt-4 border-t border-white/5 space-y-2">
+            {[
+              { id: 'theme', icon: '🎨', label: 'Cambiar Tema', action: togglePearlTheme },
+              { id: 'lang', icon: '🌐', label: `Idioma: ${i18n.language === 'es' ? 'ES' : 'EN'}`, action: toggleLanguage },
+              { id: 'time', icon: '🕐', label: 'Simulador (Próx.)', disabled: true },
+              { id: 'guests', icon: '👥', label: 'Invitados (Próx.)', disabled: true },
+              { id: 'video', icon: '🎬', label: 'Video (Próx.)', disabled: true },
+              { id: 'voice', icon: '🎙️', label: 'Mensajes (Próx.)', disabled: true },
+            ].map((item) => (
+              <button
+                key={item.id}
+                onClick={item.action}
+                disabled={item.disabled}
+                className="w-full flex items-center gap-3 p-2 rounded-xl text-left transition-all hover:bg-white/5 text-white/50 disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                <span className="text-sm">{item.icon}</span>
+                <span className="text-[10px] uppercase tracking-wider font-semibold">{item.label}</span>
+              </button>
+            ))}
+          </div>
 
           <div className="pt-4 mt-4 border-t border-white/5">
             <button
