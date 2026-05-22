@@ -48,8 +48,9 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
       setTimeout(() => signOut(auth), 2000);
       
     } catch (err: any) {
+      console.error(err);
       if (err.code !== 'auth/popup-closed-by-user') {
-        setError('Error al conectar con Google.');
+        setError(`Error: ${err.message || 'No se pudo conectar con Google.'}`);
       }
     } finally {
       setIsLoading(false);

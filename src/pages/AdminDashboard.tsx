@@ -290,10 +290,11 @@ function AdminDashboard({ isAdmin }: AdminDashboardProps) {
                     setLoginError('No tienes permisos.');
                   }
                 } catch (error: any) {
+                  console.error("Google Auth Error:", error);
                   if (error.code !== 'auth/popup-closed-by-user') {
                     setModalMessage({
                       title: 'Error de Autenticación',
-                      message: 'Ha ocurrido un error al conectarse con Google. Revisa tu conexión a internet e intenta nuevamente.'
+                      message: `Fallo al abrir Google: ${error.message} (${error.code}). Si estás en celular, intenta desde una computadora o revisa que Google esté habilitado en Firebase Console.`
                     });
                   }
                 } finally {
