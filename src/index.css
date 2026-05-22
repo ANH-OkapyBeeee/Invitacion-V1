@@ -25,10 +25,15 @@ html, body {
   width: 100%;
   -webkit-font-smoothing: antialiased;
   min-height: 100svh;
-  /* Anti-Theft / Anti-Download */
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  user-select: none; /* Non-prefixed version */
+}
+
+/* Anti-Theft / Anti-Download for Mobile Only */
+@media (hover: none) and (pointer: coarse) {
+  html, body {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    user-select: none; /* Non-prefixed version */
+  }
 }
 
 /* Make images completely unclickable to prevent long-press downloads */
