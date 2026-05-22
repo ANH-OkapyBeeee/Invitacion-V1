@@ -61,25 +61,23 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-white font-josefin">
-      <div className="flex items-center justify-between p-4 border-b border-gray-100 bg-xv-pearl sticky top-0 z-10 shadow-sm">
-        <div className="flex items-center gap-3">
-          <button 
-            onClick={onClose}
-            className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:text-gray-800 transition-colors shadow-sm"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-5 h-5">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <h2 className="font-playfair text-xl text-xv-red italic">Administradores</h2>
-        </div>
+    <div className="flex flex-col h-full bg-transparent font-josefin">
+      <div className="flex items-center mb-6 mt-2">
+        <button 
+          onClick={onClose}
+          className="p-2 mr-2 bg-white/10 hover:bg-white/20 rounded-full transition-all text-white"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <h2 className="text-xl font-serif text-white">Administradores</h2>
       </div>
 
-      <div className="p-6 flex-1 overflow-y-auto bg-gray-50/50">
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6">
-          <h3 className="text-lg font-bold text-gray-800 mb-2">Agregar Nuevo</h3>
-          <p className="text-sm text-gray-500 mb-4">
+      <div className="flex-1 overflow-y-auto space-y-6 pr-1 scrollbar-thin">
+        <div className="bg-white/5 rounded-xl p-5 border border-white/10">
+          <h3 className="text-sm font-serif text-xv-gold mb-1">Agregar Nuevo</h3>
+          <p className="text-[10px] text-white/70 font-josefin leading-tight mb-4">
             Escribe el correo de Google de la persona a la que quieres darle acceso al panel.
           </p>
           
@@ -89,51 +87,51 @@ const AdminsManager: React.FC<AdminsManagerProps> = ({ onClose }) => {
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
               placeholder="ejemplo@gmail.com"
-              className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-800 focus:outline-none focus:border-xv-gold focus:bg-white transition-colors"
+              className="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-xv-gold transition-colors text-xs"
               required
             />
             <button
               type="submit"
-              className="bg-xv-gold text-xv-black-bg px-6 rounded-xl font-bold uppercase text-xs tracking-wider hover:bg-[#D4AF37] transition-colors"
+              className="bg-xv-gold text-xv-black-bg px-4 py-2 rounded-xl font-bold uppercase text-[10px] tracking-wider hover:bg-[#D4AF37] transition-colors"
             >
               Añadir
             </button>
           </form>
-          {error && <p className="text-red-500 text-xs font-bold mt-3 animate-pulse">{error}</p>}
-          {success && <p className="text-green-600 text-xs font-bold mt-3">{success}</p>}
+          {error && <p className="text-red-400 text-[10px] font-bold mt-2 animate-pulse">{error}</p>}
+          {success && <p className="text-green-400 text-[10px] font-bold mt-2">{success}</p>}
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-          <div className="p-4 border-b border-gray-100 bg-gray-50/50">
-            <h3 className="font-bold text-gray-800">Cuentas Autorizadas</h3>
+        <div className="bg-white/5 rounded-xl border border-white/10 overflow-hidden">
+          <div className="p-3 border-b border-white/10 bg-black/20">
+            <h3 className="font-serif text-sm text-xv-gold">Cuentas Autorizadas</h3>
           </div>
           
           {admins.length === 0 ? (
-            <div className="p-8 text-center">
-              <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-2xl">👥</span>
+            <div className="p-6 text-center">
+              <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-3">
+                <span className="text-xl">👥</span>
               </div>
-              <p className="text-gray-500 text-sm">No hay administradores agregados aún.</p>
-              <p className="text-gray-400 text-xs mt-1">Solo tú puedes entrar con la cuenta principal.</p>
+              <p className="text-white/60 text-xs">No hay administradores agregados aún.</p>
+              <p className="text-white/40 text-[10px] mt-1">Solo tú puedes entrar con la cuenta principal.</p>
             </div>
           ) : (
-            <ul className="divide-y divide-gray-100">
+            <ul className="divide-y divide-white/5">
               {admins.map(admin => (
-                <li key={admin.id} className="p-4 flex items-center justify-between hover:bg-gray-50/50 transition-colors">
+                <li key={admin.id} className="p-3 flex items-center justify-between hover:bg-white/5 transition-colors">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-xv-gold/10 rounded-full flex items-center justify-center text-xv-gold">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-5 h-5">
+                    <div className="w-8 h-8 bg-xv-gold/20 rounded-full flex items-center justify-center text-xv-gold">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
                     </div>
-                    <span className="font-medium text-gray-700">{admin.email}</span>
+                    <span className="font-medium text-white/90 text-xs">{admin.email}</span>
                   </div>
                   <button
                     onClick={() => handleRemoveAdmin(admin.id, admin.email)}
-                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    className="p-1.5 text-white/40 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors"
                     title="Revocar acceso"
                   >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-5 h-5">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                     </svg>
                   </button>
