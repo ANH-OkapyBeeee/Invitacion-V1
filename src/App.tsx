@@ -21,7 +21,7 @@ const RecentGallery = lazy(() => import('./components/RecentGallery'));
 const Footer = lazy(() => import('./components/Footer'));
 const LegalModal = lazy(() => import('./components/LegalModal'));
 import { db } from './firebase';
-import { collection, query, where, getDocs, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, onSnapshot, doc, updateDoc, deleteDoc, setDoc } from 'firebase/firestore';
 
 
 function App() {
@@ -131,9 +131,31 @@ function App() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [legalModalOpen, setLegalModalOpen] = useState(false);
   const [activeLegalTab, setActiveLegalTab] = useState<'privacy' | 'terms' | 'cookies'>('privacy');
-  const [adminSubView, setAdminSubView] = useState<'menu' | 'moderation' | 'published'>('menu');
+  const [adminSubView, setAdminSubView] = useState<'menu' | 'moderation' | 'published' | 'developer'>('menu');
   const [pendingPhotos, setPendingPhotos] = useState<any[]>([]);
   const [approvedPhotos, setApprovedPhotos] = useState<any[]>([]);
+  const [globalSettings, setGlobalSettings] = useState<any>({});
+
+  // Real-time subscription to global settings
+  useEffect(() => {
+    const unsub = onSnapshot(doc(db, 'settings', 'global'), (snap) => {
+      if (snap.exists()) {
+        setGlobalSettings(snap.data());
+      }
+    });
+    return () => unsub();
+  }, []);
+
+  const toggleDevMode = async () => {
+    const newValue = !globalSettings.devMode;
+    try {
+      await updateDoc(doc(db, 'settings', 'global'), { devMode: newValue });
+    } catch (e: any) {
+      if (e.code === 'not-found') {
+        await setDoc(doc(db, 'settings', 'global'), { devMode: newValue });
+      }
+    }
+  };
 
   // Real-time subscription to pending photos when moderation panel is open
   useEffect(() => {
@@ -566,6 +588,12 @@ function App() {
                   badge: pendingPhotos.length > 0 ? pendingPhotos.length : undefined,
                   available: true, 
                   onClick: () => setAdminSubView('moderation') 
+                },
+                { 
+                  icon: '🛠️', 
+                  label: 'Modo Desarrollador', 
+                  available: true, 
+                  onClick: () => setAdminSubView('developer') 
                 },
                 { icon: '🎙️', label: 'Mensajes de Voz', available: false },
               ].map((item, idx) => (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { db } from '../firebase';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, doc } from 'firebase/firestore';
 
 const RecentGallery = () => {
   const [photos, setPhotos] = useState<any[]>([]);
@@ -20,6 +20,27 @@ const RecentGallery = () => {
 
   // Particle explosion state
   const [particles, setParticles] = useState<any[]>([]);
+  const [globalSettings, setGlobalSettings] = useState<any>({});
+
+  // Global Settings for developer mode
+  useEffect(() => {
+    const unsub = onSnapshot(doc(db, 'settings', 'global'), (snap) => {
+      if (snap.exists()) {
+        setGlobalSettings(snap.data());
+      }
+    });
+    return () => unsub();
+  }, []);
+
+  const testPhotos = [
+    { id: 'test_1', url: '/Fotos/Fotos%20de%20Prueva/1.webp?v=1', status: 'approved' },
+    { id: 'test_2', url: '/Fotos/Fotos%20de%20Prueva/2.webp?v=1', status: 'approved' },
+    { id: 'test_3', url: '/Fotos/Fotos%20de%20Prueva/3.webp?v=1', status: 'approved' },
+    { id: 'test_4', url: '/Fotos/Fotos%20de%20Prueva/4.webp?v=1', status: 'approved' },
+    { id: 'test_5', url: '/Fotos/Fotos%20de%20Prueva/5.webp?v=1', status: 'approved' }
+  ];
+
+  const displayPhotos = globalSettings.devMode ? testPhotos : photos;
 
   // Responsive and screen size state tracking
   useEffect(() => {
@@ -52,7 +73,7 @@ const RecentGallery = () => {
 
   // Sync thrown cards when database photos list changes
   useEffect(() => {
-    const photoIds = photos.map(p => p.id);
+    const photoIds = displayPhotos.map(p => p.id);
     setThrownCards((prev) => {
       const next = { ...prev };
       let changed = false;
@@ -158,7 +179,7 @@ const RecentGallery = () => {
     const baseCardH = isMobile ? 160 : 215;
 
     // Filter remaining active cards that are NOT thrown
-    const activePhotos = photos.filter(p => thrownCards[p.id] === undefined);
+    const activePhotos = displayPhotos.filter(p => thrownCards[p.id] === undefined);
     const layoutIdx = activePhotos.findIndex(p => p.id === photoId);
 
     const isThrown = thrownCards[photoId] !== undefined;
@@ -394,7 +415,7 @@ const RecentGallery = () => {
           className="relative mx-auto overflow-visible"
           style={{ height: `${containerHeight}px`, maxWidth: '640px' }}
         >
-          {photos.length === 0 ? (
+          {displayPhotos.length === 0 ? (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-3xl border-2 border-dashed border-xv-gold/40 bg-white/50">
               <span className="text-5xl">📷</span>
               <p className="font-cormorant text-xl md:text-2xl italic text-xv-red font-medium leading-relaxed">
@@ -402,12 +423,12 @@ const RecentGallery = () => {
               </p>
             </div>
           ) : (
-            photos.map((photo, idx) => {
+            displayPhotos.map((photo, idx) => {
               const isActive = activeIdx === idx;
               return (
                 <div
                   key={photo.id}
-                  style={getDeckStyle(idx, photos.length, photo.id)}
+                  style={getDeckStyle(idx, displayPhotos.length, photo.id)}
                   onPointerDown={(e) => handlePointerDown(e, idx)}
                   onPointerMove={handlePointerMove}
                   onPointerUp={(e) => handlePointerUp(e, photo.id)}
